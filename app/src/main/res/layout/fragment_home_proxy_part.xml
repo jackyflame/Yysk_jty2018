@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@+id/proxyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <ImageView
+            android:id="@+id/imageleft"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/menu_about"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            />
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textColor="@color/font"
+            android:gravity="center_vertical"
+            android:text="xxxxx"
+            android:layout_toRightOf="@+id/imageleft"
+            />
+        <ImageView
+            android:id="@+id/imageright"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/arrow_right"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+
+
+    <include layout="@layout/line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/font"
+            android:text="直连国内网站?"
+
+            />
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/line" />
+
+
+</LinearLayout>

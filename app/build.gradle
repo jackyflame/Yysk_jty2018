@@ -1,0 +1,110 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+//        release {
+//            keyAlias 'yysk'
+//            keyPassword '123456'
+//            storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/key.jks')
+//            storePassword '123456'
+//        }
+        release_dz {
+            keyAlias 'yysk_dz'
+            keyPassword '123456'
+            storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/dz_key.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        applicationId "im.socks.yysk"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 6
+        versionName "1.3.2"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //jpush
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "im.socks.yysk",
+                JPUSH_APPKEY : "f692abbdb1f0e0adc0892dc0", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
+        signingConfig signingConfigs.debug
+        flavorDimensions "versionCode"
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release_dz
+        }
+        debug {
+            jniDebuggable true
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+        }
+    }
+    productFlavors {
+        gr_app {
+            applicationId "im.socks.yyskjty_gr"
+            versionCode 8
+            versionName "1.3.4"
+        }
+        qy_app {
+            applicationId "im.socks.yyskjty_qy"
+            versionCode 8
+            versionName "1.3.4"
+        }
+    }
+}
+
+
+
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //admob
+    compile 'com.google.android.gms:play-services-ads:11.6.0'
+    //compile 'com.google.firebase:firebase-ads:11.4.0'
+    //okhttp
+    api 'com.squareup.okhttp3:okhttp:3.9.0'
+    //compile 'com.cuboid:cuboidcirclebutton:1.0.3'
+    //for pay
+    compile 'com.pingxx:pingpp-core:2.1.14'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    // 使用微信支付时添加,具体版本参考微信官方文档
+    compile 'com.pingxx:pingpp-alipay:2.1.14'
+    // 使用支付宝时添加
+    //jpush
+    //compile 'cn.jiguang.sdk:jpush:3.1.0'
+    //compile 'cn.jiguang.sdk:jcore:1.1.8'
+    //update
+    compile 'com.qianwen:update-app:3.3.8'
+    compile 'com.qianwen:okhttp-utils:3.8.0'
+    //zxing
+    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
+    //spinner  support hint
+    compile 'com.github.ganfra:material-spinner:2.0.0'
+    //refresh layout
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    //compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+    //for proguard to okhttp
+    compile 'com.google.code.findbugs:jsr305:3.0.2'
+    //swipelayout
+    //compile 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.0'
+    testCompile 'junit:junit:4.12'
+}

@@ -1,0 +1,34 @@
+<resources>
+
+    <!-- Base application theme. -->
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <!-- -->
+
+        <item name="pageBarStyle">@style/PageBarStyle</item>
+    </style>
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+
+    <style name="PageBarStyle">
+        <item name="pb_backgroundColor">?attr/colorPrimary</item>
+        <item name="pb_textSize">20sp</item>
+        <item name="pb_backTextSize">16sp</item>
+        <item name="pb_textColor">#ffffff</item>
+    </style>
+
+</resources>
+

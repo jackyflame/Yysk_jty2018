@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <long name="last_dispatch" value="1506502899566" />
+    <long name="monitoring:start" value="1506501073105" />
+    <long name="monitoring:count" value="16" />
+    <string name="monitoring:value">3Wc9.2.56:CampaignTrackingReceiver is not registered, not exported or is disabled. Installation campaign tracking is not possible. See http://goo.gl/8Rd3yj for instructions.</string>
+    <long name="first_run" value="1506501073108" />
+</map>

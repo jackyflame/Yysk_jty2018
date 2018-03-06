@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PageBar">
+        <attr name="pb_title" format="string|reference"></attr>
+        <attr name="pb_back" format="boolean|reference"></attr>
+        <attr name="pb_backgroundColor" format="color|reference"></attr>
+        <attr name="pb_textSize" format="dimension|reference"></attr>
+        <attr name="pb_backTextSize" format="dimension|reference"></attr>
+        <attr name="pb_textColor" format="color|reference"></attr>
+    </declare-styleable>
+
+    <attr name="pageBarStyle" format="reference"></attr>
+</resources>

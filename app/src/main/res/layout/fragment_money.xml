@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <im.socks.yysk.PageBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pb_title="剩余钱币"
+        ></im.socks.yysk.PageBar>
+
+    <include layout="@layout/view_brand"></include>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <TextView
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="正在查询..."
+            android:gravity="center"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:id="@+id/contentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+            <TextView
+                android:id="@+id/moneyView"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:text="金币 200"
+                />
+            <TextView
+                android:id="@+id/integralView"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:text="积分 1000"
+                />
+        </LinearLayout>
+    </FrameLayout>
+
+
+
+
+</LinearLayout>

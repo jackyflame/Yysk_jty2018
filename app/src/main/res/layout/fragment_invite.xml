@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context="im.socks.yysk.InviteFragment">
+
+    <im.socks.yysk.PageBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pb_title="邀请">
+
+    </im.socks.yysk.PageBar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/inputInviteCodeView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="邀请码" />
+        <Button
+            android:id="@+id/submitView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="领取" />
+
+        <TextView
+            android:id="@+id/descView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="邀请码说明:填入自己的邀请码无效,只可填入其他人邀请码,输入好友分享的邀请码获得30积分" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <im.socks.yysk.PageBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pb_title="编辑规则"
+
+        ></im.socks.yysk.PageBar>
+
+    <EditText
+        android:id="@+id/aclView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="left|top"
+
+        />
+    <Button
+        android:id="@+id/saveView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="保存"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="在[直连国内网站]开启后，如果有国外网站打开不了，可以添加该域名或者ip地址，建议仅仅定义二级域名，如：facebook.com，而不是www.facebook.com。一行一个。"
+        />
+</LinearLayout>

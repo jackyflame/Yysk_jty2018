@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    app:srlEnableAutoLoadmore="false"
+    app:srlEnableHeaderTranslationContent="true"
+    app:srlEnableLoadmore="false">
+
+    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlClassicsSpinnerStyle="FixedBehind"
+        app:srlDrawableMarginRight="20dp"
+        app:srlEnableLastTime="false"
+        app:srlFinishDuration="500"
+        app:srlTextSizeTime="10dp"
+        app:srlTextSizeTitle="16sp"
+        app:srlTextTimeMarginTop="2dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        >
+
+        <TextView
+            android:id="@+id/errorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="获得数据失败"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/loginView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="请先登录"
+            android:visibility="gone"
+            />
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:padding="10dp"
+
+            >
+
+        </android.support.v7.widget.RecyclerView>
+    </FrameLayout>
+
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
