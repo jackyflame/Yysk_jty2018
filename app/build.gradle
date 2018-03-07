@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-//        release {
-//            keyAlias 'yysk'
-//            keyPassword '123456'
-//            storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/key.jks')
-//            storePassword '123456'
-//        }
-        release_dz {
+        //debug {
+        //    keyAlias 'yysk'
+        //    keyPassword '123456'
+        //    storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/key.jks')
+        //    storePassword '123456'
+        //}
+        release {
             keyAlias 'yysk_dz'
             keyPassword '123456'
             storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/dz_key.jks')
@@ -53,7 +53,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release_dz
+            signingConfig signingConfigs.release
         }
         debug {
             jniDebuggable true
