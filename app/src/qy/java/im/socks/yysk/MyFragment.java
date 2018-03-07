@@ -22,7 +22,7 @@ import im.socks.yysk.data.Session;
 import im.socks.yysk.util.XBean;
 
 
-public class MyFragmentDZ extends Fragment implements View.OnClickListener {
+public class MyFragment extends Fragment implements View.OnClickListener {
     //
     private View loginLayout;
     private View phoneNumberLayout;
@@ -129,7 +129,7 @@ public class MyFragmentDZ extends Fragment implements View.OnClickListener {
         int id = v.getId();
         if (id == R.id.loginView) {
             //or show_money
-            getFragmentStack().show(LoginFragmentDZ.newInstance(null), "login", false);
+            getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
         } else if (id == R.id.phoneNumberView) {
             //getFragmentStack().show(MoneyFragment.newInstance(), null, false);
         } else if (id == R.id.userIdView) {
@@ -271,8 +271,8 @@ public class MyFragmentDZ extends Fragment implements View.OnClickListener {
         app.getSessionManager().onLogout();
     }
 
-    public static MyFragmentDZ newInstance() {
-        MyFragmentDZ fragment = new MyFragmentDZ();
+    public static MyFragment newInstance() {
+        MyFragment fragment = new MyFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

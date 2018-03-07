@@ -18,7 +18,7 @@ import java.util.List;
  * Created by cole on 2017/11/21.
  */
 
-public class ProxyFragmentDZ extends Fragment {
+public class ProxyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class ProxyFragmentDZ extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
 
 
-        adapter.addFragment(ProxyListFragmentDZ.newInstance(false),"企业idc线路");
+        adapter.addFragment(ProxyListFragment.newInstance(false),"企业idc线路");
 //        adapter.addFragment(CustomProxyListFragment.newInstance(), "自定义");
 
         viewPager.setAdapter(adapter);
@@ -46,8 +46,8 @@ public class ProxyFragmentDZ extends Fragment {
         return view;
     }
 
-    public static ProxyFragmentDZ newInstance(){
-        ProxyFragmentDZ fragment = new ProxyFragmentDZ();
+    public static ProxyFragment newInstance(){
+        ProxyFragment fragment = new ProxyFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

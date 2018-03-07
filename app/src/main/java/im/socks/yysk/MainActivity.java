@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MainFragmentDZ mainFragment;
+    private MainFragment mainFragment;
 
 
     private FragmentStack fragmentStack = null;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentStack = new FragmentStack(this, getSupportFragmentManager());
 
-        mainFragment = MainFragmentDZ.newInstance();
+        mainFragment = MainFragment.newInstance();
 
         fragmentStack.show(mainFragment, "main", false);
 

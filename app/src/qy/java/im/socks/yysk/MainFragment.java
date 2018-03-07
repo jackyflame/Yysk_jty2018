@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
  * Created by cole on 2017/10/23.
  */
 
-public class MainFragmentDZ extends Fragment {
+public class MainFragment extends Fragment {
     /**
      * 主页
      */
@@ -67,12 +67,12 @@ public class MainFragmentDZ extends Fragment {
         Fragment currentFragment = null;
         if (id == R.id.navigation_home) {
             if (homeFragment == null) {
-                homeFragment = HomeFragmentDZ.newInstance();
+                homeFragment = HomeFragment.newInstance();
             }
             currentFragment = homeFragment;
         } else if (id == R.id.navigation_my) {
             if (myFragment == null) {
-                myFragment = MyFragmentDZ.newInstance();
+                myFragment = MyFragment.newInstance();
             }
 
             currentFragment = myFragment;
@@ -119,8 +119,8 @@ public class MainFragmentDZ extends Fragment {
     }
 
 
-    public static MainFragmentDZ newInstance() {
-        MainFragmentDZ fragment = new MainFragmentDZ();
+    public static MainFragment newInstance() {
+        MainFragment fragment = new MainFragment();
         fragment.setArguments(new Bundle());
         return fragment;
     }

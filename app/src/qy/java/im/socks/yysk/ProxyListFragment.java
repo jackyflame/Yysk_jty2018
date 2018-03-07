@@ -30,7 +30,7 @@ import im.socks.yysk.util.XBean;
  * Created by cole on 2017/10/24.
  */
 
-public class ProxyListFragmentDZ extends Fragment {
+public class ProxyListFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProxyAdapter adapter;
     private TextView errorView;
@@ -182,8 +182,8 @@ public class ProxyListFragmentDZ extends Fragment {
         }
     }
 
-    public static ProxyListFragmentDZ newInstance(boolean isReloadVpn) {
-        ProxyListFragmentDZ fragment = new ProxyListFragmentDZ();
+    public static ProxyListFragment newInstance(boolean isReloadVpn) {
+        ProxyListFragment fragment = new ProxyListFragment();
         Bundle args = new Bundle();
         args.putBoolean("is_reload_vpn", isReloadVpn);
         fragment.setArguments(args);

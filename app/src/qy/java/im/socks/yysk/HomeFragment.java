@@ -38,7 +38,7 @@ import im.socks.yysk.vpn.IYyskService;
 import im.socks.yysk.vpn.IYyskServiceListener;
 
 
-public class HomeFragmentDZ extends Fragment {
+public class HomeFragment extends Fragment {
 
     private TextView vpnButton;
 
@@ -167,7 +167,7 @@ public class HomeFragmentDZ extends Fragment {
         loginLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentStack().show(LoginFragmentDZ.newInstance(null), "login", false);
+                getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
             }
         });
     }
@@ -179,7 +179,7 @@ public class HomeFragmentDZ extends Fragment {
         proxyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentStack().show(ProxyFragmentDZ.newInstance(),null,false);
+                getFragmentStack().show(ProxyFragment.newInstance(),null,false);
             }
         });
 
@@ -544,8 +544,8 @@ public class HomeFragmentDZ extends Fragment {
     };
 
 
-    public static HomeFragmentDZ newInstance() {
-        HomeFragmentDZ fragment = new HomeFragmentDZ();
+    public static HomeFragment newInstance() {
+        HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

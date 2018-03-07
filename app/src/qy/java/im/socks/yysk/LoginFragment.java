@@ -25,7 +25,7 @@ import im.socks.yysk.util.XBean;
  * Time: 17:24
  */
 
-public class LoginFragmentDZ extends Fragment {
+public class LoginFragment extends Fragment {
 
     private EditText phoneNumberText;
     private EditText passwordText;
@@ -152,8 +152,8 @@ public class LoginFragmentDZ extends Fragment {
      * @param nextAction 表示登录成功后，执行什么操作，如果为null，表示不执行，现在仅仅支持null，show_money
      * @return
      */
-    public static LoginFragmentDZ newInstance(String nextAction) {
-        LoginFragmentDZ fragment = new LoginFragmentDZ();
+    public static LoginFragment newInstance(String nextAction) {
+        LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         args.putString("next_action", nextAction);
         fragment.setArguments(args);
