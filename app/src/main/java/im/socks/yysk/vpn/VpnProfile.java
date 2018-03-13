@@ -77,7 +77,7 @@ public class VpnProfile {
     /**
      * true表示国内的直接连接，不走代理，false表示全部都走代理
      */
-    public boolean bypass_china = false;
+    public boolean bypass_china = VpnConfig.BYPASS_CHINA_DEFAULT;
     /**
      * 获得自定义的访问过滤列表
      */

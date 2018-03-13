@@ -174,7 +174,7 @@ public class HomeFragment extends Fragment {
         });
 
         bypassChinaView = proxyLayout.findViewById(R.id.bypassChinaView);
-        bypassChinaView.setChecked(app.getSettings().getData().getBoolean("bypass_china", false));
+        bypassChinaView.setChecked(app.getSettings().getData().getBoolean("bypass_china", VpnConfig.BYPASS_CHINA_DEFAULT));
         bypassChinaView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

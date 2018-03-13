@@ -150,7 +150,6 @@ public class App {
     }
 
 
-
     protected void initJPush(){
 //        //jpush ，会启动一个service，在独立的进程
 //        JPushInterface.setDebugMode(DEBUG);
@@ -282,7 +281,6 @@ public class App {
         //主进程默认的名字为包名，其它进程的为packageName:xxxx
         return context.getPackageName().equals(getProcessName(context));
     }
-
 
     protected static String getProcessName(Context context) {
         int pid = android.os.Process.myPid();

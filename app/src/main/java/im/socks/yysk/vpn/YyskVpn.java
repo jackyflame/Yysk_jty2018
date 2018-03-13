@@ -234,7 +234,7 @@ public class YyskVpn {
         XBean cfg = app.getSettings().newData();
         List<String> acl = parseAcl(cfg.getString("acl", null));
         profile.acl = acl;
-        profile.bypass_china = cfg.getBoolean("bypass_china", false);
+        profile.bypass_china = cfg.getBoolean("bypass_china", VpnConfig.BYPASS_CHINA_DEFAULT);
 
         return profile;
     }

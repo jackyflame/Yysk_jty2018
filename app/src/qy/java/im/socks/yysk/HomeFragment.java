@@ -34,8 +34,10 @@ import im.socks.yysk.data.Proxy;
 import im.socks.yysk.data.Session;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
+import im.socks.yysk.vpn.ConfigUtils;
 import im.socks.yysk.vpn.IYyskService;
 import im.socks.yysk.vpn.IYyskServiceListener;
+import im.socks.yysk.vpn.VpnConfig;
 
 
 public class HomeFragment extends Fragment {
@@ -184,7 +186,7 @@ public class HomeFragment extends Fragment {
         });
 
         bypassChinaView = proxyLayout.findViewById(R.id.bypassChinaView);
-        bypassChinaView.setChecked(app.getSettings().getData().getBoolean("bypass_china", false));
+        bypassChinaView.setChecked(app.getSettings().getData().getBoolean("bypass_china", VpnConfig.BYPASS_CHINA_DEFAULT));
         bypassChinaView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

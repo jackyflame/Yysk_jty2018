@@ -24,6 +24,7 @@ import im.socks.yysk.Yysk;
 import im.socks.yysk.util.IOUtil;
 import im.socks.yysk.util.Json;
 import im.socks.yysk.util.XBean;
+import im.socks.yysk.vpn.VpnConfig;
 
 public class YyskApi {
 
@@ -78,7 +79,8 @@ public class YyskApi {
         this.deviceId = buildDeviceId();
 
         //这是默认的
-        this.defaultApiUrl = "http://api.tissotlab.com:8080/ApiServer/SsrHandle?Msg=";
+        //this.defaultApiUrl = "http://api.tissotlab.com:8080/ApiServer/SsrHandle?Msg=";
+        this.defaultApiUrl = VpnConfig.API_URL_DEFAULT;
 
 
         this.http = new Http(app);
