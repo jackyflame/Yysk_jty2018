@@ -85,6 +85,9 @@
                         android:id="@+id/meLayout"
                         layout="@layout/showme_dz" />
 
+                    <include android:id="@+id/statLayout"
+                        layout="@layout/showtime" />
+
                 </LinearLayout>
 
             </android.support.v4.widget.NestedScrollView>

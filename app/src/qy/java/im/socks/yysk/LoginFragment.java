@@ -80,11 +80,6 @@ public class LoginFragment extends Fragment {
             }
         });
 
-
-        //for test
-        //phoneNumberText.setText("18011353062");
-        //passwordText.setText("12345678a");
-
         return view;
     }
 
