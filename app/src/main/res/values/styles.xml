@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeBase" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
@@ -11,11 +11,11 @@
 
         <item name="pageBarStyle">@style/PageBarStyle</item>
     </style>
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
+    <style name="AppThemeBase.NoActionBar" parent="AppThemeBase">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="AppTheme.FullScreen" parent="AppTheme">
+    <style name="AppThemeBase.FullScreen" parent="AppThemeBase">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>

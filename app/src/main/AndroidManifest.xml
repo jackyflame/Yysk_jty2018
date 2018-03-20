@@ -27,15 +27,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppThemeBase">
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:theme="@style/AppThemeBase.NoActionBar">
         </activity>
 
 
@@ -55,6 +52,26 @@
             android:name="com.pingplusplus.android.PaymentActivity"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name=".SplashActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LoginActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeBase.NoActionBar" />
+
+        <activity
+            android:name=".RegisterActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeBase.NoActionBar"/>
 
         <!--&lt;!&ndash; 支付宝 &ndash;&gt;-->
         <!--<activity-->

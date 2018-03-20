@@ -18,6 +18,11 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
+    <color name="btn_orange">#ffa703</color>
+    <color name="btn_blue">#199ed8</color>
+
+    <color name="text_white">#FFFFFF</color>
+
     <!-- -->
     <color name="fragment_background">#FFFFFF</color>
 
