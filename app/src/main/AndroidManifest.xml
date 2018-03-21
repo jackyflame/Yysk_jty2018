@@ -56,7 +56,7 @@
         <activity
             android:name=".SplashActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:theme="@style/AppThemeBase.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

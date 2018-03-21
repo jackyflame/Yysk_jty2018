@@ -18,6 +18,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist);
+        //必需继承FragmentActivity,嵌套fragment只需要这行代码
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.rootLayout, RegisterFragment.newInstance())
+                .commitAllowingStateLoss();
     }
 
 }

@@ -289,7 +289,7 @@ public class HomeFragment extends Fragment {
             loginLayout.setVisibility(View.VISIBLE);
             phoneNumberLayout.setVisibility(View.GONE);
             //moneyLayout.setEnabled(true);
-            mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_LOGIN,1000);
+            //mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_LOGIN,1000);
         } else {
             phoneNumberView.setText(session.user.phoneNumber);
             loginLayout.setVisibility(View.GONE);

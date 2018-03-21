@@ -21,15 +21,13 @@ import java.lang.reflect.Field;
  */
 
 public class MainFragment extends Fragment {
-    /**
-     * 主页
-     */
-    private Fragment homeFragment;
-    /**
-     * 我的
-     */
-    private Fragment myFragment;
 
+    /**主页*/
+    private Fragment homeFragment;
+    /**我的*/
+    private Fragment myFragment;
+    /**我的*/
+    private Fragment buyFragment;
 
     private BottomNavigationView navigationView;
 
@@ -74,10 +72,14 @@ public class MainFragment extends Fragment {
             if (myFragment == null) {
                 myFragment = MyFragment.newInstance();
             }
-
             currentFragment = myFragment;
+        }else if(id == R.id.navigation_buy){
+            if (buyFragment == null) {
+                buyFragment = PayFragment.newInstance();
+            }
+            currentFragment = buyFragment;
         }
-        Fragment[] fragments = new Fragment[]{homeFragment, myFragment};
+        Fragment[] fragments = new Fragment[]{homeFragment, buyFragment, myFragment};
         for (Fragment f : fragments) {
             if (f != currentFragment && f != null) {
                 ft.hide(f);

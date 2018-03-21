@@ -17,8 +17,9 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/navigation_main_dz"
-        >
+        app:itemTextColor="@color/home_menu_color"
+        app:itemIconTint="@color/home_menu_color"
+        app:menu="@menu/navigation_main_dz">
 
     </android.support.design.widget.BottomNavigationView>
 

@@ -2,20 +2,22 @@ package im.socks.yysk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+
+import im.socks.yysk.util.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
     private MainFragment mainFragment;
-
-
     private FragmentStack fragmentStack = null;
-
-
     private final App app = Yysk.app;
-
     private boolean isCheckUpdate=true;
+    private Handler mHandler;
 
+    private static final int HANDLER_GOTO_LOGIN = 100002;
+    private static final int HANDLER_GOTO_REGIST = 100003;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,28 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentStack.show(mainFragment, "main", false);
 
+        mHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case HANDLER_GOTO_LOGIN:
+                        getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
+                        break;
+                    case HANDLER_GOTO_REGIST:
+                        getFragmentStack().show(RegisterFragment.newInstance(), "regist", false);
+                        break;
+                }
+            }
+        };
+
+        if(getIntent().hasExtra(Constants.EXTRA_JUMP)){
+            String action = getIntent().getStringExtra(Constants.EXTRA_JUMP);
+            if(Constants.EXTRA_JUMP_LOGIN.equals(action)){
+                mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_LOGIN,500);
+            }else if(Constants.EXTRA_JUMP_REGIST.equals(action)){
+                mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_REGIST,500);
+            }
+        }
 
     }
 

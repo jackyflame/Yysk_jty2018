@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import im.socks.yysk.util.Constants;
+
 /**
  * Created by Android Studio.
  * ProjectName: Yysk_jty2018
@@ -57,10 +59,14 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_regist:
-                startActivity(new Intent(this,RegisterActivity.class));
+                Intent intent = new Intent(this,MainActivity.class);
+                intent.putExtra(Constants.EXTRA_JUMP,Constants.EXTRA_JUMP_REGIST);
+                startActivity(intent);
                 break;
             case R.id.btn_login:
-                startActivity(new Intent(this,LoginActivity.class));
+                intent = new Intent(this,MainActivity.class);
+                intent.putExtra(Constants.EXTRA_JUMP,Constants.EXTRA_JUMP_LOGIN);
+                startActivity(intent);
                 break;
         }
     }

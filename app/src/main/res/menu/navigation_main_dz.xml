@@ -6,6 +6,10 @@
         android:icon="@drawable/home_24dp"
         android:title="首页" />
     <item
+        android:id="@+id/navigation_buy"
+        android:icon="@drawable/pay_24dp"
+        android:title="购买" />
+    <item
         android:id="@+id/navigation_my"
         android:icon="@drawable/my"
         android:title="我的" />
