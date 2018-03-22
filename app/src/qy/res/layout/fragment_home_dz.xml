@@ -41,7 +41,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f3f3f3">
+                android:background="@color/primary">
 
                 <Button
                     android:id="@+id/vpnButton"
@@ -57,7 +57,7 @@
 
                 <TextView
                     android:id="@+id/txv_endtime"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/vpnButton"
@@ -77,16 +77,86 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <include
-                        android:id="@+id/proxyLayout"
-                        layout="@layout/showproxy_dz" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_height_ml"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/padding_xl"
+                        android:paddingRight="@dimen/padding_xl"
+                        android:orientation="horizontal">
 
-                    <include
-                        android:id="@+id/meLayout"
-                        layout="@layout/showme_dz" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="可使用时长："/>
 
-                    <include android:id="@+id/statLayout"
-                        layout="@layout/showtime" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="@dimen/padding_xl"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            tools:text="24天12小时39分"/>
+
+                    </LinearLayout>
+
+                    <include layout="@layout/line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_height_ml"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/padding_xl"
+                        android:paddingRight="@dimen/padding_xl"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="加速线路选择："/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/arrow_right"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            tools:text="24天12小时39分"/>
+
+                    </LinearLayout>
+
+                    <include layout="@layout/line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_height_ml"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/padding_xl"
+                        android:paddingRight="@dimen/padding_xl"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="邀请有奖："/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/arrow_right"
+                            android:gravity="center_vertical"
+                            tools:text="24天12小时39分"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
