@@ -30,5 +30,33 @@
         <item name="pb_textColor">#ffffff</item>
     </style>
 
+    <style name="my_row_lin">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="my_row_item_rl">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="my_row_item_txv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/padding_l</item>
+        <item name="android:paddingBottom">@dimen/padding_l</item>
+        <item name="android:drawablePadding">@dimen/padding_m</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_ml</item>
+    </style>
+
+    <style name="my_row_item" parent="my_row_item_txv">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
 </resources>
 

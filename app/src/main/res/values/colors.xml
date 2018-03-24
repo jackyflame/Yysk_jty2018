@@ -24,6 +24,7 @@
     <color name="btn_blue">#199ed8</color>
 
     <color name="text_white">#FFFFFF</color>
+    <color name="text_red">#FF0000</color>
 
     <!-- -->
     <color name="fragment_background">#FFFFFF</color>

@@ -13,7 +13,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,25 +26,16 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private View loginLayout;
     private View phoneNumberLayout;
     private TextView phoneNumberView;
-    private TextView loginView;
-    private TextView siteView;
+    private TextView txv_packge_title;
     //
-    private TextView feedbackView;
-    private TextView versionView;
-    private View versionLayout;
-
-
+    private View logoutView;
     //
-    private Button logoutView;
-    //
-    //private boolean isViewDestroyed=false;
     private EventBus.IListener eventListener = new EventBus.IListener() {
         @Override
         public void onEvent(String name, Object data) throws Exception {
             if (Yysk.EVENT_LOGIN.equals(name) || Yysk.EVENT_LOGOUT.equals(name)) {
                 syncLoginStatus();
             }
-
         }
     };
 
@@ -53,35 +43,17 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private final AppDZ app = Yysk.app;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_dz, container, false);
         loginLayout = view.findViewById(R.id.loginLayout);
         phoneNumberLayout = view.findViewById(R.id.phoneNumberLayout);
-
-        loginView = view.findViewById(R.id.loginView);
+        txv_packge_title = view.findViewById(R.id.txv_packge_title);
         phoneNumberView = view.findViewById(R.id.phoneNumberView);
-        siteView = view.findViewById(R.id.siteView);
-        //
-        feedbackView = view.findViewById(R.id.feedbackView);
-        //contactView = view.findViewById(R.id.contactView);
-        versionView = view.findViewById(R.id.versionView);
-        versionLayout = view.findViewById(R.id.versionLayout);
-
-        //qqView = view.findViewById(R.id.qqView);
+        loginLayout.setOnClickListener(this);
+        phoneNumberView.setOnClickListener(this);
         //
         logoutView = view.findViewById(R.id.logoutView);
-        //
-        loginView.setOnClickListener(this);
-        phoneNumberView.setOnClickListener(this);
-        siteView.setOnClickListener(this);
-        //
-        feedbackView.setOnClickListener(this);
-        versionLayout.setOnClickListener(this);
-        //
         logoutView.setOnClickListener(this);
-
-        versionView.setText(getVersion());
 
         return view;
     }
@@ -89,13 +61,12 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adjustIconSize(loginView);
-        adjustIconSize(phoneNumberView);
-        adjustIconSize(siteView);
+        //adjustIconSize(loginView);
+        //adjustIconSize(phoneNumberView);
+        //adjustIconSize(siteView);
         //
-        adjustIconSize(feedbackView);
         //adjustIconSize(contactView);
-        adjustIconSize((TextView) view.findViewById(R.id.versionLabelView));
+        //adjustIconSize((TextView) view.findViewById(R.id.versionLabelView));
     }
 
     private void adjustIconSize(TextView view) {
@@ -127,7 +98,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.loginView) {
+        if (id == R.id.loginLayout) {
             //or show_money
             getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
         } else if (id == R.id.phoneNumberView) {
@@ -204,11 +175,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private void syncLoginStatus() {
         Session session = app.getSessionManager().getSession();
         if (!session.isLogin()) {
-            loginLayout.setVisibility(View.VISIBLE);
             phoneNumberLayout.setVisibility(View.GONE);
             logoutView.setEnabled(false);
         } else {
-            loginLayout.setVisibility(View.GONE);
             phoneNumberLayout.setVisibility(View.VISIBLE);
             phoneNumberView.setText(session.user.phoneNumber);
             logoutView.setEnabled(true);

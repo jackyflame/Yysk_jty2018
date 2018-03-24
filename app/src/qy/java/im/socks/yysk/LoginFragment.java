@@ -88,6 +88,13 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        if(app.getSessionManager().getSession().user != null){
+            String phoneNum = app.getSessionManager().getSession().user.phoneNumber;
+            if(phoneNum != null){
+                phoneNumberText.setText(phoneNum);
+            }
+        }
+
         return view;
     }
 
