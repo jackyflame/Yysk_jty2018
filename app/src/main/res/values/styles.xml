@@ -58,5 +58,18 @@
         <item name="android:layout_weight">1</item>
     </style>
 
+    <style name="buy_tab">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/item_height_l</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingTop">@dimen/padding_l</item>
+        <item name="android:paddingBottom">@dimen/padding_l</item>
+        <item name="android:background">@drawable/buy_tab_selector</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_ml</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
 </resources>
 

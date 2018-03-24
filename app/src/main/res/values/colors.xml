@@ -19,9 +19,11 @@
     <color name="divider">#BDBDBD</color>
     <color name="blue">#1296db</color>
     <color name="black">#212121</color>
+    <color name="gray">#ABABAB</color>
 
     <color name="btn_orange">#ffa703</color>
     <color name="btn_blue">#199ed8</color>
+    <color name="btn_blue_light">#87CEFA</color>
 
     <color name="text_white">#FFFFFF</color>
     <color name="text_red">#FF0000</color>
