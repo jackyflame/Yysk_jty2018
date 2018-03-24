@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -42,7 +43,8 @@ import im.socks.yysk.vpn.VpnConfig;
 
 public class HomeFragment extends Fragment {
 
-    private TextView vpnButton;
+    private RelativeLayout vpnButton;
+    private TextView txv_vpn_statu;
 
     //proxy part
     private View proxyView;
@@ -145,6 +147,7 @@ public class HomeFragment extends Fragment {
 
     private void initConnectLayout(View view) {
         vpnButton = view.findViewById(R.id.vpnButton);
+        txv_vpn_statu = view.findViewById(R.id.txv_vpn_statu);
         vpnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,27 +319,27 @@ public class HomeFragment extends Fragment {
         }
         this.vpnStatus = status;
         if (status == Yysk.STATUS_INIT || status == Yysk.STATUS_STOPPED) {
-            vpnButton.setText("连接");
+            txv_vpn_statu.setText("您还未连接");
             vpnButton.setEnabled(true);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         } else if (status == Yysk.STATUS_CONNECTING) {
-            vpnButton.setText("连接中...");
+            txv_vpn_statu.setText("连接中...");
             vpnButton.setEnabled(false);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         } else if (status == Yysk.STATUS_STOPPING) {
-            vpnButton.setText("停止中...");
+            txv_vpn_statu.setText("停止中...");
             vpnButton.setEnabled(false);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
         } else if (status == Yysk.STATUS_CONNECTED) {
             showVPNAlert("VPN 开启");
-            vpnButton.setText("停止");
+            txv_vpn_statu.setText("已连接成功");
             vpnButton.setEnabled(true);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
         } else {
             //
             showVPNAlert("VPN 已断开");
             //不可能的
-            vpnButton.setText("未知:" + status);
+            txv_vpn_statu.setText("未知:" + status);
             vpnButton.setEnabled(true);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         }

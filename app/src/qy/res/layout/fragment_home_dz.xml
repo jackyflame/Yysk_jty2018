@@ -35,28 +35,53 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:background="@color/primary">
 
-                <Button
-                    android:id="@+id/vpnButton"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                <LinearLayout
+                    android:id="@+id/lin_vpn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:padding="@dimen/padding_m"
+                    android:background="@mipmap/bg_switch_white"
+                    android:layout_marginTop="20dp">
+
+                    <RelativeLayout
+                        android:id="@+id/vpnButton"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:gravity="center"
+                        android:background="@drawable/vpn_button_off">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_button_off"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txv_vpn_statu"
+                    android:layout_below="@+id/lin_vpn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/text_white"
+                    android:text="您还未连接"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/vpn_button_off"
-                    android:text=""
-                    android:textColor="@android:color/white"
-                    android:textSize="16dp" />
+                    android:layout_marginTop="10dp"/>
 
-            </RelativeLayout>
-
+            </LinearLayout>
 
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -82,7 +107,9 @@
                             android:layout_weight="1"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"
-                            android:text="可使用时长："/>
+                            android:drawableLeft="@mipmap/ic_vilable_time"
+                            android:drawablePadding="@dimen/padding_m"
+                            android:text="可使用时长"/>
 
                         <TextView
                             android:id="@+id/txv_endtime"
@@ -112,15 +139,25 @@
                             android:gravity="center_vertical"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"
-                            android:text="加速线路选择："/>
+                            android:drawableLeft="@mipmap/ic_vpn_lines"
+                            android:drawablePadding="@dimen/padding_m"
+                            android:text="加速线路选择"/>
 
                         <TextView
+                            android:id="@+id/txv_line_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="26dp"
+                            android:paddingLeft="@dimen/padding_m"
+                            android:paddingRight="@dimen/padding_m"
+                            android:gravity="center"
+                            android:textColor="@color/blue"
+                            android:background="@drawable/btn_blue_solid_border"
+                            tools:text="日本线路"/>
+
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/arrow_right"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            tools:text="24天12小时39分"/>
+                            android:src="@drawable/arrow_right"/>
 
                     </LinearLayout>
 
@@ -139,16 +176,18 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="邀请有奖："/>
+                            android:drawableLeft="@mipmap/ic_share"
+                            android:drawablePadding="@dimen/padding_m"
+                            android:text="邀请有奖"/>
 
-                        <TextView
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/arrow_right"
-                            android:gravity="center_vertical"
-                            tools:text="24天12小时39分"/>
+                            android:src="@drawable/arrow_right"/>
 
                     </LinearLayout>
+
+                    <include layout="@layout/line" />
 
                 </LinearLayout>
 
