@@ -47,12 +47,6 @@
             </intent-filter>
         </service>
 
-        <!-- begin ping++ -->
-        <activity
-            android:name="com.pingplusplus.android.PaymentActivity"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name=".SplashActivity"
             android:launchMode="singleTop"
@@ -73,25 +67,31 @@
             android:launchMode="singleTop"
             android:theme="@style/AppThemeBase.NoActionBar"/>
 
-        <!--&lt;!&ndash; 支付宝 &ndash;&gt;-->
-        <!--<activity-->
-            <!--android:name="com.alipay.sdk.app.H5PayActivity"-->
-            <!--android:configChanges="orientation|keyboardHidden|navigation|screenSize"-->
-            <!--android:exported="false"-->
-            <!--android:screenOrientation="behind" >-->
-        <!--</activity>-->
-        <!--<activity-->
-            <!--android:name="com.alipay.sdk.auth.AuthActivity"-->
-            <!--android:configChanges="orientation|keyboardHidden|navigation|screenSize"-->
-            <!--android:exported="false"-->
-            <!--android:screenOrientation="behind" >-->
-        <!--</activity>-->
+        <!-- begin ping++ -->
+        <activity
+            android:name="com.pingplusplus.android.PaymentActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--&lt;!&ndash; 微信支付 &ndash;&gt;-->
-        <!--<activity-alias-->
-            <!--android:name=".wxapi.WXPayEntryActivity"-->
-            <!--android:exported="true"-->
-            <!--android:targetActivity="com.pingplusplus.android.PaymentActivity" />-->
+        <!-- 支付宝 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+
+        <!-- 微信支付 -->
+        <activity-alias
+            android:name="im.socks.yyskjtyqy.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
 
         <!-- end ping++ -->
 

@@ -10,8 +10,7 @@
     <im.socks.yysk.PageBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:pb_title="我的"
-        ></im.socks.yysk.PageBar>
+        app:pb_title="我的"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -51,9 +50,7 @@
                        android:gravity="center_vertical"
                        android:drawablePadding="10dp"
                        android:drawableLeft="@drawable/account"
-                       android:drawableRight="@drawable/arrow_right"
-
-                       />
+                       android:drawableRight="@drawable/arrow_right"/>
                    <View android:layout_alignParentBottom="true" android:layout_width="match_parent" android:layout_height="1dp" android:background="#f3f3f3"></View>
 
                </LinearLayout>
@@ -167,7 +164,5 @@
        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-
 
 </LinearLayout>

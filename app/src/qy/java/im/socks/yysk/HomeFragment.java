@@ -83,15 +83,15 @@ public class HomeFragment extends Fragment {
         @Override
         public void onEvent(String name, Object data) throws Exception {
             if (Yysk.EVENT_LOGIN.equals(name)) {
-                updateMe(false);
-                checkVpnUpdate(false);
+                //updateMe(false);
+                //checkVpnUpdate(false);
             } else if (Yysk.EVENT_LOGOUT.equals(name)) {
-                updateMe(false);
+                //updateMe(false);
             } else if (Yysk.EVENT_PROXY_CHANGED.equals(name)) {
-                updateProxy((Proxy) data);
+                //updateProxy((Proxy) data);
             }else if(Yysk.EVENT_PAY_SUCCESS.equals(name)||Yysk.EVENT_PAY_FAIL.equals(name)){
-                //充值成功或者失败都更新一次
-                updateMe(false);
+                ////充值成功或者失败都更新一次
+                //updateMe(false);
             }
         }
     };
@@ -288,19 +288,19 @@ public class HomeFragment extends Fragment {
 
     private void updateMe(final boolean isManual) {
         Session session = app.getSessionManager().getSession();
-        if (!session.isLogin()) {
-            loginLayout.setVisibility(View.VISIBLE);
-            phoneNumberLayout.setVisibility(View.GONE);
-            //moneyLayout.setEnabled(true);
-            //mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_LOGIN,1000);
-        } else {
-            phoneNumberView.setText(session.user.phoneNumber);
-            loginLayout.setVisibility(View.GONE);
-            phoneNumberLayout.setVisibility(View.VISIBLE);
-            if(!TextUtils.isEmpty(session.user.entername)){
-                pageBar.setPbTitle(session.user.entername);
-            }
-        }
+//        if (!session.isLogin()) {
+//            loginLayout.setVisibility(View.VISIBLE);
+//            phoneNumberLayout.setVisibility(View.GONE);
+//            //moneyLayout.setEnabled(true);
+//            //mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_LOGIN,1000);
+//        } else {
+//            phoneNumberView.setText(session.user.phoneNumber);
+//            loginLayout.setVisibility(View.GONE);
+//            phoneNumberLayout.setVisibility(View.VISIBLE);
+//            if(!TextUtils.isEmpty(session.user.entername)){
+//                pageBar.setPbTitle(session.user.entername);
+//            }
+//        }
     }
 
     private void updateVpnStatus() {

@@ -69,12 +69,12 @@ android {
     }
     productFlavors {
         gr {
-            applicationId "im.socks.yyskjty.gr"
+            applicationId "im.socks.yyskjtygr"
             versionCode 9
             versionName "1.3.5"
         }
         qy {
-            applicationId "im.socks.yyskjty.qy"
+            applicationId "im.socks.yyskjtyqy"
             versionCode 9
             versionName "1.3.5"
         }
