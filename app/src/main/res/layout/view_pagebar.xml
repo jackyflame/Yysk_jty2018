@@ -9,18 +9,17 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
+        android:drawableLeft="@mipmap/ic_back"
+        android:gravity="center_vertical"
         android:text="返回"
-        android:visibility="gone"
+        android:visibility="gone"/>
 
-        />
     <TextView
         android:id="@+id/titleView"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="雨燕梭客"
-
-        />
+        android:text="雨燕梭客"/>
 
     <TextView
         android:id="@+id/actionView"
@@ -29,8 +28,6 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:text="操作"
-        android:visibility="gone"
-
-        />
+        android:visibility="gone"/>
 
 </merge>

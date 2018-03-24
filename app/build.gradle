@@ -14,6 +14,12 @@ android {
             storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/dz_key.jks')
             storePassword '123456'
         }
+        release {
+            keyAlias 'yysk_jty2018_qy'
+            keyPassword '666666'
+            storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/dz_key.jks')
+            storePassword '666666'
+        }
     }
     compileSdkVersion 26
     buildToolsVersion '26.0.2'

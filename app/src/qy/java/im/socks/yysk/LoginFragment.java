@@ -29,7 +29,7 @@ public class LoginFragment extends Fragment {
 
     private EditText phoneNumberText;
     private EditText passwordText;
-
+    private PageBar title_bar;
 
     private final AppDZ app = Yysk.app;
 
@@ -53,6 +53,14 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login_dz, container, false);
+
+        title_bar = view.findViewById(R.id.title_bar);
+        title_bar.setBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentStack().back();
+            }
+        });
         View registerButton = view.findViewById(R.id.registerButton);
         View forgetPasswordButton = view.findViewById(R.id.forgetPasswordButton);
 

@@ -55,15 +55,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/txv_endtime"
-                    android:visibility="visible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vpnButton"
-                    android:layout_centerHorizontal="true"
-                    tools:text="到期时间：2018-01-01 14:59"/>
-
             </RelativeLayout>
 
 
@@ -94,6 +85,7 @@
                             android:text="可使用时长："/>
 
                         <TextView
+                            android:id="@+id/txv_endtime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingRight="@dimen/padding_xl"

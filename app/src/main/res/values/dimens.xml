@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="padding_m">8dp</dimen>
     <dimen name="padding_l">12dp</dimen>
     <dimen name="padding_xl">24dp</dimen>
     <dimen name="padding_xxl">32dp</dimen>
@@ -12,6 +13,8 @@
     <dimen name="item_height_l">45dp</dimen>
     <dimen name="item_height_xl">54dp</dimen>
 
+    <dimen name="text_xxl">22sp</dimen>
+    <dimen name="text_xl">20sp</dimen>
     <dimen name="text_l">18sp</dimen>
     <dimen name="text_ml">16sp</dimen>
     <dimen name="text_m">14sp</dimen>

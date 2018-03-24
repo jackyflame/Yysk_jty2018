@@ -113,17 +113,17 @@ public class HomeFragment extends Fragment {
 
         initConnectLayout(view);
 
-        initProxyLayout(view);
+//        initProxyLayout(view);
+//
+//        initMe(view);
+//
+//        initRefreshLayout(view);
+//
+//        updateVpnStatus();
+//
+//        updateMe(false);
 
-        initMe(view);
-
-        initRefreshLayout(view);
-
-        updateVpnStatus();
-
-        updateMe(false);
-
-        checkVpnUpdate(false);
+//        checkVpnUpdate(false);
 
         return view;
     }
