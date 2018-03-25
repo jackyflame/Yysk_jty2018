@@ -58,14 +58,9 @@
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".InviteActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppThemeBase.NoActionBar" />
-
-        <activity
-            android:name=".RegisterActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeBase.NoActionBar"/>
 
         <!-- begin ping++ -->
         <activity

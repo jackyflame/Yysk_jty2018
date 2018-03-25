@@ -27,6 +27,7 @@
     <color name="btn_orange">#ffa703</color>
     <color name="btn_blue">#199ed8</color>
     <color name="btn_blue_light">#87CEFA</color>
+    <color name="btn_red">#FF0000</color>
 
     <color name="text_white">@color/white</color>
     <color name="text_red">#FF0000</color>

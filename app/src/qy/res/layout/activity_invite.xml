@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <im.socks.yysk.PageBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pb_back="true"
+        app:pb_title="邀请有奖"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/padding_l"
+        android:layout_marginTop="@dimen/padding_l"
+        android:drawablePadding="@dimen/padding_m"
+        android:textSize="@dimen/text_l"
+        android:textColor="@color/black"
+        android:text="邀请有奖"
+        android:drawableLeft="@mipmap/ic_share"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="@dimen/padding_m"
+        android:textSize="@dimen/text_m"
+        android:text="邀请注册和首充成功可获得更加优质的加速体验!"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_l"
+        android:padding="@dimen/padding_l"
+        android:gravity="center"
+        android:background="@drawable/bg_white_solid_gray_border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_m"
+            android:paddingBottom="@dimen/padding_m"
+            android:paddingLeft="@dimen/padding_xl"
+            android:paddingRight="@dimen/padding_xl"
+            android:textColor="@color/text_white"
+            android:background="@drawable/btn_blue_shap_cnr_5"
+            android:text="注册奖励"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_m"
+            android:textSize="@dimen/text_m"
+            android:gravity="center"
+            android:text="@string/invite_regist_tips"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_l"
+        android:padding="@dimen/padding_l"
+        android:gravity="center"
+        android:background="@drawable/bg_white_solid_gray_border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_m"
+            android:paddingBottom="@dimen/padding_m"
+            android:paddingLeft="@dimen/padding_xl"
+            android:paddingRight="@dimen/padding_xl"
+            android:textColor="@color/text_white"
+            android:background="@drawable/btn_blue_shap_cnr_5"
+            android:text="首冲奖励"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_m"
+            android:gravity="center"
+            android:textSize="@dimen/text_m"
+            android:text="@string/invite_pay_tips"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_xxxl"
+            android:layout_marginRight="@dimen/padding_xxxl"
+            android:layout_marginBottom="@dimen/padding_xl"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/text_ml"
+            android:background="@color/btn_red"
+            android:text="果断邀请"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

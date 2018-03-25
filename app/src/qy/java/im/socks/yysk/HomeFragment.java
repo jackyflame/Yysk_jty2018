@@ -3,6 +3,7 @@ package im.socks.yysk;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -104,6 +105,13 @@ public class HomeFragment extends Fragment {
         initConnectLayout(view);
 
         initProxyLayout(view);
+
+        view.findViewById(R.id.lin_invite).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),InviteActivity.class));
+            }
+        });
 
 //        initMe(view);
 //
