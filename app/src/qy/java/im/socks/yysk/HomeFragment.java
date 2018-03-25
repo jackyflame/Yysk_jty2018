@@ -15,6 +15,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,7 +39,7 @@ import im.socks.yysk.vpn.IYyskServiceListener;
 
 public class HomeFragment extends Fragment {
 
-    private RelativeLayout vpnButton;
+    private ImageButton vpnButton;
     private TextView txv_vpn_statu;
 
     //proxy part
@@ -269,19 +271,23 @@ public class HomeFragment extends Fragment {
         if (status == Yysk.STATUS_INIT || status == Yysk.STATUS_STOPPED) {
             txv_vpn_statu.setText("您还未连接");
             vpnButton.setEnabled(true);
+            vpnButton.setImageResource(R.drawable.ic_button_off);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         } else if (status == Yysk.STATUS_CONNECTING) {
             txv_vpn_statu.setText("连接中...");
             vpnButton.setEnabled(false);
+            vpnButton.setImageResource(R.drawable.ic_button_off);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         } else if (status == Yysk.STATUS_STOPPING) {
             txv_vpn_statu.setText("停止中...");
             vpnButton.setEnabled(false);
+            vpnButton.setImageResource(R.drawable.ic_button_on);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
         } else if (status == Yysk.STATUS_CONNECTED) {
             showVPNAlert("VPN 开启");
             txv_vpn_statu.setText("已连接成功");
             vpnButton.setEnabled(true);
+            vpnButton.setImageResource(R.drawable.ic_button_on);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
         } else {
             //
@@ -289,6 +295,7 @@ public class HomeFragment extends Fragment {
             //不可能的
             txv_vpn_statu.setText("未知:" + status);
             vpnButton.setEnabled(true);
+            vpnButton.setImageResource(R.drawable.ic_button_off);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         }
     }

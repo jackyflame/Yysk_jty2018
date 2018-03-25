@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,7 +75,7 @@ public class ProxyListFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         adapter = new ProxyAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
@@ -155,19 +157,21 @@ public class ProxyListFragment extends Fragment {
     }
 
     private void displayProxyList(List<XBean> result){
+        //测试国家
+        if(result != null && result.size() > 0){
+            result.get(0).set("title",true);
+        }
+
         if (result != null && adapter != null) {
             adapter.setItems(result);
             refreshLayout.finishRefresh(true);
             errorView.setVisibility(View.GONE);
             loginView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-
             Toast.makeText(getContext(),"为了获得准确的ping时间，建议先断开vpn连接",Toast.LENGTH_LONG).show();
-
         } else {
             //adapter.setItems();
             refreshLayout.finishRefresh(true);
-
             errorView.setText("获得代理列表失败");
             errorView.setVisibility(View.VISIBLE);
             loginView.setVisibility(View.GONE);
@@ -191,6 +195,7 @@ public class ProxyListFragment extends Fragment {
     }
 
     private class ProxyAdapter extends RecyclerView.Adapter<ProxyHolder> {
+
         private List<XBean> items = new ArrayList<>();
         private Context context;
         private Ping ping=null;
@@ -216,7 +221,7 @@ public class ProxyListFragment extends Fragment {
 
         @Override
         public ProxyHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_proxy_list_proxy, viewGroup, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.item_proxy_list_proxy_dz, viewGroup, false);
             return new ProxyHolder(view);
         }
 
@@ -335,10 +340,15 @@ public class ProxyListFragment extends Fragment {
     }
 
     private class ProxyHolder extends RecyclerView.ViewHolder {
+
         private XBean data;
 
-        private TextView nameView;
-        private TextView pingTimeView;
+        private LinearLayout lin_title;
+        private ImageView img_nation;
+        private TextView txv_nation;
+
+        private TextView txv_name;
+        private TextView txv_speed;
 
         public ProxyHolder(View itemView) {
             super(itemView);
@@ -347,8 +357,13 @@ public class ProxyListFragment extends Fragment {
         }
 
         private void init() {
-            nameView = itemView.findViewById(R.id.nameView);
-            pingTimeView = itemView.findViewById(R.id.pingTimeView);
+
+            lin_title = itemView.findViewById(R.id.lin_title);
+            img_nation = itemView.findViewById(R.id.img_nation);
+            txv_nation = itemView.findViewById(R.id.txv_nation);
+
+            txv_name = itemView.findViewById(R.id.txv_name);
+            txv_speed = itemView.findViewById(R.id.txv_speed);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -360,9 +375,16 @@ public class ProxyListFragment extends Fragment {
 
         public void bind(XBean data) {
             this.data = data;
-            nameView.setText(data.getString("name"));
-            pingTimeView.setText(data.getString("ping_time","正在测试"));
 
+            if(data.getBoolean("title",false) == true){
+                lin_title.setVisibility(View.VISIBLE);
+                //img_nation
+                //txv_nation.setText("国家");
+            }else{
+                lin_title.setVisibility(View.GONE);
+            }
+            txv_name.setText(data.getString("name"));
+            txv_speed.setText(data.getString("ping_time","正在测试"));
         }
 
         private void onSelect() {

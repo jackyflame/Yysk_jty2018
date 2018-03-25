@@ -20,7 +20,7 @@
     <dimen name="text_xl">20sp</dimen>
     <dimen name="text_l">18sp</dimen>
     <dimen name="text_ml">16sp</dimen>
-    <dimen name="text_m">14sp</dimen>
+    <dimen name="text_m">13sp</dimen>
     <dimen name="text_s">8sp</dimen>
 
 </resources>

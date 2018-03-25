@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_l"
+    android:paddingBottom="@dimen/padding_l"
+    android:paddingLeft="@dimen/padding_xl"
+    android:paddingRight="@dimen/padding_xl"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lin_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_l"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_nation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_nationflag_eng"/>
+
+        <TextView
+            android:id="@+id/txv_nation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:paddingLeft="@dimen/padding_m"
+            tools:text="英国"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/padding_l"
+            android:textSize="@dimen/text_ml"
+            android:drawableLeft="@mipmap/ic_local"
+            android:text="xxxx"/>
+
+        <TextView
+            android:id="@+id/txv_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/ic_signal"
+            android:textSize="@dimen/text_m"
+            tools:text="20ms"/>
+
+        <TextView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="@dimen/padding_l"
+            android:background="@drawable/vpn_line_radio_selector"/>
+
+    </LinearLayout>
+
+</LinearLayout>
