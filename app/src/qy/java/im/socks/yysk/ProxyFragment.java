@@ -22,14 +22,13 @@ public class ProxyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_proxy_main,container,false);
+
+        View view = inflater.inflate(R.layout.fragment_proxy_main_dz,container,false);
         ViewPager viewPager = view.findViewById(R.id.pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
 
-
         adapter.addFragment(ProxyListFragment.newInstance(false),"企业idc线路");
-//        adapter.addFragment(CustomProxyListFragment.newInstance(), "自定义");
-
+        //adapter.addFragment(CustomProxyListFragment.newInstance(), "自定义");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);

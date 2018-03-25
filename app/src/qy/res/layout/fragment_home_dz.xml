@@ -95,7 +95,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/item_height_ml"
+                        android:layout_height="@dimen/item_height_l"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/padding_xl"
                         android:paddingRight="@dimen/padding_xl"
@@ -103,12 +103,11 @@
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
                             android:drawableLeft="@mipmap/ic_vilable_time"
                             android:drawablePadding="@dimen/padding_m"
+                            android:gravity="center_vertical"
                             android:text="可使用时长"/>
 
                         <TextView
@@ -125,8 +124,9 @@
                     <include layout="@layout/line" />
 
                     <LinearLayout
+                        android:id="@+id/lin_vpn_lines"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/item_height_ml"
+                        android:layout_height="@dimen/item_height_l"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/padding_xl"
                         android:paddingRight="@dimen/padding_xl"
@@ -134,11 +134,9 @@
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
                             android:drawableLeft="@mipmap/ic_vpn_lines"
                             android:drawablePadding="@dimen/padding_m"
                             android:text="加速线路选择"/>
@@ -165,7 +163,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/item_height_ml"
+                        android:layout_height="@dimen/item_height_l"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/padding_xl"
                         android:paddingRight="@dimen/padding_xl"
@@ -173,7 +171,7 @@
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:drawableLeft="@mipmap/ic_share"

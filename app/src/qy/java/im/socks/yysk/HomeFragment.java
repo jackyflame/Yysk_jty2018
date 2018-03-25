@@ -1,6 +1,5 @@
 package im.socks.yysk;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
@@ -16,9 +15,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -35,11 +32,8 @@ import im.socks.yysk.data.Proxy;
 import im.socks.yysk.data.Session;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
-import im.socks.yysk.vpn.ConfigUtils;
 import im.socks.yysk.vpn.IYyskService;
 import im.socks.yysk.vpn.IYyskServiceListener;
-import im.socks.yysk.vpn.VpnConfig;
-
 
 public class HomeFragment extends Fragment {
 
@@ -47,15 +41,10 @@ public class HomeFragment extends Fragment {
     private TextView txv_vpn_statu;
 
     //proxy part
-    private View proxyView;
-    private TextView proxyNameView;
-    private TextView txv_vpn_update;
+    private View lin_vpn_lines;
+    private TextView txv_line_name;
     private TextView txv_endtime;
-    private Switch bypassChinaView;
-    private View editAclView;
-    private View testSpeedView;
     private boolean isTimeEnd = false;
-
 
     //me part
     private TextView phoneNumberView;
@@ -64,12 +53,9 @@ public class HomeFragment extends Fragment {
     private PageBar pageBar;
 
     //private long startTime;
-
     private final AppDZ app = Yysk.app;
 
-    /**
-     * true表示需要登录才可以连接，获得代理列表
-     */
+    /**true表示需要登录才可以连接，获得代理列表*/
     //private final boolean requireLogin = false;
 
     private Handler mHandler;
@@ -115,8 +101,8 @@ public class HomeFragment extends Fragment {
 
         initConnectLayout(view);
 
-//        initProxyLayout(view);
-//
+        initProxyLayout(view);
+
 //        initMe(view);
 //
 //        initRefreshLayout(view);
@@ -178,53 +164,15 @@ public class HomeFragment extends Fragment {
     }
 
     private void initProxyLayout(View view) {
-        View proxyLayout = view.findViewById(R.id.proxyLayout);
-        proxyView = proxyLayout.findViewById(R.id.proxyView);
-        proxyNameView = proxyLayout.findViewById(R.id.nameView);
-        proxyView.setOnClickListener(new View.OnClickListener() {
+        lin_vpn_lines = view.findViewById(R.id.lin_vpn_lines);
+        txv_line_name = view.findViewById(R.id.txv_line_name);
+        lin_vpn_lines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragmentStack().show(ProxyFragment.newInstance(),null,false);
             }
         });
-
-        bypassChinaView = proxyLayout.findViewById(R.id.bypassChinaView);
-        bypassChinaView.setChecked(app.getSettings().getData().getBoolean("bypass_china", VpnConfig.BYPASS_CHINA_DEFAULT));
-        bypassChinaView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                app.getSettings().set("bypass_china", isChecked);
-                app.getVpn().reload();
-
-            }
-        });
-
-        editAclView = proxyLayout.findViewById(R.id.editAclView);
-        editAclView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentStack().show(AclEditorFragment.newInstance(), null, false);
-            }
-        });
-        //
         updateProxy(app.getSessionManager().getProxy());
-
-        testSpeedView = proxyLayout.findViewById(R.id.testSpeedView);
-        testSpeedView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                app.openUrl("https://fast.com");
-            }
-        });
-
-        proxyLayout.findViewById(R.id.proxyUpdateView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkVpnUpdate(true);
-            }
-        });
-
-        txv_vpn_update = proxyLayout.findViewById(R.id.txv_vpn_update);
     }
 
     @Override
@@ -278,11 +226,11 @@ public class HomeFragment extends Fragment {
     private void updateProxy(Proxy proxy) {
         if (proxy != null && proxy.data != null) {
             //设置text
-            proxyNameView.setText(proxy.name);
+            txv_line_name.setText(proxy.name);
             String host = proxy.data.getString("host");
             startPing(host);
         } else {
-            proxyNameView.setText("请选择代理");
+            txv_line_name.setText("请选择代理");
         }
     }
 
@@ -378,11 +326,11 @@ public class HomeFragment extends Fragment {
                             });
                             //提示线路更新
                             showVPNAlert("线路更新："+StringUtils.getNowTimeStr());
-                            txv_vpn_update.setText("更新线路("+StringUtils.getNowTimeStr()+")");
+                            //txv_vpn_update.setText("更新线路("+StringUtils.getNowTimeStr()+")");
                         }else{
                             showVPNAlert("线路无更新");
                             if(session.vpnUpdateTime > 0){
-                                txv_vpn_update.setText("更新线路("+StringUtils.getTimeStr(session.vpnUpdateTime)+")");
+                                //txv_vpn_update.setText("更新线路("+StringUtils.getTimeStr(session.vpnUpdateTime)+")");
                             }
                         }
                     }else{
