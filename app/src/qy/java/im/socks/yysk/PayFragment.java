@@ -32,7 +32,7 @@ import im.socks.yysk.util.Json;
 import im.socks.yysk.util.XBean;
 
 
-public class PayFragment extends Fragment {
+public class PayFragment extends Fragment implements View.OnClickListener{
 
     private RecyclerView recyclerView;
     private AdapterImpl adapter;
@@ -41,26 +41,28 @@ public class PayFragment extends Fragment {
     private TextView btn_right;
     private final App app = Yysk.app;
 
+    private List<XBean> leftList = new ArrayList<>();;
+    private List<XBean> centerList = new ArrayList<>();;
+    private List<XBean> rightList = new ArrayList<>();;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pay_dz, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         btn_left = view.findViewById(R.id.btn_left);
         btn_left.setSelected(true);
+        btn_left.setOnClickListener(this);
         btn_center = view.findViewById(R.id.btn_center);
+        btn_center.setOnClickListener(this);
         btn_right = view.findViewById(R.id.btn_right);
+        btn_right.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
+        initListData();
+
         adapter = new AdapterImpl(getActivity());
-        List<XBean> items = new ArrayList<>();
-        //amount表示金额，单位为分
-        items.add(new XBean("name", "6金币套餐", "price", "￥6", "amount", 600));
-        items.add(new XBean("name", "19金币套餐", "price", "￥18", "amount", 1800));
-        items.add(new XBean("name", "32金币套餐", "price", "￥30", "amount", 3000));
-        items.add(new XBean("name", "64金币套餐", "price", "￥60", "amount", 6000));
-        items.add(new XBean("name", "115金币套餐", "price", "￥108", "amount", 10800));
-        adapter.setItems(items);
+        adapter.setItems(leftList);
         recyclerView.setAdapter(adapter);
 
         SmartRefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
@@ -74,6 +76,29 @@ public class PayFragment extends Fragment {
         return view;
     }
 
+    private void initListData(){
+        //普通套餐：amount表示金额，单位为分
+        leftList.clear();
+        leftList.add(new XBean("title", "描述：支持网页浏览加速服务。", "msg", "支持使用Google等互联网基础服务，网页浏览，包括网页搜索、社交网站等，不支持油管等视频；"));
+        leftList.add(new XBean("name", "包月套餐", "price", "10元", "amount", 1000));
+        leftList.add(new XBean("name", "季度套餐", "price", "27元", "amount", 2700));
+        leftList.add(new XBean("name", "半年套餐", "price", "48元", "amount", 4800));
+        leftList.add(new XBean("name", "年度套餐", "price", "84元", "amount", 8400));
+        //VIP套餐：amount表示金额，单位为分
+        centerList.clear();
+        centerList.add(new XBean("title","描述：支持网页浏览与视频播放等VIP服务。", "msg", "支持：使用Google等互联网基础服务；视频类播放，譬如油管等应用；"));
+        centerList.add(new XBean("name", "包月套餐", "price", "20元", "amount", 2000));
+        centerList.add(new XBean("name", "季度套餐", "price", "53元", "amount", 5300));
+        centerList.add(new XBean("name", "半年套餐", "price", "96元", "amount", 9600));
+        centerList.add(new XBean("name", "年度套餐", "price", "180元", "amount", 18000));
+        //SVIP套餐：amount表示金额，单位为分
+        rightList.clear();
+        rightList.add(new XBean("title", "描述：提供基于跨境物理专线的加速服务，网速太快请系好安全带。", "msg", "支持：所有境外服务，无限量使用；"));
+        rightList.add(new XBean("name", "包月套餐", "price", "40元", "amount", 4000));
+        rightList.add(new XBean("name", "季度套餐", "price", "114元", "amount", 11400));
+        rightList.add(new XBean("name", "半年套餐", "price", "216元", "amount", 21600));
+        rightList.add(new XBean("name", "年度套餐", "price", "418元", "amount", 41800));
+    }
 
     private FragmentStack getFragmentStack() {
         return ((MainActivity) getActivity()).getFragmentStack();
@@ -96,7 +121,6 @@ public class PayFragment extends Fragment {
 
     /**
      * 处理支付后的返回
-     *
      * @param data
      */
     private void onPay(Intent data) {
@@ -130,7 +154,6 @@ public class PayFragment extends Fragment {
         }
     }
 
-
     private void showMessage(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
     }
@@ -149,7 +172,6 @@ public class PayFragment extends Fragment {
         builder.show();
     }
 
-
     private static boolean isWeixinInstalled(Context context) {
         PackageManager pm = context.getPackageManager();
         try {
@@ -162,12 +184,35 @@ public class PayFragment extends Fragment {
 
     }
 
-
     public static PayFragment newInstance() {
         PayFragment fragment = new PayFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_left:
+                btn_left.setSelected(true);
+                btn_center.setSelected(false);
+                btn_right.setSelected(false);
+                adapter.setItems(leftList);
+                break;
+            case R.id.btn_center:
+                btn_left.setSelected(false);
+                btn_center.setSelected(true);
+                btn_right.setSelected(false);
+                adapter.setItems(centerList);
+                break;
+            case R.id.btn_right:
+                btn_left.setSelected(false);
+                btn_center.setSelected(false);
+                btn_right.setSelected(true);
+                adapter.setItems(rightList);
+                break;
+        }
     }
 
     private class PayHolder extends RecyclerView.ViewHolder {
@@ -201,6 +246,8 @@ public class PayFragment extends Fragment {
                 rl_root.setBackgroundResource(R.drawable.bg_gray_border_item_tail);
             }
         }
+
+
 
         private void doBuy() {
             if (!app.getSessionManager().getSession().isLogin()) {
@@ -299,9 +346,15 @@ public class PayFragment extends Fragment {
         }
 
         @Override
-        public PayHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_pay_list_pay_dz, viewGroup, false);
-            return new PayHolder(view);
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            if(viewType == 1){
+                View view = LayoutInflater.from(context).inflate(R.layout.item_pay_list_title_dz, viewGroup, false);
+                return new TitleHolder(view);
+            }else{
+                View view = LayoutInflater.from(context).inflate(R.layout.item_pay_list_pay_dz, viewGroup, false);
+                return new PayHolder(view);
+            }
+
         }
 
         @Override
@@ -312,6 +365,14 @@ public class PayFragment extends Fragment {
                 boolean istail = position >= items.size();
                 ((PayHolder)holder).bind(items.get(position),istail);
             }
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if(!items.get(position).isEmpty("title")){
+                return 1;
+            }
+            return 0;
         }
 
         @Override
