@@ -13,6 +13,9 @@
     <dimen name="item_height_l">45dp</dimen>
     <dimen name="item_height_xl">54dp</dimen>
 
+    <dimen name="btn_height">34dp</dimen>
+    <dimen name="btn_height_m">30dp</dimen>
+
     <dimen name="text_xxl">22sp</dimen>
     <dimen name="text_xl">20sp</dimen>
     <dimen name="text_l">18sp</dimen>

@@ -151,7 +151,7 @@
                             android:paddingRight="@dimen/padding_m"
                             android:gravity="center"
                             android:textColor="@color/blue"
-                            android:background="@drawable/btn_blue_solid_border"
+                            android:background="@drawable/btn_blue_border"
                             tools:text="日本线路"/>
 
                         <ImageView

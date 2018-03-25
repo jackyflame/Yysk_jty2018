@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -171,32 +172,34 @@ public class PayFragment extends Fragment {
 
     private class PayHolder extends RecyclerView.ViewHolder {
         private XBean data;
-        private TextView nameView;
-        private TextView priceView;
-        private Button buyView;
+        private RelativeLayout rl_root;
+        private TextView txv_name;
+        private Button btn_buy;
 
         public PayHolder(View itemView) {
             super(itemView);
-
             init();
         }
 
         private void init() {
-            nameView = itemView.findViewById(R.id.nameView);
-            priceView = itemView.findViewById(R.id.priceView);
-            buyView = itemView.findViewById(R.id.buyView);
+            rl_root = itemView.findViewById(R.id.rl_root);
+            txv_name = itemView.findViewById(R.id.txv_name);
+            btn_buy = itemView.findViewById(R.id.btn_buy);
         }
 
-        public void bind(XBean data) {
+        public void bind(XBean data,boolean isTail) {
             this.data = data;
-            nameView.setText(data.getString("name"));
-            priceView.setText(data.getString("price"));
-            buyView.setOnClickListener(new View.OnClickListener() {
+            txv_name.setText(data.getString("name"));
+            btn_buy.setText(data.getString("price"));
+            btn_buy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     doBuy();
                 }
             });
+            if(isTail == true){
+                rl_root.setBackgroundResource(R.drawable.bg_gray_border_item_tail);
+            }
         }
 
         private void doBuy() {
@@ -268,7 +271,26 @@ public class PayFragment extends Fragment {
 
     }
 
-    private class AdapterImpl extends RecyclerView.Adapter<PayHolder> {
+    private class TitleHolder extends RecyclerView.ViewHolder{
+
+        private TextView txv_title;
+        private TextView txv_msg;
+        private XBean data;
+
+        public TitleHolder(View itemView) {
+            super(itemView);
+            txv_title = itemView.findViewById(R.id.txv_title);
+            txv_msg = itemView.findViewById(R.id.txv_msg);
+        }
+
+        public void bind(XBean data) {
+            this.data = data;
+            txv_title.setText(data.getString("title"));
+            txv_msg.setText(data.getString("msg"));
+        }
+    }
+
+    private class AdapterImpl extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private Context context;
         private List<XBean> items = new ArrayList<>();
 
@@ -277,14 +299,19 @@ public class PayFragment extends Fragment {
         }
 
         @Override
-        public PayHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_pay_list_pay, viewGroup, false);
+        public PayHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_pay_list_pay_dz, viewGroup, false);
             return new PayHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(PayHolder payHolder, int i) {
-            payHolder.bind(items.get(i));
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if(holder instanceof TitleHolder){
+                ((TitleHolder)holder).bind(items.get(position));
+            }else{
+                boolean istail = position >= items.size();
+                ((PayHolder)holder).bind(items.get(position),istail);
+            }
         }
 
         @Override

@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:orientation="vertical"
     tools:context="im.socks.yysk.PayFragment">
 
@@ -19,6 +18,7 @@
         android:drawableLeft="@mipmap/ic_buy_chart"
         android:textColor="@color/text_red"
         android:gravity="center_vertical"
+        android:background="@color/text_white"
         android:text="购买加速套餐"/>
 
     <LinearLayout
@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/padding_l"
         android:paddingRight="@dimen/padding_l"
+        android:background="@color/text_white"
         android:orientation="horizontal">
 
         <TextView
@@ -72,7 +73,9 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff" />
+            android:layout_margin="@dimen/padding_l"
+            android:padding="@dimen/padding_m"
+            android:background="@drawable/bg_white_solid_gray_border" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
