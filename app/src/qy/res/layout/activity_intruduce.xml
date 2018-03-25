@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <im.socks.yysk.PageBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pb_back="true"
+        app:pb_title=""/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/padding_xl"
+        android:layout_marginTop="@dimen/padding_l"
+        android:drawablePadding="@dimen/padding_m"
+        android:textSize="@dimen/text_xl"
+        android:textColor="@color/black"
+        android:text="新用户注册说明"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_xl"
+        android:layout_marginTop="@dimen/padding_m"
+        android:textSize="@dimen/text_m"
+        android:text="欢迎您使用速客加速服务软件，以下几点为您说明："/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_xxxl"
+            android:layout_marginRight="@dimen/padding_xxxl"
+            android:layout_marginBottom="@dimen/padding_xl"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/text_ml"
+            android:background="@color/btn_blue"
+            android:text="同意进入下一步"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
