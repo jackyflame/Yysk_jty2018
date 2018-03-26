@@ -2,6 +2,7 @@ package im.socks.yysk;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -54,7 +55,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         //
         logoutView = view.findViewById(R.id.logoutView);
         logoutView.setOnClickListener(this);
-
+        //修改密码
+        view.findViewById(R.id.btn_change_psw).setOnClickListener(this);
         return view;
     }
 
@@ -120,6 +122,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             checkUpdate();
         } else if (id == R.id.logoutView) {
             doLogout();
+        } else if (id == R.id.btn_change_psw) {
+            startActivity(new Intent(getContext(),ChangePswActivity.class));
         }
     }
 
