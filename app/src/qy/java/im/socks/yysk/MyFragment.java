@@ -40,7 +40,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         }
     };
 
-
     private final AppDZ app = Yysk.app;
 
     @Override
@@ -57,6 +56,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         logoutView.setOnClickListener(this);
         //修改密码
         view.findViewById(R.id.btn_change_psw).setOnClickListener(this);
+        view.findViewById(R.id.btn_feedback).setOnClickListener(this);
+        view.findViewById(R.id.btn_msgs).setOnClickListener(this);
+        view.findViewById(R.id.btn_devices).setOnClickListener(this);
+        view.findViewById(R.id.btn_buy_records).setOnClickListener(this);
         return view;
     }
 
@@ -105,21 +108,16 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
         } else if (id == R.id.phoneNumberView) {
             //getFragmentStack().show(MoneyFragment.newInstance(), null, false);
-        } else if (id == R.id.userIdView) {
-            //
-        } else if (id == R.id.siteView) {
-            openWebSite();
-        } else if (id == R.id.feedbackView) {
-            openFeedback();
-        }
-        else if (id == R.id.notifyView) {
-            //showError("显示通知，未实现");
-            openNotify();
-        } else if (id == R.id.hostView) {
-            //域名设置
-            showHostDialog();
+        } else if (id == R.id.btn_buy_records) {
+
+        } else if (id == R.id.btn_devices) {
+            startActivity(new Intent(getContext(),DevicesActivity.class));
+        }else if (id == R.id.btn_msgs) {
+            startActivity(new Intent(getContext(),SystemMsgActivity.class));
+        } else if (id == R.id.btn_feedback) {
+            startActivity(new Intent(getContext(),FeedbackActivity.class));
         } else if (id == R.id.versionLayout) {
-            checkUpdate();
+            startActivity(new Intent(getContext(),SystemMsgActivity.class));
         } else if (id == R.id.logoutView) {
             doLogout();
         } else if (id == R.id.btn_change_psw) {
@@ -160,11 +158,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         builder.show();
     }
 
-
     private FragmentStack getFragmentStack() {
         return ((MainActivity) getActivity()).getFragmentStack();
     }
-
 
     private String getVersion() {
         try {
@@ -188,7 +184,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     private void openNotify() {
         app.getApi().getAnnoUrl(new YyskApi.ICallback<String>() {
             @Override
@@ -202,12 +197,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-    }
-
-    private void openFeedback() {
-        //String url = "https://kefu.easemob.com/webim/im.html?configId=3806da3a-1fa7-4e6b-bcc2-6617529c088d";
-        String url = "https://webchat.7moor.com/wapchat.html?accessId=559eecd0-c91e-11e7-8178-2573f743b2b9&fromUrl=android";
-        app.openUrl(url);
     }
 
     private void checkUpdate(){
