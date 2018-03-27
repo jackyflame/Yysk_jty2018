@@ -33,6 +33,7 @@
     <color name="text_white">@color/white</color>
     <color name="text_red">#FF0000</color>
     <color name="text_blue_dark">@color/blue_dark</color>
+    <color name="text_green">#66CD00</color>
 
     <!-- -->
     <color name="fragment_background">#FFFFFF</color>

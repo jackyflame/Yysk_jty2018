@@ -109,7 +109,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         } else if (id == R.id.phoneNumberView) {
             //getFragmentStack().show(MoneyFragment.newInstance(), null, false);
         } else if (id == R.id.btn_buy_records) {
-
+            startActivity(new Intent(getContext(),BuyRecordsActivity.class));
         } else if (id == R.id.btn_devices) {
             startActivity(new Intent(getContext(),DevicesActivity.class));
         }else if (id == R.id.btn_msgs) {

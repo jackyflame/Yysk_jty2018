@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/txv_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_ms"
+        tools:text="12345"/>
+
+    <TextView
+        android:id="@+id/txv_name"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_ms"
+        tools:text="VIP包月套餐"/>
+
+    <TextView
+        android:id="@+id/txv_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_ms"
+        tools:text="支付宝"/>
+
+    <TextView
+        android:id="@+id/txv_money"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_green"
+        android:textSize="@dimen/text_ms"
+        tools:text="-20元"/>
+
+    <TextView
+        android:id="@+id/txv_time"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_ms"
+        tools:text="2018-03-12 11:01:01"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -82,6 +82,11 @@
             android:launchMode="singleTop"
             android:theme="@style/AppThemeBase.NoActionBar" />
 
+        <activity
+            android:name=".BuyRecordsActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeBase.NoActionBar" />
+
         <!-- begin ping++ -->
         <activity
             android:name="com.pingplusplus.android.PaymentActivity"
