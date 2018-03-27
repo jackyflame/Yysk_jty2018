@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="@dimen/padding_m"
+        android:layout_marginBottom="2dp"
         android:orientation="horizontal">
 
         <TextView
@@ -98,9 +99,9 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:background="@color/bg_empty_gray"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/padding_m"/>
+            android:layout_height="match_parent"/>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

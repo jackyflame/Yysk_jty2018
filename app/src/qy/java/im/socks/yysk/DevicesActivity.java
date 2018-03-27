@@ -39,7 +39,7 @@ public class DevicesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_system_msg);
+        setContentView(R.layout.activity_devices);
         title_bar = findViewById(R.id.title_bar);
         title_bar.setBackListener(new View.OnClickListener() {
             @Override

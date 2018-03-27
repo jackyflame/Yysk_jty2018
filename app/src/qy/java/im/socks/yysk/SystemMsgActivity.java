@@ -82,7 +82,7 @@ public class SystemMsgActivity extends AppCompatActivity {
 
         @Override
         public MyHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_pay_list_title_dz, viewGroup, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.item_sysmsg_list_dz, viewGroup, false);
             return new MyHolder(view);
         }
 

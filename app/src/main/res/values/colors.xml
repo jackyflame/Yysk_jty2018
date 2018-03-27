@@ -25,6 +25,8 @@
     <color name="gray_light">#E3E3E3</color>
     <color name="white">#FFFFFF</color>
 
+    <color name="bg_empty_gray">#fafafa</color>
+
     <color name="btn_orange">#ffa703</color>
     <color name="btn_blue">#199ed8</color>
     <color name="btn_blue_light">#87CEFA</color>
