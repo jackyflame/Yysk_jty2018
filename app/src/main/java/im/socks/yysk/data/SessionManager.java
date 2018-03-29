@@ -80,14 +80,14 @@ public class SessionManager {
      * @param id
      * @param phoneNumber
      */
-    public void onLogin(String id, String phoneNumber) {
+    public void onLogin(int id, String phoneNumber) {
         onLogin(id,phoneNumber,null,null,null,null);
     }
 
-    public void onLogin(String id, String phoneNumber,String terminalNum,String bindedTerminalNum,String entername,String psw) {
+    public void onLogin(int id, String phoneNumber,String terminalNum,String bindedTerminalNum,String entername,String psw) {
 
         session = new Session();
-        session.user.phoneNumber = phoneNumber;
+        session.user.mobile_number = phoneNumber;
         session.user.id = id;
         if(terminalNum != null){
             session.user.terminalNum = terminalNum;
