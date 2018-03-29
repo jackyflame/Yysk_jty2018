@@ -31,6 +31,15 @@
 
 
         <EditText
+            android:id="@+id/edt_inviteCode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height_l"
+            android:drawableLeft="@mipmap/ic_invite_code"
+            android:drawablePadding="@dimen/padding_m"
+            android:textSize="@dimen/text_ml"
+            android:hint="邀请码：邀请码注册有福利（选填）"/>
+
+        <EditText
             android:id="@+id/phoneNumberText"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height_l"
@@ -75,7 +84,7 @@
             android:layout_marginTop="@dimen/padding_m"
             android:textSize="@dimen/text_ml"
             android:inputType="textPassword"
-            android:hint="密码"/>
+            android:hint="请设置登录密码（6-12位）"/>
 
         <Button
             android:id="@+id/registerButton"
