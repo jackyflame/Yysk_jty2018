@@ -86,42 +86,42 @@ android {
 
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //admob
-    implementation 'com.google.android.gms:play-services-ads:11.6.0'
-    //implementation 'com.google.firebase:firebase-ads:11.4.0'
+    compile 'com.google.android.gms:play-services-ads:11.6.0'
+    //compile 'com.google.firebase:firebase-ads:11.4.0'
     //okhttp
     api 'com.squareup.okhttp3:okhttp:3.9.0'
-    //implementation 'com.cuboid:cuboidcirclebutton:1.0.3'
+    //compile 'com.cuboid:cuboidcirclebutton:1.0.3'
     //for pay
-    implementation 'com.pingxx:pingpp-core:2.1.14'
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    compile 'com.pingxx:pingpp-core:2.1.14'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     // 使用微信支付时添加,具体版本参考微信官方文档
-    implementation 'com.pingxx:pingpp-alipay:2.1.14'
+    compile 'com.pingxx:pingpp-alipay:2.1.14'
     // 使用支付宝时添加
     //jpush
-    //implementation 'cn.jiguang.sdk:jpush:3.1.0'
-    //implementation 'cn.jiguang.sdk:jcore:1.1.8'
+    //compile 'cn.jiguang.sdk:jpush:3.1.0'
+    //compile 'cn.jiguang.sdk:jcore:1.1.8'
     //update
-    implementation 'com.qianwen:update-app:3.3.8'
-    implementation 'com.qianwen:okhttp-utils:3.8.0'
+    compile 'com.qianwen:update-app:3.3.8'
+    compile 'com.qianwen:okhttp-utils:3.8.0'
     //zxing
-    implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     //spinner  support hint
-    implementation 'com.github.ganfra:material-spinner:2.0.0'
+    compile 'com.github.ganfra:material-spinner:2.0.0'
     //refresh layout
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    //implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    //compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
     //for proguard to okhttp
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    compile 'com.google.code.findbugs:jsr305:3.0.2'
     //swipelayout
-    //implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.0'
-    testImplementation 'junit:junit:4.12'
+    //compile 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.0'
+    testCompile 'junit:junit:4.12'
 }

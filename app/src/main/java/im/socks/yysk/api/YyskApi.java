@@ -79,8 +79,8 @@ public class YyskApi {
         this.deviceId = buildDeviceId();
 
         //这是默认的
-        this.defaultApiUrl = "http://api.tissotlab.com:8080/ApiServer/SsrHandle?Msg=";
-        //this.defaultApiUrl = VpnConfig.API_URL_DEFAULT;
+//        this.defaultApiUrl = "http://api.tissotlab.com:8080/ApiServer/SsrHandle?Msg=";
+        this.defaultApiUrl = VpnConfig.API_URL_DEFAULT;
 
 
         this.http = new Http(app);
@@ -450,13 +450,13 @@ public class YyskApi {
             }
         }
         //update 20180314 取消从微薄获取接口地址（因为采用全新的服务器地址接口）
-        //如果尝试了上面的，还是不能够获得，从微博获得一个
-        if (result == null) {
-            url = getApiUrlFromBlog();
-            if (url != null) {
-                result = invokeApi(url, msgId, params);
-            }
-        }
+//        //如果尝试了上面的，还是不能够获得，从微博获得一个
+//        if (result == null) {
+//            url = getApiUrlFromBlog();
+//            if (url != null) {
+//                result = invokeApi(url, msgId, params);
+//            }
+//        }
 
         if (result != null) {
             //如果获得了结果，表示该url有效，保存下次使用

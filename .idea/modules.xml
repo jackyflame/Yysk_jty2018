@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Yysk/.idea/Yysk.iml" filepath="$PROJECT_DIR$/../Yysk/.idea/Yysk.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Yysk_jty2018.iml" filepath="$PROJECT_DIR$/Yysk_jty2018.iml" />
-      <module fileurl="file://D:/UserData/AndroidStudioProjects/Yysk_jty2018/Yysk_jty2018.iml" filepath="D:/UserData/AndroidStudioProjects/Yysk_jty2018/Yysk_jty2018.iml" />
+      <module fileurl="file://D:/Deverloper/Yysk/.idea/Yysk.iml" filepath="D:/Deverloper/Yysk/.idea/Yysk.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Yysk_jty2018.iml" filepath="$PROJECT_DIR$/.idea/Yysk_jty2018.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Yysk_jty2018.iml" filepath="$PROJECT_DIR$/Yysk_jty2018.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
