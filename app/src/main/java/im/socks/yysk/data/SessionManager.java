@@ -81,28 +81,36 @@ public class SessionManager {
      * @param phoneNumber
      */
     public void onLogin(int id, String phoneNumber) {
-        onLogin(id,phoneNumber,null,null,null,null);
+        onLogin(id,-1,null,phoneNumber,null,null,null,
+                null,null,null,null,null,null);
     }
 
-    public void onLogin(int id, String phoneNumber,String terminalNum,String bindedTerminalNum,String entername,String psw) {
+    public void onLogin(XBean xBean){
+        onLogin(xBean.getInteger("id"),xBean.getInteger("userType"),xBean.getString("username"),
+                xBean.getString("mobile_number"),xBean.getString("psw"),xBean.getString("email"),
+                xBean.getString("corporate_name"),xBean.getString("department"),xBean.getString("created"),
+                xBean.getString("last_login_time"),xBean.getString("invite_code"),xBean.getString("ss_pass"),
+                xBean.getString("token"));
+    }
+
+    public void onLogin(int id, int userType,String username,String mobile_number,String psw,
+                        String email,String corporate_name,String department,String created,
+                        String last_login_time,String invite_code,String ss_pass,String token) {
 
         session = new Session();
-        session.user.mobile_number = phoneNumber;
         session.user.id = id;
-        if(terminalNum != null){
-            session.user.terminalNum = terminalNum;
-        }
-        if(bindedTerminalNum != null){
-            session.user.bindedTerminalNum = bindedTerminalNum;
-        }
-        if(entername != null){
-            session.user.entername = entername;
-        }
-        if(psw != null){
-            session.user.psw = psw;
-        }
-        //session.user.password = password;//
-        //session.setToken("");//正常登录后应该获得一个token的
+        session.user.user_type = userType;
+        session.user.username = username;
+        session.user.mobile_number = mobile_number;
+        session.user.email = email;
+        session.user.corporate_name = corporate_name;
+        session.user.department = department;
+        session.user.created = created;
+        session.user.last_login_time = last_login_time;
+        session.user.invite_code = invite_code;
+        session.user.ss_pass = ss_pass;
+        session.user.token = token;
+        session.user.psw = psw;
         session.setLogin(true);
 
         saveSession(session);

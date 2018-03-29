@@ -89,7 +89,7 @@ public class LoginFragment extends Fragment {
         });
 
         if(app.getSessionManager().getSession().user != null){
-            String phoneNum = app.getSessionManager().getSession().user.phoneNumber;
+            String phoneNum = app.getSessionManager().getSession().user.mobile_number;
             if(phoneNum != null){
                 phoneNumberText.setText(phoneNum);
             }
@@ -254,8 +254,6 @@ public class LoginFragment extends Fragment {
             return;
         }
         //保存登录状态信息
-        app.getSessionManager().onLogin(loginRst.getString("uuid"), loginRst.getString("account"),
-                loginRst.getString("terminal_num"),loginRst.getString("binded_terminal_num"),
-                loginRst.getString("entername"),loginRst.getString("password"));
+        app.getSessionManager().onLogin(loginRst);
     }
 }
