@@ -25,6 +25,7 @@ import im.socks.yysk.data.Session;
 import im.socks.yysk.util.IOUtil;
 import im.socks.yysk.util.Json;
 import im.socks.yysk.util.XBean;
+import im.socks.yysk.util.XRspBean;
 import im.socks.yysk.vpn.VpnConfig;
 
 public class YyskApi {
@@ -223,46 +224,15 @@ public class YyskApi {
         invoke("10014", "20014", new XBean("mobile_number", strPhoneNum), cb);
     }
 
-    public void login(String strPhoneNum, String strPassword, final ICallback<XBean> cb) {
-        //如果仅仅执行登录，感觉没有做任何事情，什么都不返回，token也没有
-        //invoke("10020", "20020", new XBean("mobile_number", strPhoneNum, "Password", strPassword),cb);
-        final XBean loginParams = new XBean("mobile_number", strPhoneNum, "Password", strPassword);
-        final XBean profileParams = new XBean("mobile_number", strPhoneNum);
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                //先登录，不登录也不影响，实际上应该返回用户的基本信息，如：user_id+token(控制api的访问)
-                XBean result = invoke("10020", "20020", loginParams);
-                if (result != null && result.isEquals("retcode", "succ")) {
-                    //获得uuid
-                    result = invoke("10024", "20024", profileParams);
-                    if (result != null && result.isEquals("retcode", "succ")) {
-                        //获得profile成功
-                    } else {
-                        //
-                    }
-                }
-                if (cb != null) {
-                    final XBean result2 = result;
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            cb.onResult(result2);
-                        }
-                    });
-                }
-            }
-        });
-    }
-
     /* 用户注册
     * strPhoneNum: 注册手机号
     * strPassword: 登录用户名
     * strVeryCode 验证码
     *  返回值: 成功返回{"retcode":"succ",  ##succ || fail, "error":"" },否则返回null
     * */
-    public void register(String strPhoneNum, String strPassword, String strVeryCode, ICallback<XBean> cb) {
-        invoke("10022", "20022", strPhoneNum, new XBean("mobile_number", strPhoneNum, "Password", strPassword, "VeryCode", strVeryCode), cb);
+    public void register(String strPhoneNum, String strPassword, String strVeryCode, String inviteCode,ICallback<XRspBean> cb) {
+        invoke("10022", "20022", strPhoneNum,
+                new XBean("mobile_number", strPhoneNum, "Password", strPassword, "VeryCode", strVeryCode,"activation_code",inviteCode), cb);
     }
 
     /* 用户修改密码

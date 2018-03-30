@@ -14,6 +14,7 @@ import android.widget.Toast;
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
+import im.socks.yysk.util.XRspBean;
 
 /**
  * Created by cole on 2017/10/23.
@@ -99,18 +100,30 @@ public class RegisterFragment extends Fragment {
         final String phoneNumber = StringUtils.getTextViewStr(phoneNumberText);
         String verifyCode = StringUtils.getTextViewStr(verifyCodeText);
         final String password = StringUtils.getTextViewStr(passwordText);
+        if(StringUtils.isEmpty(phoneNumber)){
+            showError("请输入电话号码");
+            return;
+        }
+        if(StringUtils.isEmpty(verifyCode)){
+            showError("请输入收到的验证码");
+            return;
+        }
+        if(StringUtils.isEmpty(password)){
+            showError("请设置密码");
+            return;
+        }
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("正在注册...");
         dialog.show();
-        app.getApi().register(phoneNumber, password, verifyCode, new YyskApi.ICallback<XBean>() {
+        app.getApi().register(phoneNumber, password, verifyCode, inviteCode, new YyskApi.ICallback<XRspBean>() {
             @Override
-            public void onResult(XBean result) {
+            public void onResult(XRspBean result) {
                 MyLog.d("register=%s",result);
                 if (result != null) {
-                    if (result.isEquals("retcode", "succ")) {
+                    if (result.isRspSuccess()) {
                         doLogin(phoneNumber, password, dialog);
                     } else {
-                        showError("注册失败：" + result.getString("error"));
+                        showError("注册失败：" + result.getRspError());
                     }
                 } else {
                     dialog.dismiss();
@@ -124,18 +137,18 @@ public class RegisterFragment extends Fragment {
         boolean autoLogin = true;
         if (autoLogin) {
             dialog.setMessage("正在登录...");
-            app.getApi().login(phoneNumber, password, new YyskApi.ICallback<XBean>() {
+            app.getApi().loginDZ(phoneNumber, password, new YyskApi.ICallback<XRspBean>() {
                 @Override
-                public void onResult(XBean result) {
+                public void onResult(XRspBean result) {
                     //自动登录
                     dialog.dismiss();
                     if (result != null) {
-                        if (result.isEquals("retcode", "succ")) {
+                        if (result.isRspSuccess()) {
                             getFragmentStack().show(null, "main", true);
                             app.getSessionManager().onLogin(result, phoneNumber, password);
                         } else {
                             //错误
-                            showError("自动登录失败:" + result.getString("error"));
+                            showError("自动登录失败:" + result.getRspError());
                             getFragmentStack().show(LoginFragment.newInstance(null), "login", true);
                         }
                     } else {
