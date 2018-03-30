@@ -32,16 +32,16 @@ public class YyskDZApi extends YyskApi {
     }
 
     /*--------------------------------------------------------------------------------------------*/
-    public void loginDZ(String strPhoneNum, String strPassword, final ICallback<XRspBean> cb) {
+    public void loginDZ(String strPhoneNum, String strPassword, final ICallback<XBean> cb) {
         //如果仅仅执行登录，感觉没有做任何事情，什么都不返回，token也没有
         final XBean loginParams = new XBean("mobile_number", strPhoneNum, "password", strPassword);
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 //先登录，不登录也不影响，实际上应该返回用户的基本信息，如：user_id+token(控制api的访问)
-                XRspBean result = invoke("10020", "20020", loginParams);
+                XBean result = invoke("10020", "20020", loginParams);
                 if (cb != null) {
-                    final XRspBean result2 = result;
+                    final XBean result2 = result;
                     handler.post(new Runnable() {
                         @Override
                         public void run() {

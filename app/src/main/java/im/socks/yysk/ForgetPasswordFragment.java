@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import im.socks.yysk.api.YyskApi;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
+import im.socks.yysk.util.XRspBean;
 
 /**
  * Created by cole on 2017/10/23.
@@ -27,7 +29,7 @@ public class ForgetPasswordFragment extends Fragment {
     private Button getVerifyCodeView;
     private Button submitView;
 
-    private final App app = Yysk.app;
+    private final AppDZ app = Yysk.app;
 
     @Nullable
     @Override
@@ -67,19 +69,13 @@ public class ForgetPasswordFragment extends Fragment {
         //检查手机号是否正确
         getVerifyCodeView.setEnabled(false);
 
-        app.getApi().getVerifyCode(phoneNumber, new YyskApi.ICallback<XBean>() {
+        app.getApi().getVerifyCode(phoneNumber,true,new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
                 MyLog.d("getVerifyCode=%s",result);
                 getVerifyCodeView.setEnabled(true);
-                if (result != null) {
-                    if (result.isEquals("retcode", "succ")) {
-                        showError("发送验证码成功，请查收短信");
-                    } else {
-                        showError("发送验证码失败：" + result.getString("error"));
-                    }
-                } else {
-                    showError("发送验证码失败，请检查网络后再次尝试");
+                if(NetUtil.checkAndHandleRsp(result,getContext(),"发送验证码失败",null)){
+                    showError("发送验证码成功，请查收短信");
                 }
             }
         });
@@ -93,9 +89,9 @@ public class ForgetPasswordFragment extends Fragment {
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("正在修改密码...");
         dialog.show();
-        app.getApi().changePassword(phoneNumber, newPassword, verifyCode, new YyskApi.ICallback<XBean>() {
+        app.getApi().changePassword(phoneNumber, newPassword, verifyCode, new YyskApi.ICallback<XRspBean>() {
             @Override
-            public void onResult(XBean result) {
+            public void onResult(XRspBean result) {
                 MyLog.d("changePassword=%s",result);
                 if (result != null) {
                     if (result.isEquals("retcode", "succ")) {
@@ -116,23 +112,16 @@ public class ForgetPasswordFragment extends Fragment {
         boolean autoLogin = true;
         if (autoLogin) {
             dialog.setMessage("正在登录...");
-            app.getApi().login(phoneNumber, password, new YyskApi.ICallback<XBean>() {
+            app.getApi().loginDZ(phoneNumber, password, new YyskApi.ICallback<XBean>() {
                 @Override
                 public void onResult(XBean result) {
                     //自动登录
                     dialog.dismiss();
-                    if (result != null) {
-                        if (result.isEquals("retcode", "succ")) {
-                            getFragmentStack().show(null, "main", true);
-                            app.getSessionManager().onLogin(result, phoneNumber, password);
-                        } else {
-                            //错误
-                            showError("自动登录失败:" + result.getString("error"));
-                            getFragmentStack().show(LoginFragment.newInstance(null), "login", true);
-                        }
+                    if (NetUtil.checkAndHandleRsp(result,getContext(),"自动登录失败","请手动登录",null)) {
+                        getFragmentStack().show(null, "main", true);
+                        app.getSessionManager().onLogin(result, phoneNumber, password);
                     } else {
                         //api错误
-                        showError("自动登录失败，请手动登录");
                         getFragmentStack().show(LoginFragment.newInstance(null), "login", true);
                     }
                 }

@@ -230,9 +230,9 @@ public class YyskApi {
     * strVeryCode 验证码
     *  返回值: 成功返回{"retcode":"succ",  ##succ || fail, "error":"" },否则返回null
     * */
-    public void register(String strPhoneNum, String strPassword, String strVeryCode, String inviteCode,ICallback<XRspBean> cb) {
+    public void register(String strPhoneNum, String strPassword, String strVeryCode, String inviteCode,ICallback<XBean> cb) {
         invoke("10022", "20022", strPhoneNum,
-                new XBean("mobile_number", strPhoneNum, "Password", strPassword, "VeryCode", strVeryCode,"activation_code",inviteCode), cb);
+                new XBean("mobile_number", strPhoneNum, "password", strPassword, "verification_code", strVeryCode,"activation_code",inviteCode), cb);
     }
 
     /* 用户修改密码
@@ -240,7 +240,7 @@ public class YyskApi {
     * strPassword: 密码
     * strVeryCode: 验证码
     * */
-    public void changePassword(String strPhoneNum, String strPassword, String strVeryCode, ICallback<XBean> cb) {
+    public void changePassword(String strPhoneNum, String strPassword, String strVeryCode, ICallback<XRspBean> cb) {
         invoke("10023", "20023", new XBean("mobile_number", strPhoneNum, "Password", strPassword, "VeryCode", strVeryCode), cb);
     }
 
@@ -285,8 +285,14 @@ public class YyskApi {
      * @param mobile_number
      * @param cb
      */
-    public void getVerifyCode(String mobile_number, ICallback<XBean> cb) {
-        invoke("10021", "20021", new XBean("mobile_number", mobile_number), cb);
+    public void getVerifyCode(String mobile_number, boolean isFindPsw,ICallback<XBean> cb) {
+        XBean param = new XBean("mobile_number", mobile_number);
+        if(isFindPsw == true){
+            param.put("code_type","retrieve_password");
+        }else{
+            param.put("code_type","register");
+        }
+        invoke("10021", "20021", param, cb);
     }
 
     /**

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.api.YyskDZApi;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 import im.socks.yysk.util.XRspBean;
@@ -122,33 +123,24 @@ public class LoginFragment extends Fragment {
         dialog.setMessage("正在登录...");
         dialog.show();
 
-        api.loginDZ(phoneNumber, password, new YyskApi.ICallback<XRspBean>() {
+        api.loginDZ(phoneNumber, password, new YyskApi.ICallback<XBean>() {
             @Override
-            public void onResult(XRspBean result) {
+            public void onResult(XBean result) {
                 MyLog.d("login=%s",result);
                 dialog.dismiss();
-                if (result != null) {
-                    //登录成功后什么都不返回，正常的实现应该返回一个token，然后其他操作都通过这个token来调用api
-                    if (result.isEquals("status_code", 0)) {
-                        //缓存登录信息
-                        loginRst = result.getXBean("data");
-                        //保存登录状态信息
-                        saveLoginRst(phoneNumber,password);
-                        //当前的fragment不需要保留在stack了，所以为替代
-                        if ("show_money".equals(nextAction)) {
-                            getFragmentStack().show(MoneyFragment.newInstance(), null, true);
-                        } else {
-                            getFragmentStack().back();
-                        }
+                String errorSuffix = "请检查你的本地网络是否通畅，或是登录服务器故障需要恢复后重新尝试登录";
+                if(NetUtil.checkAndHandleRsp(result,getContext(),"登录失败",errorSuffix,null)){
+                    //缓存登录信息
+                    loginRst = NetUtil.getRspData(result);
+                    //保存登录状态信息
+                    saveLoginRst(phoneNumber,password);
+                    //当前的fragment不需要保留在stack了，所以为替代
+                    if ("show_money".equals(nextAction)) {
+                        getFragmentStack().show(MoneyFragment.newInstance(), null, true);
                     } else {
-                        //登录失败，显示错误信息
-                        showError("登录失败：" + result.getString("error"));
+                        getFragmentStack().back();
                     }
-                } else {
-                    //登录失败，主要是api调用失败
-                    showError("登录失败，请检查你的本地网络是否通畅，或是登录服务器故障需要恢复后重新尝试登录");
                 }
-
             }
         });
 

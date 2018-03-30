@@ -15,6 +15,7 @@ import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 import im.socks.yysk.util.XRspBean;
+import im.socks.yysk.util.NetUtil;
 
 /**
  * Created by cole on 2017/10/23.
@@ -76,20 +77,13 @@ public class RegisterFragment extends Fragment {
     private void sendVerifyCode() {
         String phoneNumber = phoneNumberText.getText().toString();
         sendVerifyCodeButton.setEnabled(false);
-        app.getApi().getVerifyCode(phoneNumber, new YyskApi.ICallback<XBean>() {
+        app.getApi().getVerifyCode(phoneNumber,false,new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
                 MyLog.d("getVerifyCode=%s",result);
                 sendVerifyCodeButton.setEnabled(true);
-                if (result != null) {
-                    if (result.isEquals("retcode", "succ")) {
-                        showError("发送验证码成功，请查收短信");
-                    } else {
-                        showError("发送验证码失败：" + result.getString("error"));
-                    }
-                } else {
-                    //api error
-                    showError("发送验证码失败，请检查网络后再次尝试");
+                if(NetUtil.checkAndHandleRsp(result,getContext(),"发送验证码失败",null)){
+                    showError("发送验证码成功，请查收短信");
                 }
             }
         });
@@ -115,19 +109,14 @@ public class RegisterFragment extends Fragment {
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("正在注册...");
         dialog.show();
-        app.getApi().register(phoneNumber, password, verifyCode, inviteCode, new YyskApi.ICallback<XRspBean>() {
+        app.getApi().register(phoneNumber, password, verifyCode, inviteCode, new YyskApi.ICallback<XBean>() {
             @Override
-            public void onResult(XRspBean result) {
+            public void onResult(XBean result) {
                 MyLog.d("register=%s",result);
-                if (result != null) {
-                    if (result.isRspSuccess()) {
-                        doLogin(phoneNumber, password, dialog);
-                    } else {
-                        showError("注册失败：" + result.getRspError());
-                    }
+                if(NetUtil.checkAndHandleRsp(result,getContext(),"注册失败",null)){
+                    doLogin(phoneNumber, password, dialog);
                 } else {
                     dialog.dismiss();
-                    showError("注册失败，请检查网络后再次尝试");
                 }
             }
         });
@@ -137,23 +126,15 @@ public class RegisterFragment extends Fragment {
         boolean autoLogin = true;
         if (autoLogin) {
             dialog.setMessage("正在登录...");
-            app.getApi().loginDZ(phoneNumber, password, new YyskApi.ICallback<XRspBean>() {
+            app.getApi().loginDZ(phoneNumber, password, new YyskApi.ICallback<XBean>() {
                 @Override
-                public void onResult(XRspBean result) {
+                public void onResult(XBean result) {
                     //自动登录
                     dialog.dismiss();
-                    if (result != null) {
-                        if (result.isRspSuccess()) {
-                            getFragmentStack().show(null, "main", true);
-                            app.getSessionManager().onLogin(result, phoneNumber, password);
-                        } else {
-                            //错误
-                            showError("自动登录失败:" + result.getRspError());
-                            getFragmentStack().show(LoginFragment.newInstance(null), "login", true);
-                        }
+                    if(NetUtil.checkAndHandleRsp(result,getContext(),"自动登录失败", "请手动登录",null)){
+                        app.getSessionManager().onLogin(result, phoneNumber, password);
+                        getFragmentStack().show(null, "main", true);
                     } else {
-                        //api错误
-                        showError("自动登录失败，请手动登录");
                         getFragmentStack().show(LoginFragment.newInstance(null), "login", true);
                     }
                 }
