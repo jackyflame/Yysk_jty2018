@@ -16,6 +16,7 @@ import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.api.YyskDZApi;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
+import im.socks.yysk.util.XRspBean;
 
 /**
  * Created by Android Studio.
@@ -121,9 +122,9 @@ public class LoginFragment extends Fragment {
         dialog.setMessage("正在登录...");
         dialog.show();
 
-        api.loginDZ(phoneNumber, password, new YyskApi.ICallback<XBean>() {
+        api.loginDZ(phoneNumber, password, new YyskApi.ICallback<XRspBean>() {
             @Override
-            public void onResult(XBean result) {
+            public void onResult(XRspBean result) {
                 MyLog.d("login=%s",result);
                 dialog.dismiss();
                 if (result != null) {
