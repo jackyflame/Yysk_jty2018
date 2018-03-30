@@ -112,7 +112,7 @@ public class ForgetPasswordFragment extends Fragment {
         });
     }
 
-    private void doLogin(final String phoneNumber, String password, final ProgressDialog dialog) {
+    private void doLogin(final String phoneNumber, final String password, final ProgressDialog dialog) {
         boolean autoLogin = true;
         if (autoLogin) {
             dialog.setMessage("正在登录...");
@@ -124,7 +124,7 @@ public class ForgetPasswordFragment extends Fragment {
                     if (result != null) {
                         if (result.isEquals("retcode", "succ")) {
                             getFragmentStack().show(null, "main", true);
-                            app.getSessionManager().onLogin(result.getString("uuid"), phoneNumber);
+                            app.getSessionManager().onLogin(result, phoneNumber, password);
                         } else {
                             //错误
                             showError("自动登录失败:" + result.getString("error"));

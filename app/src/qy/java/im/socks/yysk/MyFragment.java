@@ -179,7 +179,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             logoutView.setEnabled(false);
         } else {
             phoneNumberLayout.setVisibility(View.VISIBLE);
-            phoneNumberView.setText(session.user.phoneNumber);
+            phoneNumberView.setText(session.user.mobile_number);
             logoutView.setEnabled(true);
         }
     }
@@ -212,7 +212,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         if (session.isLogin()) {
             //如果没有登录?
         }
-        String phoneNumber = session.user.phoneNumber;
+        String phoneNumber = session.user.mobile_number;
         app.getApi().getSiteUrl(phoneNumber, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {

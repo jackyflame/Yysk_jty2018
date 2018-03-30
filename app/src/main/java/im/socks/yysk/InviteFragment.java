@@ -52,7 +52,7 @@ public class InviteFragment extends Fragment {
 
     private void doSubmit() {
 
-        String phoneNumber = app.getSessionManager().getSession().user.phoneNumber;
+        String phoneNumber = app.getSessionManager().getSession().user.mobile_number;
         String code = inputInviteCodeView.getText().toString();
         app.getApi().submitInviteCode(phoneNumber, code, new YyskApi.ICallback<XBean>() {
             @Override

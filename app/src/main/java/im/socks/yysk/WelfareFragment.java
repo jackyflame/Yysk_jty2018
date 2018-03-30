@@ -333,7 +333,7 @@ public class WelfareFragment extends Fragment {
     private void updateInviteCode(final YyskApi.ICallback<String> cb) {
         inviteCodeView.setText("");
         if (app.getSessionManager().getSession().isLogin()) {
-            String phoneNumber = app.getSessionManager().getSession().user.phoneNumber;
+            String phoneNumber = app.getSessionManager().getSession().user.mobile_number;
             app.getApi().getInviteInfo(phoneNumber, new YyskApi.ICallback<XBean>() {
                 @Override
                 public void onResult(XBean result) {
@@ -470,7 +470,7 @@ public class WelfareFragment extends Fragment {
     private void rewardIntegral(String clicktype) {
         Session session = app.getSessionManager().getSession();
         if (session.isLogin()) {
-            String phoneNumber = session.user.phoneNumber;
+            String phoneNumber = session.user.mobile_number;
             //video,advert,sign
             app.getApi().rewardIntegral(phoneNumber, clicktype, new YyskApi.ICallback<XBean>() {
                 @Override
@@ -499,7 +499,7 @@ public class WelfareFragment extends Fragment {
         }
 
         Session session = app.getSessionManager().getSession();
-        String phoneNumber = session.user.phoneNumber;
+        String phoneNumber = session.user.mobile_number;
         app.getApi().getIntegralShopUrl(phoneNumber, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {

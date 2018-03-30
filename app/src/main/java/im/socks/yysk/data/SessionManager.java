@@ -76,42 +76,25 @@ public class SessionManager {
 
     }
 
-    /**
-     * @param id
-     * @param phoneNumber
-     */
-    public void onLogin(int id, String phoneNumber) {
-        onLogin(id,-1,null,phoneNumber,null,null,null,
-                null,null,null,null,null,null);
+    public void onLogin(XBean xBean,String phoneNumber,String psw){
+        xBean.put("mobile_number",phoneNumber);
+        xBean.put("password",psw);
+        onLogin(xBean);
     }
 
     public void onLogin(XBean xBean){
-        onLogin(xBean.getInteger("id"),xBean.getInteger("userType"),xBean.getString("username"),
-                xBean.getString("mobile_number"),xBean.getString("psw"),xBean.getString("email"),
-                xBean.getString("corporate_name"),xBean.getString("department"),xBean.getString("created"),
-                xBean.getString("last_login_time"),xBean.getString("invite_code"),xBean.getString("ss_pass"),
-                xBean.getString("token"));
+        User user = new User();
+        user.fill(xBean);
+        onLogin(user);
     }
 
-    public void onLogin(int id, int userType,String username,String mobile_number,String psw,
-                        String email,String corporate_name,String department,String created,
-                        String last_login_time,String invite_code,String ss_pass,String token) {
+    public void onLogin(User user) {
 
         session = new Session();
-        session.user.id = id;
-        session.user.user_type = userType;
-        session.user.username = username;
-        session.user.mobile_number = mobile_number;
-        session.user.email = email;
-        session.user.corporate_name = corporate_name;
-        session.user.department = department;
-        session.user.created = created;
-        session.user.last_login_time = last_login_time;
-        session.user.invite_code = invite_code;
-        session.user.ss_pass = ss_pass;
-        session.user.token = token;
-        session.user.psw = psw;
+        session.user = user;
         session.setLogin(true);
+
+        app.getApi().setMobileNumber(user.mobile_number);
 
         saveSession(session);
 
@@ -126,6 +109,7 @@ public class SessionManager {
     public void onLogout() {
         session = new Session();
         saveSession(session);
+        app.getApi().setMobileNumber(null);
         app.getEventBus().emit(Yysk.EVENT_LOGOUT, session, false);
 
         if (proxy!=null&&!proxy.isCustom) {

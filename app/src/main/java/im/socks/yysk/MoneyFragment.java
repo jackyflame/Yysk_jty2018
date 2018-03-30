@@ -54,7 +54,7 @@ public class MoneyFragment extends Fragment {
 
         contentView.setVisibility(View.GONE);
 
-        String phoneNumber = app.getSessionManager().getSession().user.phoneNumber;
+        String phoneNumber = app.getSessionManager().getSession().user.mobile_number;
 
         app.getApi().getUserProfile(phoneNumber, new YyskApi.ICallback<XBean>() {
             @Override

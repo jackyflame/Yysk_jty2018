@@ -21,6 +21,7 @@ import im.socks.yysk.App;
 import im.socks.yysk.EventBus;
 import im.socks.yysk.MyLog;
 import im.socks.yysk.Yysk;
+import im.socks.yysk.data.Session;
 import im.socks.yysk.util.IOUtil;
 import im.socks.yysk.util.Json;
 import im.socks.yysk.util.XBean;
@@ -29,18 +30,13 @@ import im.socks.yysk.vpn.VpnConfig;
 public class YyskApi {
 
     protected String deviceId;
-    /**
-     * 默认的api url
-     */
-    protected String defaultApiUrl = null;
+    protected String mobile_number;
 
-    /**
-     * 当前有效的url
-     */
+    /** 默认的api url */
+    protected String defaultApiUrl = null;
+    /** 当前有效的url */
     protected AtomicReference<String> apiUrl = new AtomicReference<>(null);
-    /**
-     * 用户设置的api url
-     */
+    /** 用户设置的api url */
     protected AtomicReference<String> customApiUrl = new AtomicReference<>(null);
 
     protected ExecutorService executor;
@@ -90,7 +86,6 @@ public class YyskApi {
         app.getEventBus().on(Yysk.EVENT_SETTINGS, eventListener);
     }
 
-
     protected void updateCustomApiUrl(XBean value) {
         if (value == null) {
             setCustomApiUrl(null);
@@ -112,7 +107,6 @@ public class YyskApi {
         destroy();
         super.finalize();
     }
-
 
     protected String buildDeviceId() {
         //参考：http://www.jianshu.com/p/b6f4b0aca6b0
@@ -176,6 +170,20 @@ public class YyskApi {
         }
     }
 
+    protected String getMobileNumber(){
+        if(mobile_number == null || mobile_number.isEmpty()){
+            Session session = app.getSessionManager().getSession();
+            if(session.isLogin()){
+                mobile_number = session.user.mobile_number;
+            }
+        }
+        return mobile_number;
+    }
+
+    public void setMobileNumber(String mobile_number){
+        mobile_number = mobile_number;
+    }
+
     /* 获取权限控制
     * userType: 用户类型 1 普通用户 测试环境不支持，先不使用该接口
     * 返回: 成功返回直接结果{"show_shop":"1", "show_pay":"1", "show_socksim":"1", "show_notice":"1"}，失败返回null
@@ -193,7 +201,7 @@ public class YyskApi {
       *  */
     public void createOrder(String strPhoneNum, String channel, int amount, ICallback<XBean> cb) {
         //FIXME 注意：参数的名字为amout，而不是amount，应该是后台拼写错误了
-        invoke("10005", "20005", new XBean("PhoneNumber", strPhoneNum, "channel", channel, "amout", "" + amount), cb);
+        invoke("10005", "20005", new XBean("mobile_number", strPhoneNum, "channel", channel, "amout", "" + amount), cb);
 
     }
 
@@ -212,23 +220,14 @@ public class YyskApi {
     * 返回值: 成功返回[{"authscheme":"","host":"","name":"","password":"","port":"","price":,"ssrObfs":"n","ssrProtocol":"","user":""}],失败返回null
     * */
     public void getProxyList(String strPhoneNum, ICallback<List<XBean>> cb) {
-        invoke("10014", "20014", new XBean("PhoneNumber", strPhoneNum), cb);
-    }
-
-    /* 用户登录
-    * strPhoneNum: 登录手机号
-    * String strPassword: 登录用户名
-    *  返回值: 成功返回{"retcode":"succ",  ##succ || fail, "error":"" },否则返回null
-    * */
-    public void login2(String strPhoneNum, String strPassword, final ICallback<XBean> cb) {
-        invoke("10020", "20020", new XBean("PhoneNumber", strPhoneNum, "Password", strPassword), cb);
+        invoke("10014", "20014", new XBean("mobile_number", strPhoneNum), cb);
     }
 
     public void login(String strPhoneNum, String strPassword, final ICallback<XBean> cb) {
         //如果仅仅执行登录，感觉没有做任何事情，什么都不返回，token也没有
-        //invoke("10020", "20020", new XBean("PhoneNumber", strPhoneNum, "Password", strPassword),cb);
-        final XBean loginParams = new XBean("PhoneNumber", strPhoneNum, "Password", strPassword);
-        final XBean profileParams = new XBean("PhoneNumber", strPhoneNum);
+        //invoke("10020", "20020", new XBean("mobile_number", strPhoneNum, "Password", strPassword),cb);
+        final XBean loginParams = new XBean("mobile_number", strPhoneNum, "Password", strPassword);
+        final XBean profileParams = new XBean("mobile_number", strPhoneNum);
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -263,7 +262,7 @@ public class YyskApi {
     *  返回值: 成功返回{"retcode":"succ",  ##succ || fail, "error":"" },否则返回null
     * */
     public void register(String strPhoneNum, String strPassword, String strVeryCode, ICallback<XBean> cb) {
-        invoke("10022", "20022", new XBean("PhoneNumber", strPhoneNum, "Password", strPassword, "VeryCode", strVeryCode), cb);
+        invoke("10022", "20022", strPhoneNum, new XBean("mobile_number", strPhoneNum, "Password", strPassword, "VeryCode", strVeryCode), cb);
     }
 
     /* 用户修改密码
@@ -272,7 +271,7 @@ public class YyskApi {
     * strVeryCode: 验证码
     * */
     public void changePassword(String strPhoneNum, String strPassword, String strVeryCode, ICallback<XBean> cb) {
-        invoke("10023", "20023", new XBean("PhoneNumber", strPhoneNum, "Password", strPassword, "VeryCode", strVeryCode), cb);
+        invoke("10023", "20023", new XBean("mobile_number", strPhoneNum, "Password", strPassword, "VeryCode", strVeryCode), cb);
     }
 
 
@@ -280,7 +279,7 @@ public class YyskApi {
     * strPhoneNum: 手机号
     * */
     public void getUserProfile(String strPhoneNum, ICallback<XBean> cb) {
-        invoke("10024", "20024", new XBean("PhoneNumber", strPhoneNum), cb);
+        invoke("10024", "20024", new XBean("mobile_number", strPhoneNum), cb);
 
     }
 
@@ -291,7 +290,7 @@ public class YyskApi {
      * @param cb
      */
     public void rewardIntegral(String strPhoneNum, String strClickType, ICallback<XBean> cb) {
-        invoke("10025", "20025", new XBean("PhoneNumber", strPhoneNum, "clicktype", strClickType), cb);
+        invoke("10025", "20025", new XBean("mobile_number", strPhoneNum, "clicktype", strClickType), cb);
 
     }
 
@@ -299,45 +298,45 @@ public class YyskApi {
     /*  获取积分商城免登陆url
     * strPhoneNum:  手机号
     * */
-    public void getIntegralShopUrl(String phoneNumber, ICallback<XBean> cb) {
-        invoke("10027", "20027", new XBean("PhoneNumber", phoneNumber), cb);
+    public void getIntegralShopUrl(String mobile_number, ICallback<XBean> cb) {
+        invoke("10027", "20027", new XBean("mobile_number", mobile_number), cb);
     }
 
     /*  获取公告信息
-    *  phoneNumber:  手机号
+    *  mobile_number:  手机号
     * */
-    public void getNoticeInfo(String phoneNumber, ICallback<XBean> cb) {
-        invoke("10029", "20029", new XBean("PhoneNumber", phoneNumber), cb);
+    public void getNoticeInfo(String mobile_number, ICallback<XBean> cb) {
+        invoke("10029", "20029", new XBean("mobile_number", mobile_number), cb);
     }
 
     /**
      * 获得验证码
      *
-     * @param phoneNumber
+     * @param mobile_number
      * @param cb
      */
-    public void getVerifyCode(String phoneNumber, ICallback<XBean> cb) {
-        invoke("10021", "20021", new XBean("PhoneNumber", phoneNumber), cb);
+    public void getVerifyCode(String mobile_number, ICallback<XBean> cb) {
+        invoke("10021", "20021", new XBean("mobile_number", mobile_number), cb);
     }
 
     /**
      * 获得后台系统的信息
      *
-     * @param phoneNumber
+     * @param mobile_number
      * @param cb
      */
-    public void getSystemInfo(String phoneNumber, ICallback<List<XBean>> cb) {
-        invoke("10035", "20035", new XBean("PhoneNumber", phoneNumber), cb);
+    public void getSystemInfo(String mobile_number, ICallback<List<XBean>> cb) {
+        invoke("10035", "20035", new XBean("mobile_number", mobile_number), cb);
     }
 
     /**
      * 获得官网的地址 {url:''}
      *
-     * @param phoneNumber
+     * @param mobile_number
      * @param cb
      */
-    public void getSiteUrl(String phoneNumber, ICallback<XBean> cb) {
-        invoke("10034", "20034", new XBean("PhoneNumber", phoneNumber), cb);
+    public void getSiteUrl(String mobile_number, ICallback<XBean> cb) {
+        invoke("10034", "20034", new XBean("mobile_number", mobile_number), cb);
     }
 
     /**
@@ -352,22 +351,22 @@ public class YyskApi {
     /**
      * 获得邀请码{}
      *
-     * @param phoneNumber
+     * @param mobile_number
      * @param cb
      */
-    public void getInviteInfo(String phoneNumber, ICallback<XBean> cb) {
-        invoke("10032", "20032", new XBean("PhoneNumber", phoneNumber), cb);
+    public void getInviteInfo(String mobile_number, ICallback<XBean> cb) {
+        invoke("10032", "20032", new XBean("mobile_number", mobile_number), cb);
     }
 
     /**
      * 输入邀请码，获得积分
      *
-     * @param phoneNumber
+     * @param mobile_number
      * @param code
      * @param cb
      */
-    public void submitInviteCode(String phoneNumber, String code, ICallback<XBean> cb) {
-        invoke("10033", "20033", new XBean("PhoneNumber", phoneNumber, "UserSk", code), cb);
+    public void submitInviteCode(String mobile_number, String code, ICallback<XBean> cb) {
+        invoke("10033", "20033", new XBean("mobile_number", mobile_number, "UserSk", code), cb);
     }
 
     public void getAppVersion(String version,ICallback<XBean> cb){
@@ -377,12 +376,12 @@ public class YyskApi {
     /**
      *
      * 获得推荐的url
-     * @param phoneNumber
+     * @param mobile_number
      * @param password
      * @param cb {errorcode:200,error:'',spreadurl:''}  200表示成功
      */
-    public void getSpreadInfo(String phoneNumber,String password,ICallback<XBean> cb){
-        invoke("10038","20083",new XBean("PhoneNumber",phoneNumber,"Password",password));
+    public void getSpreadInfo(String mobile_number,String password,ICallback<XBean> cb){
+        invoke("10038","20083",new XBean("mobile_number",mobile_number,"Password",password));
     }
 
     /**
@@ -409,11 +408,19 @@ public class YyskApi {
 
     }
 
-    protected <T> void invoke(final String msgId, final String ackMsgId, final XBean params, final ICallback<T> cb) {
+    protected <T> void invoke(String msgId, String ackMsgId, XBean params, ICallback<T> cb) {
+        String mobile_number = "";
+        if(params.isEmpty("mobile_number")){
+            mobile_number = getMobileNumber();
+        }
+        invoke(msgId,ackMsgId,mobile_number,params,cb);
+    }
+
+    protected <T> void invoke(final String msgId, final String ackMsgId, final String phoneNum, final XBean params, final ICallback<T> cb) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                final T result = invoke(msgId, ackMsgId, params);
+                final T result = invoke(msgId, ackMsgId, phoneNum, params);
                 if (cb != null) {
                     handler.post(new Runnable() {
                         @Override
@@ -426,9 +433,21 @@ public class YyskApi {
         });
     }
 
-    protected <T> T invoke(String msgId, String acKMsgId, XBean params) {
-        params.put("DeviceId", deviceId);
+    protected <T> T invoke(String msgId, String acKMsgId, XBean params){
+        String mobile_number = "";
+        if(params.isEmpty("mobile_number")){
+            mobile_number = getMobileNumber();
+        }
+        return invoke(msgId,acKMsgId,mobile_number,params);
+    }
+
+    protected <T> T invoke(String msgId, String acKMsgId, String phoneNum, XBean params) {
+        //设备ID
         params.put("deviceid", deviceId);
+        //如果参数存在电话号码则使用自带的
+        if(params.isEmpty("mobile_number")){
+            params.put("mobile_number", phoneNum);
+        }
         //先使用上一次成功的url
         String oldUrl = apiUrl.get();
         String url = null;
@@ -491,12 +510,12 @@ public class YyskApi {
 
         if (body != null) {
             String s = decode(body);
-            MyLog.d("invokeApi,url=%s,request=%s,response=%s", url, strJson, s);
+            MyLog.d("invokeApi ==>>\n url=%s;\nrequest=%s;\nresponse=%s", url, strJson, s);
             XBean rst = Json.parse(s, XBean.class);
             return rst;
         } else {
             //有错误
-            MyLog.d("invokeApi,url=%s,request=%s,response=%s", url, strJson, null);
+            MyLog.d("invokeApi ==>>\n url=%s;\nrequest=%s;\nresponse=%s", url, strJson, null);
             return null;
         }
 
@@ -561,7 +580,6 @@ public class YyskApi {
         }
     }
 
-
     public interface ICallback<T> {
         /**
          * 在UI线程执行
@@ -570,6 +588,5 @@ public class YyskApi {
          */
         void onResult(T result);
     }
-
 
 }

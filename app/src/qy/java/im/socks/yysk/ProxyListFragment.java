@@ -135,7 +135,7 @@ public class ProxyListFragment extends Fragment {
 
     private void doRefresh() {
         if (app.getSessionManager().getSession().isLogin()) {
-            String phoneNumber = app.getSessionManager().getSession().user.phoneNumber;
+            String phoneNumber = app.getSessionManager().getSession().user.mobile_number;
             app.getApi().getDZProxyList(phoneNumber, new YyskApi.ICallback<List<XBean>>() {
                 @Override
                 public void onResult(List<XBean> result) {

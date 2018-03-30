@@ -315,7 +315,7 @@ public class HomeFragment extends Fragment {
             dialog.setCancelable(false);
             dialog.setMessage("正在刷新...");
             dialog.show();
-            app.apiDZ.checkVpnUpdateVerson(session.user.phoneNumber, session.user.psw, new YyskApi.ICallback<XBean>() {
+            app.apiDZ.checkVpnUpdateVerson(session.user.mobile_number, session.user.password, new YyskApi.ICallback<XBean>() {
                 @Override
                 public void onResult(XBean result) {
                     if(result != null && result.isEquals("errorcode", "succ")){
@@ -326,7 +326,7 @@ public class HomeFragment extends Fragment {
                         //版本过低则更新
                         if(session.vpnVersion <= 0 || session.vpnVersion < vpnVersion){
                             //获取公司代理列表
-                            app.getApi().getDZProxyList(session.user.phoneNumber, new YyskApi.ICallback<List<XBean>>() {
+                            app.getApi().getDZProxyList(session.user.mobile_number, new YyskApi.ICallback<List<XBean>>() {
                                 @Override
                                 public void onResult(List<XBean> result) {
                                     if(result != null && result.size() > 0){
@@ -355,7 +355,7 @@ public class HomeFragment extends Fragment {
                 }
             });
             //检查过期时间
-            checkEndTime(session.user.phoneNumber);
+            checkEndTime(session.user.mobile_number);
         }else if(isClick == true){
             new AlertDialog.Builder(getContext())
                     .setTitle("提醒")

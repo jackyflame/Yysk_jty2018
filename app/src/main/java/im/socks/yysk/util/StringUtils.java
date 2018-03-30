@@ -1,6 +1,7 @@
 package im.socks.yysk.util;
 
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,4 +58,17 @@ public class StringUtils {
         return format.format(new Date(time));
     }
 
+    public static String getTextViewStr(TextView textView){
+        if(textView == null){
+            return "";
+        }
+        return textView.getText() != null ? textView.getText().toString() : "";
+    }
+
+    public static boolean isEmpty(String phoneNumber) {
+        if(phoneNumber == null || phoneNumber.isEmpty()){
+            return true;
+        }
+        return false;
+    }
 }

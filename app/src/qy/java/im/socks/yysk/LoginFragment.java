@@ -38,6 +38,8 @@ public class LoginFragment extends Fragment {
     private boolean isLoading = false;
 
     private XBean loginRst;
+    private String phoneNumber;
+    private String password;
 
 
     @Override
@@ -103,12 +105,17 @@ public class LoginFragment extends Fragment {
     }
 
     private void doLogin() {
-
-        final String phoneNumber = phoneNumberText.getText().toString();
-        final String password = passwordText.getText().toString();
-
+        phoneNumber = phoneNumberText.getText().toString();
+        password = passwordText.getText().toString();
+        if(StringUtils.isEmpty(phoneNumber)){
+            showError("请输入电话号码");
+            return;
+        }
+        if(StringUtils.isEmpty(password)){
+            showError("请输入密码");
+            return;
+        }
         YyskDZApi api = app.getApi();
-
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setCancelable(false);
         dialog.setMessage("正在登录...");
@@ -121,24 +128,16 @@ public class LoginFragment extends Fragment {
                 dialog.dismiss();
                 if (result != null) {
                     //登录成功后什么都不返回，正常的实现应该返回一个token，然后其他操作都通过这个token来调用api
-                    if (result.isEquals("retcode", "succ") ||
-                            result.isEquals("retcode", "binded")) {
+                    if (result.isEquals("status_code", 0)) {
                         //缓存登录信息
-                        loginRst = result;
-                        loginRst.put("account",phoneNumber);
-                        loginRst.put("password",password);
-                        //判断是否绑定(未绑定提示是否绑定)
-                        if(result.isEquals("retcode", "succ")){
-                            showBindDialog(phoneNumber,result);
-                        }else{
-                            //保存登录状态信息
-                            saveLoginRst();
-                            //当前的fragment不需要保留在stack了，所以为替代
-                            if ("show_money".equals(nextAction)) {
-                                getFragmentStack().show(MoneyFragment.newInstance(), null, true);
-                            } else {
-                                getFragmentStack().back();
-                            }
+                        loginRst = result.getXBean("data");
+                        //保存登录状态信息
+                        saveLoginRst(phoneNumber,password);
+                        //当前的fragment不需要保留在stack了，所以为替代
+                        if ("show_money".equals(nextAction)) {
+                            getFragmentStack().show(MoneyFragment.newInstance(), null, true);
+                        } else {
+                            getFragmentStack().back();
                         }
                     } else {
                         //登录失败，显示错误信息
@@ -235,7 +234,7 @@ public class LoginFragment extends Fragment {
                         //提示成功
                         Toast.makeText(getContext(),"终端绑定成功",Toast.LENGTH_SHORT).show();
                         //保存登录状态信息
-                        saveLoginRst();
+                        saveLoginRst(phoneNumber,password);
                         //返回主页面
                         getFragmentStack().back();
                     }else{
@@ -248,12 +247,12 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void saveLoginRst(){
+    private void saveLoginRst(String phoneNum,String psw){
         //判断是否登录成功
-        if(loginRst == null || (loginRst.isEquals("retcode", "succ") || loginRst.isEquals("retcode", "binded")) == false){
+        if(loginRst == null || loginRst.isEquals("retcode", "succ")){
             return;
         }
         //保存登录状态信息
-        app.getSessionManager().onLogin(loginRst);
+        app.getSessionManager().onLogin(loginRst,phoneNum,psw);
     }
 }

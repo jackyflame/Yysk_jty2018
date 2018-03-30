@@ -259,7 +259,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        String phoneNumber = app.getSessionManager().getSession().user.phoneNumber;
+                        String phoneNumber = app.getSessionManager().getSession().user.mobile_number;
                         final String channel = which == 0 ? "wx" : "alipay";
 
                         //如果是微信，需要先安装，否则支付不了

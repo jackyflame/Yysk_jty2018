@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import im.socks.yysk.api.YyskApi;
+import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -21,13 +22,14 @@ import im.socks.yysk.util.XBean;
 public class RegisterFragment extends Fragment {
 
     private PageBar title_bar;
+    private EditText edt_inviteCode;
     private EditText phoneNumberText;
     private EditText verifyCodeText;
     private EditText passwordText;
     private Button registerButton;
     private Button sendVerifyCodeButton;
 
-    private final App app = Yysk.app;
+    private final AppDZ app = Yysk.app;
 
     @Nullable
     @Override
@@ -40,6 +42,7 @@ public class RegisterFragment extends Fragment {
                 getFragmentStack().back();
             }
         });
+        edt_inviteCode = view.findViewById(R.id.edt_inviteCode);
         phoneNumberText = view.findViewById(R.id.phoneNumberText);
         verifyCodeText = view.findViewById(R.id.verifyCodeText);
         passwordText = view.findViewById(R.id.passwordText);
@@ -92,9 +95,10 @@ public class RegisterFragment extends Fragment {
     }
 
     private void doRegister() {
-        final String phoneNumber = phoneNumberText.getText().toString();
-        String verifyCode = verifyCodeText.getText().toString();
-        final String password = passwordText.getText().toString();
+        String inviteCode = StringUtils.getTextViewStr(edt_inviteCode);
+        final String phoneNumber = StringUtils.getTextViewStr(phoneNumberText);
+        String verifyCode = StringUtils.getTextViewStr(verifyCodeText);
+        final String password = StringUtils.getTextViewStr(passwordText);
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("正在注册...");
         dialog.show();
@@ -116,7 +120,7 @@ public class RegisterFragment extends Fragment {
         });
     }
 
-    private void doLogin(final String phoneNumber, String password, final ProgressDialog dialog) {
+    private void doLogin(final String phoneNumber, final String password, final ProgressDialog dialog) {
         boolean autoLogin = true;
         if (autoLogin) {
             dialog.setMessage("正在登录...");
@@ -128,7 +132,7 @@ public class RegisterFragment extends Fragment {
                     if (result != null) {
                         if (result.isEquals("retcode", "succ")) {
                             getFragmentStack().show(null, "main", true);
-                            app.getSessionManager().onLogin(result.getString("uuid"), phoneNumber);
+                            app.getSessionManager().onLogin(result, phoneNumber, password);
                         } else {
                             //错误
                             showError("自动登录失败:" + result.getString("error"));
