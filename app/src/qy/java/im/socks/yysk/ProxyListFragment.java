@@ -142,10 +142,11 @@ public class ProxyListFragment extends Fragment {
                 public void onResult(XBean result) {
                     MyLog.d("getDZProxyList=%s", result);
                     if(result != null && result.hasKeys("data")){
-                        displayProxyList(result.<XBean>getList("data"));
+                        List<XBean> proxList = result.getList("data");
+                        displayProxyList(proxList);
                         //保存最新列表
-                        if (result != null) {
-                            app.getDzProxyManager().save(result);
+                        if (proxList != null) {
+                            app.getDzProxyManager().save(proxList);
                         }
                     }
                 }
@@ -154,7 +155,6 @@ public class ProxyListFragment extends Fragment {
             recyclerView.setVisibility(View.GONE);
             errorView.setVisibility(View.GONE);
             loginView.setVisibility(View.VISIBLE);
-
         }
 
     }
@@ -173,11 +173,11 @@ public class ProxyListFragment extends Fragment {
         }else{
             List<XBean> displayList = combineProxListData(result);
             if (displayList != null && adapter != null) {
-                adapter.setItems(displayList);
                 refreshLayout.finishRefresh(true);
                 errorView.setVisibility(View.GONE);
                 loginView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                adapter.setItems(displayList);
                 Toast.makeText(getContext(),"为了获得准确的ping时间，建议先断开vpn连接",Toast.LENGTH_LONG).show();
             }
         }
