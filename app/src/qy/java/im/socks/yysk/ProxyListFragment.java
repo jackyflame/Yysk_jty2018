@@ -157,13 +157,15 @@ public class ProxyListFragment extends Fragment {
     }
 
     private void displayProxyList(List<XBean> result){
-        //测试国家
-        if(result != null && result.size() > 0){
-            result.get(0).set("title",true);
-        }
+        ////测试国家
+        //if(result != null && result.size() > 0){
+        //    result.get(0).set("title",true);
+        //}
 
-        if (result != null && adapter != null) {
-            adapter.setItems(result);
+        List<XBean> displayList = combineProxListData(result);
+
+        if (displayList != null && adapter != null) {
+            adapter.setItems(displayList);
             refreshLayout.finishRefresh(true);
             errorView.setVisibility(View.GONE);
             loginView.setVisibility(View.GONE);
@@ -177,6 +179,27 @@ public class ProxyListFragment extends Fragment {
             loginView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
         }
+    }
+
+    private List<XBean> combineProxListData(List<XBean> resultList){
+        List<XBean> displayList = new ArrayList<>();
+        if(resultList == null || resultList.size() == 0){
+            return displayList;
+        }
+        for(XBean item:resultList){
+            List<XBean> nodes = item.getList("nodes");
+            if(nodes == null || nodes.size() == 0){
+                continue;
+            }else{
+                String state_region = item.getString("state_region");
+                String img = item.getString("img");
+                nodes.get(0).put("title",true);
+                nodes.get(0).put("stateName",state_region);
+                nodes.get(0).put("stateImage",img);
+                resultList.addAll(nodes);
+            }
+        }
+        return displayList;
     }
 
     @Override
@@ -346,25 +369,20 @@ public class ProxyListFragment extends Fragment {
         private LinearLayout lin_title;
         private ImageView img_nation;
         private TextView txv_nation;
-
         private TextView txv_name;
         private TextView txv_speed;
 
         public ProxyHolder(View itemView) {
             super(itemView);
             init();
-
         }
 
         private void init() {
-
             lin_title = itemView.findViewById(R.id.lin_title);
             img_nation = itemView.findViewById(R.id.img_nation);
             txv_nation = itemView.findViewById(R.id.txv_nation);
-
             txv_name = itemView.findViewById(R.id.txv_name);
             txv_speed = itemView.findViewById(R.id.txv_speed);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -375,11 +393,10 @@ public class ProxyListFragment extends Fragment {
 
         public void bind(XBean data) {
             this.data = data;
-
             if(data.getBoolean("title",false) == true){
                 lin_title.setVisibility(View.VISIBLE);
                 //img_nation
-                //txv_nation.setText("国家");
+                txv_nation.setText(data.getString("stateName"));
             }else{
                 lin_title.setVisibility(View.GONE);
             }
@@ -389,26 +406,14 @@ public class ProxyListFragment extends Fragment {
 
         private void onSelect() {
             //发出一个事件，然后HomeFragment就可以监听到了
-            //Yysk.getProxyManager().select(data);
-
-
             Proxy proxy = new Proxy();
-            //proxy.id="";
             proxy.name = data.getString("name");
             proxy.data = data;
             proxy.isCustom = false;
-
-            //如果没有登录，返回的是deviceId
-            //如果登录了，返回的是phoneNumber
-            //proxy.phoneNumber = data.getString("user");
-
             //所在的activity需要实现onActivityResult => app.getVpn().onActivityResult()
-
             Activity activity = getActivity();
             getFragmentStack().back();
-
             app.getSessionManager().setProxy(activity, proxy, isReloadVpn);
-
         }
     }
 
