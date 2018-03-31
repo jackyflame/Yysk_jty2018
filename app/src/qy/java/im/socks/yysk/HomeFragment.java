@@ -33,6 +33,7 @@ import java.util.TimerTask;
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.Proxy;
 import im.socks.yysk.data.Session;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 import im.socks.yysk.vpn.IYyskService;
@@ -326,16 +327,19 @@ public class HomeFragment extends Fragment {
                         //版本过低则更新
                         if(session.vpnVersion <= 0 || session.vpnVersion < vpnVersion){
                             //获取公司代理列表
-                            app.getApi().getDZProxyList(session.user.mobile_number, new YyskApi.ICallback<List<XBean>>() {
+                            app.getApi().getDZProxyList(session.user.mobile_number, new YyskApi.ICallback<XBean>() {
                                 @Override
-                                public void onResult(List<XBean> result) {
-                                    if(result != null && result.size() > 0){
-                                        //缓存列表
-                                        app.getDzProxyManager().save(result);
-                                        //更新版本
-                                        app.getSessionManager().onVpnVerCheck(vpnVersion,companyid);
-                                        //自动设置默认代理
-                                        setDefaultProxy(result);
+                                public void onResult(XBean result) {
+                                    if(result != null && result.hasKeys("data")){
+                                        List<XBean> porxList = result.getList("data");
+                                        if(porxList != null && porxList.size() > 0){
+                                            //缓存列表
+                                            app.getDzProxyManager().save(porxList);
+                                            //更新版本
+                                            app.getSessionManager().onVpnVerCheck(vpnVersion,companyid);
+                                            ////自动设置默认代理
+                                            //setDefaultProxy(result);
+                                        }
                                     }
                                 }
                             });

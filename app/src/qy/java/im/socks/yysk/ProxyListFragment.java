@@ -26,6 +26,7 @@ import java.util.List;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.Proxy;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -136,14 +137,16 @@ public class ProxyListFragment extends Fragment {
     private void doRefresh() {
         if (app.getSessionManager().getSession().isLogin()) {
             String phoneNumber = app.getSessionManager().getSession().user.mobile_number;
-            app.getApi().getDZProxyList(phoneNumber, new YyskApi.ICallback<List<XBean>>() {
+            app.getApi().getDZProxyList(phoneNumber, new YyskApi.ICallback<XBean>() {
                 @Override
-                public void onResult(List<XBean> result) {
+                public void onResult(XBean result) {
                     MyLog.d("getDZProxyList=%s", result);
-                    displayProxyList(result);
-                    //保存最新列表
-                    if (result != null) {
-                        app.getDzProxyManager().save(result);
+                    if(result != null && result.hasKeys("data")){
+                        displayProxyList(result.<XBean>getList("data"));
+                        //保存最新列表
+                        if (result != null) {
+                            app.getDzProxyManager().save(result);
+                        }
                     }
                 }
             });
@@ -161,23 +164,22 @@ public class ProxyListFragment extends Fragment {
         //if(result != null && result.size() > 0){
         //    result.get(0).set("title",true);
         //}
-
-        List<XBean> displayList = combineProxListData(result);
-
-        if (displayList != null && adapter != null) {
-            adapter.setItems(displayList);
-            refreshLayout.finishRefresh(true);
-            errorView.setVisibility(View.GONE);
-            loginView.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            Toast.makeText(getContext(),"为了获得准确的ping时间，建议先断开vpn连接",Toast.LENGTH_LONG).show();
-        } else {
-            //adapter.setItems();
+        if(result == null){
             refreshLayout.finishRefresh(true);
             errorView.setText("获得代理列表失败");
             errorView.setVisibility(View.VISIBLE);
             loginView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
+        }else{
+            List<XBean> displayList = combineProxListData(result);
+            if (displayList != null && adapter != null) {
+                adapter.setItems(displayList);
+                refreshLayout.finishRefresh(true);
+                errorView.setVisibility(View.GONE);
+                loginView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                Toast.makeText(getContext(),"为了获得准确的ping时间，建议先断开vpn连接",Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -196,7 +198,7 @@ public class ProxyListFragment extends Fragment {
                 nodes.get(0).put("title",true);
                 nodes.get(0).put("stateName",state_region);
                 nodes.get(0).put("stateImage",img);
-                resultList.addAll(nodes);
+                displayList.addAll(nodes);
             }
         }
         return displayList;
