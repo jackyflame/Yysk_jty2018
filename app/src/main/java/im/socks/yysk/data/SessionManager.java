@@ -218,4 +218,7 @@ public class SessionManager {
         }
     }
 
+    public void updateSession(){
+        saveSession(session);
+    }
 }

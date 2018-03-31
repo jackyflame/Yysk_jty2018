@@ -235,13 +235,22 @@ public class YyskApi {
                 new XBean("mobile_number", strPhoneNum, "password", strPassword, "verification_code", strVeryCode,"activation_code",inviteCode), cb);
     }
 
+    /* 用户找回密码
+    * strPhoneNum: 手机号
+    * strPassword: 密码
+    * strVeryCode: 验证码
+    * */
+    public void findBackPassword(String strPhoneNum, String strPassword, String strVeryCode, ICallback<XBean> cb) {
+        invoke("10023", "20023", new XBean("mobile_number", strPhoneNum, "new_password", strPassword, "verification_code", strVeryCode), cb);
+    }
+
     /* 用户修改密码
     * strPhoneNum: 手机号
     * strPassword: 密码
     * strVeryCode: 验证码
     * */
-    public void changePassword(String strPhoneNum, String strPassword, String strVeryCode, ICallback<XBean> cb) {
-        invoke("10023", "20023", new XBean("mobile_number", strPhoneNum, "new_password", strPassword, "verification_code", strVeryCode), cb);
+    public void changePassword(String old_password, String new_password, ICallback<XBean> cb) {
+        invoke("10028", "20028", new XBean("old_password", old_password, "new_password", new_password), cb);
     }
 
 

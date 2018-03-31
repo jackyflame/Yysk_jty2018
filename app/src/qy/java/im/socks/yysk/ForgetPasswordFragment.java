@@ -21,6 +21,8 @@ import im.socks.yysk.util.XRspBean;
  */
 
 public class ForgetPasswordFragment extends Fragment {
+
+    private PageBar title_bar;
     private EditText phoneNumberView;
     private EditText verifyCodeView;
     private EditText passwordView;
@@ -34,6 +36,15 @@ public class ForgetPasswordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forget_password_dz, container, false);
+
+        title_bar = view.findViewById(R.id.title_bar);
+        title_bar.setBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentStack().back();
+            }
+        });
+
         phoneNumberView = view.findViewById(R.id.phoneNumberView);
         verifyCodeView = view.findViewById(R.id.verifyCodeView);
         passwordView = view.findViewById(R.id.passwordView);
@@ -88,7 +99,7 @@ public class ForgetPasswordFragment extends Fragment {
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("正在修改密码...");
         dialog.show();
-        app.getApi().changePassword(phoneNumber, newPassword, verifyCode, new YyskApi.ICallback<XBean>() {
+        app.getApi().findBackPassword(phoneNumber, newPassword, verifyCode, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
                 MyLog.d("changePassword=%s",result);

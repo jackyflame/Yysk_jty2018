@@ -114,7 +114,7 @@
         <include layout="@layout/line"/>
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/btn_reset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_xl"

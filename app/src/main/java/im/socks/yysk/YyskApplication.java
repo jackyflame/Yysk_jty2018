@@ -9,11 +9,16 @@ import android.app.Application;
 
 public class YyskApplication extends Application {
 
+    private static YyskApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Yysk.app.init(this);
+        instance = this;
     }
 
-
+    public static YyskApplication getInstatnce(){
+        return instance;
+    }
 }
