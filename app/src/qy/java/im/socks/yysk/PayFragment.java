@@ -2,6 +2,7 @@ package im.socks.yysk;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +30,8 @@ import java.util.List;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.util.Json;
+import im.socks.yysk.util.NetUtil;
+import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 
 
@@ -39,11 +42,13 @@ public class PayFragment extends Fragment implements View.OnClickListener{
     private TextView btn_left;
     private TextView btn_center;
     private TextView btn_right;
-    private final App app = Yysk.app;
+    private final AppDZ app = Yysk.app;
 
-    private List<XBean> leftList = new ArrayList<>();;
-    private List<XBean> centerList = new ArrayList<>();;
-    private List<XBean> rightList = new ArrayList<>();;
+    private List<XBean> leftList = new ArrayList<>();
+    private List<XBean> centerList = new ArrayList<>();
+    private List<XBean> rightList = new ArrayList<>();
+
+    private ProgressDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,24 +64,51 @@ public class PayFragment extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
-        initListData();
-
         adapter = new AdapterImpl(getActivity());
-        adapter.setItems(leftList);
         recyclerView.setAdapter(adapter);
+
+        initListData(null);
 
         SmartRefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(true);
+                initListData(refreshlayout);
             }
         });
 
         return view;
     }
 
-    private void initListData(){
+    private void initListData(final RefreshLayout refreshlayout){
+        if(refreshlayout == null){
+            dialog = new ProgressDialog(getContext());
+            dialog.setMessage("获取资费中...");
+            dialog.show();
+        }
+        app.getApi().getOrderList(new YyskApi.ICallback<List<XBean>>() {
+            @Override
+            public void onResult(List<XBean> result) {
+                if(dialog != null){
+                    dialog.dismiss();
+                }
+                if(refreshlayout != null){
+                    refreshlayout.finishRefresh(true);
+                }
+                if(result != null){
+                    if(result.size() == 0){
+                        adapter.setItems(null);
+                    }else{
+                        handleDataList(result);
+                    }
+                }else{
+                    StringUtils.showToast("获取资费信息失败，请稍后再试");
+                }
+            }
+        });
+    }
+
+    private void initListTestData(){
         //普通套餐：amount表示金额，单位为分
         leftList.clear();
         leftList.add(new XBean("title", "描述：支持网页浏览加速服务。", "msg", "支持使用Google等互联网基础服务，网页浏览，包括网页搜索、社交网站等，不支持油管等视频；"));
@@ -98,6 +130,75 @@ public class PayFragment extends Fragment implements View.OnClickListener{
         rightList.add(new XBean("name", "季度套餐", "price", "114元", "amount", 11400));
         rightList.add(new XBean("name", "半年套餐", "price", "216元", "amount", 21600));
         rightList.add(new XBean("name", "年度套餐", "price", "418元", "amount", 41800));
+
+        adapter.setItems(leftList);
+    }
+
+    private void handleDataList(List<XBean> result){
+        for (int i=0;i<result.size() && i<3;i++){
+            XBean item = result.get(i);
+            if(i == 0){
+                packgeOrderList(item,leftList,btn_left);
+            }else if(i==1){
+                packgeOrderList(item,centerList,btn_center);
+            }else if(i==2){
+                packgeOrderList(item,rightList,btn_right);
+            }
+        }
+    }
+
+    private void packgeOrderList(XBean bean,List<XBean> list,TextView btn){
+        if(bean == null){
+            list.clear();
+        }else{
+            //设置按钮名字
+            String packgeName = bean.getString("name");
+            if(packgeName != null){
+                btn.setText(packgeName);
+            }
+            //标题行
+            XBean title = new XBean();
+            title.put("title","描述：" + bean.getString("description"));
+            title.put("msg",bean.getString("support"));
+            list.add(title);
+            //包月套餐
+            XBean packgeMonth = new XBean();
+            packgeMonth.put("name","包月套餐");
+            packgeMonth.put("packgeName",packgeName);
+            packgeMonth.put("id",bean.getInteger("id",-1));
+            packgeMonth.put("price",bean.getString("monthly")+"元");
+            packgeMonth.put("amount",bean.getFloat("monthly",0f) * 100);
+            list.add(packgeMonth);
+            //季度套餐
+            XBean packgeQuarter = new XBean();
+            packgeQuarter.put("name","季度套餐");
+            packgeMonth.put("packgeName",packgeName);
+            packgeMonth.put("id",bean.getInteger("id",-1));
+            packgeQuarter.put("price",bean.getString("packet_quarter")+"元");
+            packgeQuarter.put("amount",bean.getFloat("packet_quarter",0f) * 100);
+            list.add(packgeQuarter);
+            //半年套餐
+            XBean packgeHalfYear = new XBean();
+            packgeHalfYear.put("name","半年套餐");
+            packgeMonth.put("packgeName",packgeName);
+            packgeMonth.put("id",bean.getInteger("id",-1));
+            packgeHalfYear.put("price",bean.getString("half_year")+"元");
+            packgeHalfYear.put("amount",bean.getFloat("half_year",0f) * 100);
+            list.add(packgeHalfYear);
+            //年度套餐
+            XBean packgeYear = new XBean();
+            packgeYear.put("name","年度套餐");
+            packgeMonth.put("packgeName",packgeName);
+            packgeMonth.put("id",bean.getInteger("id",-1));
+            packgeYear.put("price",bean.getString("yearly")+"元");
+            packgeYear.put("amount",bean.getFloat("yearly",0f) * 100);
+            list.add(packgeYear);
+            //设置默认选择
+            boolean is_default = bean.getBoolean("is_default",false);
+            if(is_default){
+                btn.performClick();
+            }
+        }
     }
 
     private FragmentStack getFragmentStack() {
@@ -156,20 +257,6 @@ public class PayFragment extends Fragment implements View.OnClickListener{
 
     private void showMessage(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
-    }
-
-    private void showAlert2(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(msg);
-        builder.setPositiveButton("关闭", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // dialog.dismiss();
-
-            }
-        });
-        builder.setCancelable(true);
-        builder.show();
     }
 
     private static boolean isWeixinInstalled(Context context) {
@@ -247,8 +334,6 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             }
         }
 
-
-
         private void doBuy() {
             if (!app.getSessionManager().getSession().isLogin()) {
                 getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
@@ -270,14 +355,17 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                                 return;
                             }
                         }
-                        app.getApi().createOrder(phoneNumber, channel, data.getInteger("amount"), new YyskApi.ICallback<XBean>() {
+                        int id = data.getInteger("id",-1);
+                        int amount = data.getInteger("amount",0);
+                        String subject = data.getString("packgeName");
+                        String body = data.getString("name");
+                        app.getApi().createOrder(id, channel, amount, subject, body,new YyskApi.ICallback<XBean>() {
                             @Override
                             public void onResult(XBean result) {
                                 MyLog.d("createOrder=%s",result);
-                                //然后打开支付宝执行支付？
-                                //或者调用微信执行支付
-                                if (result != null) {
-                                    XBean charge = result.getXBean("charge");
+                                //然后打开支付宝执行支付？ 或者调用微信执行支付
+                                if (NetUtil.checkAndHandleRsp(result,getContext(),"购买失败",null)) {
+                                    XBean charge = result.getXBean("data");
                                     if (charge != null) {
                                         //创建订单成功
                                         //String orderNo = charge.getString("order_no");
@@ -285,9 +373,6 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                                     } else {
                                         showMessage("购买失败：" + result.getString("error"));
                                     }
-                                } else {
-                                    //
-                                    showMessage("购买失败，请检查网络后再次尝试");
                                 }
                             }
                         });
@@ -305,14 +390,14 @@ public class PayFragment extends Fragment implements View.OnClickListener{
 
         private void doPay(XBean data) {
             //除QQ钱包外，其他渠道调起支付方式：
-//参数一：Activity 表示当前调起支付的Activity
-//参数二：data 表示获取到的charge或order的JSON字符串
+            //参数一：Activity 表示当前调起支付的Activity
+            //参数二：data 表示获取到的charge或order的JSON字符串
             Pingpp.createPayment(PayFragment.this, Json.stringify(data));
 
 
-//QQ钱包调用方式(注：调起支付时，需要签名打包成apk)
-//“qwalletXXXXXXX”需与AndroidManifest.xml中的data值一致
-//建议填写规则:qwallet + APP_ID
+            //QQ钱包调用方式(注：调起支付时，需要签名打包成apk)
+            //“qwalletXXXXXXX”需与AndroidManifest.xml中的data值一致
+            //建议填写规则:qwallet + APP_ID
             //Pingpp.createPayment(getActivity(), Json.stringify(data), "qwalletXXXXXXX");
         }
 
@@ -382,7 +467,9 @@ public class PayFragment extends Fragment implements View.OnClickListener{
 
         public void setItems(List<XBean> items) {
             this.items.clear();
-            this.items.addAll(items);
+            if(items != null){
+                this.items.addAll(items);
+            }
             notifyDataSetChanged();
         }
     }

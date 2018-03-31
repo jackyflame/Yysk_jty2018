@@ -99,4 +99,11 @@ public class StringUtils {
         //或者显示对话框
         Toast.makeText(YyskApplication.getInstatnce(), msg, Toast.LENGTH_LONG).show();
     }
+
+    public static double getDoubleValue(String monthly) {
+        if(TextUtils.isDigitsOnly(monthly)){
+            return Double.valueOf(monthly);
+        }
+        return 0;
+    }
 }

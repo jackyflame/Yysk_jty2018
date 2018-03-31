@@ -72,11 +72,18 @@ public class YyskDZApi extends YyskApi {
         invoke("10044","20044",new XBean("account",account),cb);
     }
 
-    /* 获取企业用户专用节点
+    /** 获取企业用户专用节点
     * strPhoneNum: 登录手机号
     * 返回值: 成功返回[{"authscheme":"","host":"","name":"","password":"","port":"","price":,"ssrObfs":"n","ssrProtocol":"","user":""}],失败返回null
     * */
     public void getDZProxyList(String strPhoneNum, ICallback<List<XBean>> cb) {
         invoke("10042", "20042", new XBean("account", strPhoneNum), cb);
+    }
+
+    /**
+     * 获取资费套餐列表
+     * */
+    public void getOrderList(ICallback<List<XBean>> cb){
+        invoke("10045", "20045", new XBean(), cb);
     }
 }
