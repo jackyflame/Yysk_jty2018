@@ -17,7 +17,6 @@ import im.socks.yysk.api.YyskDZApi;
 import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
-import im.socks.yysk.util.XRspBean;
 
 /**
  * Created by Android Studio.

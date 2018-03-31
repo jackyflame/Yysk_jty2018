@@ -240,8 +240,8 @@ public class YyskApi {
     * strPassword: 密码
     * strVeryCode: 验证码
     * */
-    public void changePassword(String strPhoneNum, String strPassword, String strVeryCode, ICallback<XRspBean> cb) {
-        invoke("10023", "20023", new XBean("mobile_number", strPhoneNum, "Password", strPassword, "VeryCode", strVeryCode), cb);
+    public void changePassword(String strPhoneNum, String strPassword, String strVeryCode, ICallback<XBean> cb) {
+        invoke("10023", "20023", new XBean("mobile_number", strPhoneNum, "new_password", strPassword, "verification_code", strVeryCode), cb);
     }
 
 
