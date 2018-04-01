@@ -22,6 +22,11 @@ public class User implements Json.IJsonable<XBean> {
     public String ss_pass;//加密密码
     public String token;//token
 
+    public String expiring_time;//过期时间
+    public XBean tariff_package;//购买包
+    public int terminal_no;
+    public boolean is_active;//是否激活
+
     public User() {
     }
 
@@ -35,7 +40,8 @@ public class User implements Json.IJsonable<XBean> {
     public XBean toJson() {
         return new XBean("id", id, "user_type", user_type,  "username", username, "mobile_number", mobile_number,
                 "password", password, "email",email, "corporate_name",corporate_name,"department",department,"created",created,
-                "last_login_time",last_login_time,"invite_code",invite_code,"ss_pass",ss_pass,"token",token
+                "last_login_time",last_login_time,"invite_code",invite_code,"ss_pass",ss_pass,"token",token,
+                "expiring_time",expiring_time,"tariff_package",tariff_package,"terminal_no",terminal_no,"is_active",is_active
         );
     }
 
@@ -54,6 +60,10 @@ public class User implements Json.IJsonable<XBean> {
         invite_code = bean.getString("invite_code", null);
         ss_pass = bean.getString("ss_pass", null);
         token = bean.getString("token", null);
+        expiring_time = bean.getString("expiring_time", null);
+        tariff_package = bean.getXBean("tariff_package");
+        terminal_no = bean.getInteger("terminal_no", -1);
+        is_active = bean.getBoolean("is_active", false);
         return true;
     }
 }

@@ -65,12 +65,12 @@ public class HomeFragment extends Fragment {
             if (Yysk.EVENT_LOGIN.equals(name)) {
                 //checkVpnUpdate(false);
             } else if (Yysk.EVENT_LOGOUT.equals(name)) {
-                //updateMe(false);
+                updateMe();
             } else if (Yysk.EVENT_PROXY_CHANGED.equals(name)) {
                 updateProxy((Proxy) data);
             }else if(Yysk.EVENT_PAY_SUCCESS.equals(name)||Yysk.EVENT_PAY_FAIL.equals(name)){
-                ////充值成功或者失败都更新一次
-                //updateMe(false);
+                //充值成功或者失败都更新一次
+                updateMe();
             }
         }
     };
@@ -107,9 +107,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 updateVpnStatus();
+                updateMe();
                 //updateProxy(app.getSessionManager().newProxy());
                 refreshlayout.finishRefresh(true);
-                //refreshlayout.finishRefresh(3000,true);
             }
         });
     }
@@ -382,6 +382,24 @@ public class HomeFragment extends Fragment {
                 .show();
     }
 
+    private void updateMe(){
+        if(app.getSessionManager().isUserInfoNeedUdate()){
+            app.getApi().getUserInfo(new YyskApi.ICallback<XBean>() {
+                @Override
+                public void onResult(XBean result) {
+                    if(NetUtil.checkAndHandleRsp(result,getContext(),"获取个人信息失败",null)){
+                        XBean userInfo = NetUtil.getRspData(result);
+                        app.getSessionManager().onUserInfoUpdate(userInfo);
+                        String expertTime = userInfo.getString("expiring_time");
+                        txv_endtime.setText(expertTime);
+                    }
+                }
+            });
+        }else{
+            String expertTime = app.getSessionManager().getSession().user.expiring_time;
+            txv_endtime.setText(expertTime);
+        }
+    }
     //========================================
     private IYyskService yyskService;
     private int vpnStatus;
@@ -517,4 +535,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    /*---------------------------------------------------------------------*/
 }

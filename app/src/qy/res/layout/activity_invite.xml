@@ -98,7 +98,7 @@
         android:layout_weight="1">
 
         <Button
-            android:id="@+id/btn_next"
+            android:id="@+id/btn_invite"
             android:layout_width="match_parent"
             android:layout_height="@dimen/btn_height"
             android:layout_alignParentBottom="true"

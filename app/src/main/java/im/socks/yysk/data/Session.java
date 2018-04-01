@@ -23,6 +23,9 @@ public class Session implements Json.IJsonable<XBean> {
     /**vpn列表最后更新时间*/
     public long vpnUpdateTime;
 
+    /**UserInfo最后更新时间*/
+    public long userUpdateTime;
+
     public Session() {
     }
 

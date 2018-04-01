@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">神灯</string>
+    <string name="app_name">易加速</string>
     <string name="invite_regist_tips">邀请1位好友加入后，TA可获得时长3天的VIP免\n费网络加速服务，同样你可获得1天的服务。</string>
     <string name="invite_pay_tips">邀请好友并完成首单消费后，即可额外获得时\n长1天的SVIP免费网络加速服务。</string>
 </resources>

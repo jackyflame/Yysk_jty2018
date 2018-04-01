@@ -9,6 +9,7 @@ import im.socks.yysk.MyLog;
 import im.socks.yysk.Yysk;
 import im.socks.yysk.util.IOUtil;
 import im.socks.yysk.util.Json;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -92,6 +93,7 @@ public class SessionManager {
 
         session = new Session();
         session.user = user;
+        session.userUpdateTime = 0;
         session.setLogin(true);
 
         app.getApi().setMobileNumber(user.mobile_number);
@@ -220,5 +222,27 @@ public class SessionManager {
 
     public void updateSession(){
         saveSession(session);
+    }
+
+    public void onUserInfoUpdate(XBean userInfo){
+        if(session == null || userInfo == null){
+            return;
+        }
+        User user = new User();
+        user.fill(userInfo);
+        session.user = user;
+        session.userUpdateTime = System.currentTimeMillis();
+        saveSession(session);
+    }
+
+    public boolean isUserInfoNeedUdate(){
+        if(session == null || session.user == null){
+            return true;
+        }
+        //超过5分钟
+        if((System.currentTimeMillis() - session.userUpdateTime) < 1000*60*5){
+            return false;
+        }
+        return true;
     }
 }

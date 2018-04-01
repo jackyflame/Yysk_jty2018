@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.Session;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 
 
@@ -115,7 +116,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         }else if (id == R.id.btn_msgs) {
             startActivity(new Intent(getContext(),SystemMsgActivity.class));
         } else if (id == R.id.btn_feedback) {
-            startActivity(new Intent(getContext(),FeedbackActivity.class));
+            //startActivity(new Intent(getContext(),FeedbackActivity.class));
+            String url = "https://webchat.7moor.com/wapchat.html?accessId=559eecd0-c91e-11e7-8178-2573f743b2b9&fromUrl=android";
+            app.openUrl(url);
         } else if (id == R.id.versionLayout) {
             startActivity(new Intent(getContext(),SystemMsgActivity.class));
         } else if (id == R.id.logoutView) {
@@ -181,6 +184,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             phoneNumberLayout.setVisibility(View.VISIBLE);
             phoneNumberView.setText(session.user.mobile_number);
             logoutView.setEnabled(true);
+            refreshUserInfo();
         }
     }
 
@@ -238,5 +242,27 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void refreshUserInfo(){
+        if(app.getSessionManager().isUserInfoNeedUdate()){
+            app.getApi().getUserInfo(new YyskApi.ICallback<XBean>() {
+                @Override
+                public void onResult(XBean result) {
+                    if(NetUtil.checkAndHandleRsp(result,getContext(),"获取个人信息失败",null)){
+                        XBean userInfo = NetUtil.getRspData(result);
+                        app.getSessionManager().onUserInfoUpdate(userInfo);
+                        XBean packgeInfo = userInfo.getXBean("tariff_package");
+                        txv_packge_title.setText("当前使用套餐 "+packgeInfo.getString("name"));
+                    }
+                }
+            });
+        }else{
+            XBean userInfo = app.getSessionManager().getSession().user.toJson();
+            XBean packgeInfo = userInfo.getXBean("tariff_package");
+            if(packgeInfo != null){
+                txv_packge_title.setText("当前使用套餐 "+packgeInfo.getString("name"));
+            }
+        }
     }
 }
