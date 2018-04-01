@@ -15,9 +15,9 @@ android {
             storePassword '123456'
         }
         release {
-            keyAlias 'yysk_jty2018_qy'
+            keyAlias 'shendeng'
             keyPassword '666666'
-            storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/dz_key.jks')
+            storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk_jty2018/shendeng.jks')
             storePassword '666666'
         }
     }
