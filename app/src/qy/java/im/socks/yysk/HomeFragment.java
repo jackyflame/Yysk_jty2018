@@ -96,6 +96,8 @@ public class HomeFragment extends Fragment {
 
         updateVpnStatus();
 
+        updateMe();
+
 //        checkVpnUpdate(false);
 
         return view;
@@ -232,14 +234,14 @@ public class HomeFragment extends Fragment {
             vpnButton.setImageResource(R.drawable.ic_button_on);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
         } else if (status == Yysk.STATUS_CONNECTED) {
-            showVPNAlert("VPN 开启");
+            //showVPNAlert("VPN 开启");
             txv_vpn_statu.setText("已连接成功");
             vpnButton.setEnabled(true);
             vpnButton.setImageResource(R.drawable.ic_button_on);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
         } else {
             //
-            showVPNAlert("VPN 已断开");
+            //showVPNAlert("VPN 已断开");
             //不可能的
             txv_vpn_statu.setText("未知:" + status);
             vpnButton.setEnabled(true);
@@ -368,7 +370,7 @@ public class HomeFragment extends Fragment {
             //
         } else if (status == Yysk.STATUS_CONNECTED) {
             app.getVpn().stop();
-            showVPNAlert("VPN 已关闭");
+            //showVPNAlert("VPN 已关闭");
         } else {
             //
         }
