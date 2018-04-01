@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class NetUtil {
 
     public static boolean checkAndHandleRsp(XBean result, Context context, String errorPrefix,ProgressDialog dialog){
@@ -45,6 +47,10 @@ public class NetUtil {
 
     public static XBean getRspData(XBean result){
         return result.getXBean("data");
+    }
+
+    public static List<XBean> getRspDataList(XBean result){
+        return result.getList("data");
     }
 
     public static String getRspError(XBean result){

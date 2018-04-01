@@ -93,4 +93,11 @@ public class YyskDZApi extends YyskApi {
     public void getUserInfo(ICallback<XBean> cb){
         invoke("10024", "20024", new XBean(), cb);
     }
+
+    /**
+     * 获取购买记录
+     * */
+    public void getBuyRecord(ICallback<XBean> cb){
+        invoke("10047", "20047", new XBean(), cb);
+    }
 }

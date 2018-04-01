@@ -182,7 +182,7 @@ public class YyskApi {
     }
 
     public void setMobileNumber(String mobile_number){
-        mobile_number = mobile_number;
+        this.mobile_number = mobile_number;
     }
 
     /* 获取权限控制
@@ -200,10 +200,10 @@ public class YyskApi {
      * strPhoneNum: 支付手机号
      * 返回值： 成功返回执行结果{"charge":"微信或支付宝支付订单,苹果为空"},否则返回null
       *  */
-    public void createOrder(int packgeId, String channel, int amount, String subject, String body,ICallback<XBean> cb) {
+    public void createOrder(int packgeId, String channel, int amount, String subject, String body,String type,ICallback<XBean> cb) {
         //FIXME 注意：参数的名字为amout，而不是amount，应该是后台拼写错误了
         invoke("10005", "20005", new XBean("tariff_package_id", packgeId, "channel",
-                channel, "amount", amount,"subject",subject,"body",body), cb);
+                channel, "amount", amount,"subject",subject,"body",body,"tariff_package_type",type), cb);
 
     }
 

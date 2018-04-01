@@ -19,6 +19,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import im.socks.yysk.api.YyskApi;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -35,6 +37,8 @@ public class BuyRecordsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterImpl adapter;
     private SmartRefreshLayout refreshLayout;
+
+    private AppDZ app = Yysk.app;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,12 +68,47 @@ public class BuyRecordsActivity extends AppCompatActivity {
     }
 
     private void initListData() {
-        //普通套餐：amount表示金额，单位为分
-        List<XBean> leftList = new ArrayList<>();;
-        leftList.add(new XBean("flowNum", "100001", "name", "VIP包月套餐", "type", "支付宝","cost","-20元","time","2018-03-01"));
-        leftList.add(new XBean("flowNum", "100002", "name", "普通包月套餐", "type", "支付宝","cost","-10元","time","2018-03-02"));
-        leftList.add(new XBean("flowNum", "100003", "name", "SVIP包月套餐", "type", "支付宝","cost","-40元","time","2018-03-03"));
-        adapter.setItems(leftList);
+        app.getApi().getBuyRecord(new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                if(NetUtil.checkAndHandleRsp(result,BuyRecordsActivity.this,"获取购买记录失败",null)){
+                    List<XBean> data = NetUtil.getRspDataList(result);
+                    combineRecord(data);
+                }
+            }
+        });
+    }
+
+    private void combineRecord(List<XBean> data){
+        if(data == null || data.size() == 0){
+            adapter.setItems(null);
+        }else{
+            ////普通套餐：amount表示金额，单位为分
+            //List<XBean> leftList = new ArrayList<>();;
+            //leftList.add(new XBean("flowNum", "100001", "name", "VIP包月套餐", "type", "支付宝","cost","-20元","time","2018-03-01"));
+            //leftList.add(new XBean("flowNum", "100002", "name", "普通包月套餐", "type", "支付宝","cost","-10元","time","2018-03-02"));
+            //leftList.add(new XBean("flowNum", "100003", "name", "SVIP包月套餐", "type", "支付宝","cost","-40元","time","2018-03-03"));
+            //adapter.setItems(leftList);
+            List<XBean> showList = new ArrayList<>();
+            for (XBean item:data){
+                XBean showItem = new XBean();
+                showItem.put("flowNum",item.getString("order_no"));
+                showItem.put("name",item.getString("subject"));
+                String channel = item.getString("channel");
+                if("alipay".equals(channel)){
+                    showItem.put("type","支付宝");
+                }else if("weixin".equals(channel)){
+                    showItem.put("type","微信");
+                }else{
+                    showItem.put("type","其他");
+                }
+                String costStr = "-"+(item.getInteger("amount",0)/100)+"元";
+                showItem.put("cost",costStr);
+                showItem.put("time",item.getString("time_paid"));
+                showList.add(showItem);
+            }
+            adapter.setItems(showList);
+        }
     }
 
     private class AdapterImpl extends RecyclerView.Adapter<MyHolder> {
@@ -98,7 +137,9 @@ public class BuyRecordsActivity extends AppCompatActivity {
 
         public void setItems(List<XBean> items) {
             this.items.clear();
-            this.items.addAll(items);
+            if(items != null){
+                this.items.addAll(items);
+            }
             notifyDataSetChanged();
         }
     }

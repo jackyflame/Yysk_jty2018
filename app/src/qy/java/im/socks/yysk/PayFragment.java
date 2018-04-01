@@ -168,6 +168,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             packgeMonth.put("id",bean.getInteger("id",-1));
             packgeMonth.put("price",bean.getString("monthly")+"元");
             packgeMonth.put("amount",bean.getFloat("monthly",0f) * 100);
+            packgeMonth.put("type","monthly");
             list.add(packgeMonth);
             //季度套餐
             XBean packgeQuarter = new XBean();
@@ -176,6 +177,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             packgeMonth.put("id",bean.getInteger("id",-1));
             packgeQuarter.put("price",bean.getString("packet_quarter")+"元");
             packgeQuarter.put("amount",bean.getFloat("packet_quarter",0f) * 100);
+            packgeMonth.put("type","packet_quarter");
             list.add(packgeQuarter);
             //半年套餐
             XBean packgeHalfYear = new XBean();
@@ -184,6 +186,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             packgeMonth.put("id",bean.getInteger("id",-1));
             packgeHalfYear.put("price",bean.getString("half_year")+"元");
             packgeHalfYear.put("amount",bean.getFloat("half_year",0f) * 100);
+            packgeMonth.put("type","half_year");
             list.add(packgeHalfYear);
             //年度套餐
             XBean packgeYear = new XBean();
@@ -192,6 +195,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             packgeMonth.put("id",bean.getInteger("id",-1));
             packgeYear.put("price",bean.getString("yearly")+"元");
             packgeYear.put("amount",bean.getFloat("yearly",0f) * 100);
+            packgeMonth.put("type","yearly");
             list.add(packgeYear);
             //设置默认选择
             boolean is_default = bean.getBoolean("is_default",false);
@@ -359,7 +363,8 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                         int amount = data.getInteger("amount",0);
                         String subject = data.getString("packgeName");
                         String body = data.getString("name");
-                        app.getApi().createOrder(id, channel, amount, subject, body,new YyskApi.ICallback<XBean>() {
+                        String type = data.getString("type");
+                        app.getApi().createOrder(id, channel, amount, subject, body, type, new YyskApi.ICallback<XBean>() {
                             @Override
                             public void onResult(XBean result) {
                                 MyLog.d("createOrder=%s",result);
