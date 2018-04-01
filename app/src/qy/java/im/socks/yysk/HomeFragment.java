@@ -50,21 +50,11 @@ public class HomeFragment extends Fragment {
     private TextView txv_endtime;
     private boolean isTimeEnd = false;
 
-    //me part
-    private TextView phoneNumberView;
-    private View loginLayout;
-    private View phoneNumberLayout;
-    private PageBar pageBar;
-
     //private long startTime;
     private final AppDZ app = Yysk.app;
 
     /**true表示需要登录才可以连接，获得代理列表*/
     //private final boolean requireLogin = false;
-
-    private Handler mHandler;
-    private static final int HANDLER_GOTO_LOGIN = 100002;
-    private static final int HANDLER_UPDATE_ENDTIME = 100003;
 
     private Ping ping = null;
     private float pingTime = -1;
@@ -73,12 +63,11 @@ public class HomeFragment extends Fragment {
         @Override
         public void onEvent(String name, Object data) throws Exception {
             if (Yysk.EVENT_LOGIN.equals(name)) {
-                //updateMe(false);
                 //checkVpnUpdate(false);
             } else if (Yysk.EVENT_LOGOUT.equals(name)) {
                 //updateMe(false);
             } else if (Yysk.EVENT_PROXY_CHANGED.equals(name)) {
-                //updateProxy((Proxy) data);
+                updateProxy((Proxy) data);
             }else if(Yysk.EVENT_PAY_SUCCESS.equals(name)||Yysk.EVENT_PAY_FAIL.equals(name)){
                 ////充值成功或者失败都更新一次
                 //updateMe(false);
@@ -92,17 +81,6 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_dz, container, false);
 
-        mHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what){
-                    case HANDLER_GOTO_LOGIN:
-                        loginLayout.callOnClick();
-                        break;
-                }
-            }
-        };
-
         initConnectLayout(view);
 
         initProxyLayout(view);
@@ -114,13 +92,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        initMe(view);
-//
-//        initRefreshLayout(view);
-//
-//        updateVpnStatus();
-//
-//        updateMe(false);
+        initRefreshLayout(view);
+
+        updateVpnStatus();
 
 //        checkVpnUpdate(false);
 
@@ -132,12 +106,10 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                //refreshlayout.finishRefresh(3000,true);
                 updateVpnStatus();
-                updateMe(false);
-                //需要更新吗？
-                updateProxy(app.getSessionManager().newProxy());
+                //updateProxy(app.getSessionManager().newProxy());
                 refreshlayout.finishRefresh(true);
+                //refreshlayout.finishRefresh(3000,true);
             }
         });
     }
@@ -156,22 +128,6 @@ public class HomeFragment extends Fragment {
             }
         });
         txv_endtime = view.findViewById(R.id.txv_endtime);
-    }
-
-    private void initMe(View view) {
-        View meLayout = view.findViewById(R.id.meLayout);
-        loginLayout = meLayout.findViewById(R.id.loginLayout);
-        phoneNumberLayout = meLayout.findViewById(R.id.phoneNumberLayout);
-        phoneNumberView = meLayout.findViewById(R.id.phoneNumberView);
-
-        pageBar = view.findViewById(R.id.pageBar);
-
-        loginLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
-            }
-        });
     }
 
     private void initProxyLayout(View view) {
@@ -245,23 +201,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void updateMe(final boolean isManual) {
-        Session session = app.getSessionManager().getSession();
-//        if (!session.isLogin()) {
-//            loginLayout.setVisibility(View.VISIBLE);
-//            phoneNumberLayout.setVisibility(View.GONE);
-//            //moneyLayout.setEnabled(true);
-//            //mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_LOGIN,1000);
-//        } else {
-//            phoneNumberView.setText(session.user.phoneNumber);
-//            loginLayout.setVisibility(View.GONE);
-//            phoneNumberLayout.setVisibility(View.VISIBLE);
-//            if(!TextUtils.isEmpty(session.user.entername)){
-//                pageBar.setPbTitle(session.user.entername);
-//            }
-//        }
-    }
-
     private void updateVpnStatus() {
         int status = Yysk.STATUS_STOPPED;
         if (yyskService != null) {
@@ -309,6 +248,9 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * 自动更新代理并设置默认代理
+     * */
     private void checkVpnUpdate(boolean isClick){
         final Session session = app.getSessionManager().getSession();
         if (session.isLogin()) {
@@ -369,6 +311,9 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * 刷新剩余加速时间
+     * */
     private void checkEndTime(String account){
         app.apiDZ.checkVpnEndTime(account,new YyskApi.ICallback<XBean>(){
             @Override
@@ -436,9 +381,8 @@ public class HomeFragment extends Fragment {
                 .setPositiveButton("确定",null)
                 .show();
     }
+
     //========================================
-
-
     private IYyskService yyskService;
     private int vpnStatus;
     private Timer timer;
@@ -453,14 +397,13 @@ public class HomeFragment extends Fragment {
             } else if (msg.what == 3) {
                 //updateVpnTime();
             } else if (msg.what == 4) {
-                updateMe(false);
+                //updateMe(false);
             } else {
                 super.handleMessage(msg);
             }
 
         }
     };
-
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -501,6 +444,7 @@ public class HomeFragment extends Fragment {
             //应该会先发出onServiceDisconnected事件
         }
     };
+
     private IYyskServiceListener serviceListener = new IYyskServiceListener.Stub() {
         @Override
         public void onStatusChanged(int status) throws RemoteException {
@@ -514,7 +458,6 @@ public class HomeFragment extends Fragment {
             handler.sendMessage(handler.obtainMessage(2, new long[]{rxRate, txRate, rxTotal, txTotal}));
         }
     };
-
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
