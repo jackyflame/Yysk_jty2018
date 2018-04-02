@@ -101,7 +101,7 @@
                             android:drawableLeft="@mipmap/ic_vilable_time"
                             android:drawablePadding="@dimen/padding_m"
                             android:gravity="center_vertical"
-                            android:text="可使用时长"/>
+                            android:text="到期时间"/>
 
                         <TextView
                             android:id="@+id/txv_endtime"

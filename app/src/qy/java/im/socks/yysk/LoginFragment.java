@@ -133,12 +133,12 @@ public class LoginFragment extends Fragment {
                     loginRst = NetUtil.getRspData(result);
                     //保存登录状态信息
                     saveLoginRst(phoneNumber,password);
-                    //当前的fragment不需要保留在stack了，所以为替代
-                    if ("show_money".equals(nextAction)) {
-                        getFragmentStack().show(MoneyFragment.newInstance(), null, true);
-                    } else {
-                        getFragmentStack().back();
-                    }
+                    ////当前的fragment不需要保留在stack了，所以为替代
+                    //if ("show_money".equals(nextAction)) {
+                    //    getFragmentStack().show(MoneyFragment.newInstance(), null, true);
+                    //} else {
+                    //    getFragmentStack().back();
+                    //}
                 }
             }
         });

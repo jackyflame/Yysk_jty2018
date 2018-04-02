@@ -230,6 +230,9 @@ public class SessionManager {
         }
         User user = new User();
         user.fill(userInfo);
+        if(session.user != null){
+            user.password = session.user.password;
+        }
         session.user = user;
         session.userUpdateTime = System.currentTimeMillis();
         saveSession(session);

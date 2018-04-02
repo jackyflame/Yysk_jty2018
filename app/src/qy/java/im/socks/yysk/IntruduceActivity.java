@@ -37,6 +37,8 @@ public class IntruduceActivity extends AppCompatActivity {
                 Intent intent = new Intent(IntruduceActivity.this,MainActivity.class);
                 intent.putExtra(Constants.EXTRA_JUMP,Constants.EXTRA_JUMP_REGIST);
                 startActivity(intent);
+                SplashActivity.closeSplash();
+                finish();
             }
         });
     }
