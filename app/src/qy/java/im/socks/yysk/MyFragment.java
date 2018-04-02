@@ -106,7 +106,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         int id = v.getId();
         if (id == R.id.loginLayout) {
             //or show_money
-            getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
+            if(app.getSessionManager().getSession().isLogin() == false){
+                getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
+            }
         } else if (id == R.id.phoneNumberView) {
             //getFragmentStack().show(MoneyFragment.newInstance(), null, false);
         } else if (id == R.id.btn_buy_records) {

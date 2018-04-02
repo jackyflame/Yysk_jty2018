@@ -46,7 +46,7 @@ public class YyskVpnNotification {
         builder.setWhen(System.currentTimeMillis());
         //这3个是必须的，否则显示的是系统默认的通知的内容
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("雨燕梭客");
+        builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentText("已经建立VPN连接:" + profile.name);
         //
         builder.setContentIntent(contentIntent);
