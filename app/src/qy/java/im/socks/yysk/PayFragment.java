@@ -139,8 +139,13 @@ public class PayFragment extends Fragment implements View.OnClickListener{
         leftList.clear();
         centerList.clear();
         rightList.clear();
+        boolean isSetDefault = false;
         for (int i=0;i<result.size() && i<3;i++){
             XBean item = result.get(i);
+            //检查是否设置默认选中套餐
+            if(item != null && item.getBoolean("is_default",false)){
+                isSetDefault = true;
+            }
             if(i == 0){
                 packgeOrderList(item,leftList,btn_left);
             }else if(i==1){
@@ -148,6 +153,9 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             }else if(i==2){
                 packgeOrderList(item,rightList,btn_right);
             }
+        }
+        if(isSetDefault == false){
+            btn_left.performClick();
         }
     }
 
