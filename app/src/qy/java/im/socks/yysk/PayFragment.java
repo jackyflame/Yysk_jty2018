@@ -86,20 +86,21 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             dialog.setMessage("获取资费中...");
             dialog.show();
         }
-        app.getApi().getOrderList(new YyskApi.ICallback<List<XBean>>() {
+        app.getApi().getOrderList(new YyskApi.ICallback<XBean>() {
             @Override
-            public void onResult(List<XBean> result) {
+            public void onResult(XBean result) {
                 if(dialog != null){
                     dialog.dismiss();
                 }
                 if(refreshlayout != null){
                     refreshlayout.finishRefresh(true);
                 }
-                if(result != null){
-                    if(result.size() == 0){
+                if(NetUtil.checkAndHandleRsp(result,getContext(),"获取资费信息失败", null)){
+                    List<XBean> datalist = NetUtil.getRspDataList(result);
+                    if(datalist == null || result.size() == 0){
                         adapter.setItems(null);
                     }else{
-                        handleDataList(result);
+                        handleDataList(datalist);
                     }
                 }else{
                     StringUtils.showToast("获取资费信息失败，请稍后再试");

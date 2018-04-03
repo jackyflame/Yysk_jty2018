@@ -21,6 +21,7 @@ import java.util.List;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.util.NetUtil;
+import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -171,7 +172,11 @@ public class DevicesActivity extends AppCompatActivity {
 
         public void bind(XBean data) {
             this.data = data;
-            txv_name.setText(data.getString("model"));
+            String deviceName = data.getString("model");
+            if(StringUtils.isEmpty(deviceName)){
+                deviceName = "未知设备";
+            }
+            txv_name.setText(deviceName);
         }
     }
 

@@ -83,7 +83,7 @@ public class YyskDZApi extends YyskApi {
     /**
      * 获取资费套餐列表
      * */
-    public void getOrderList(ICallback<List<XBean>> cb){
+    public void getOrderList(ICallback<XBean> cb){
         invoke("10045", "20045", new XBean(), cb);
     }
 
