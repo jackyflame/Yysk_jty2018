@@ -2,6 +2,7 @@ package im.socks.yysk.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
@@ -46,11 +47,21 @@ public class NetUtil {
     }
 
     public static XBean getRspData(XBean result){
-        return result.getXBean("data");
+        try{
+            return result.getXBean("data");
+        }catch (Exception e){
+            Log.e("NetUtil","getRspData error:"+e.getMessage());
+            return null;
+        }
     }
 
     public static List<XBean> getRspDataList(XBean result){
-        return result.getList("data");
+        try{
+            return result.getList("data");
+        }catch (Exception e){
+            Log.e("NetUtil","getRspDataList error:" +e.getMessage());
+            return null;
+        }
     }
 
     public static String getRspError(XBean result){
