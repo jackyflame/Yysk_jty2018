@@ -136,6 +136,9 @@ public class PayFragment extends Fragment implements View.OnClickListener{
     }
 
     private void handleDataList(List<XBean> result){
+        leftList.clear();
+        centerList.clear();
+        rightList.clear();
         for (int i=0;i<result.size() && i<3;i++){
             XBean item = result.get(i);
             if(i == 0){
