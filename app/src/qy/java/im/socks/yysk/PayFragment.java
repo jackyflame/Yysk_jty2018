@@ -173,29 +173,29 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             //季度套餐
             XBean packgeQuarter = new XBean();
             packgeQuarter.put("name","季度套餐");
-            packgeMonth.put("packgeName",packgeName);
-            packgeMonth.put("id",bean.getInteger("id",-1));
+            packgeQuarter.put("packgeName",packgeName);
+            packgeQuarter.put("id",bean.getInteger("id",-1));
             packgeQuarter.put("price",bean.getString("packet_quarter")+"元");
             packgeQuarter.put("amount",bean.getFloat("packet_quarter",0f) * 100);
-            packgeMonth.put("type","packet_quarter");
+            packgeQuarter.put("type","packet_quarter");
             list.add(packgeQuarter);
             //半年套餐
             XBean packgeHalfYear = new XBean();
             packgeHalfYear.put("name","半年套餐");
-            packgeMonth.put("packgeName",packgeName);
-            packgeMonth.put("id",bean.getInteger("id",-1));
+            packgeHalfYear.put("packgeName",packgeName);
+            packgeHalfYear.put("id",bean.getInteger("id",-1));
             packgeHalfYear.put("price",bean.getString("half_year")+"元");
             packgeHalfYear.put("amount",bean.getFloat("half_year",0f) * 100);
-            packgeMonth.put("type","half_year");
+            packgeHalfYear.put("type","half_year");
             list.add(packgeHalfYear);
             //年度套餐
             XBean packgeYear = new XBean();
             packgeYear.put("name","年度套餐");
-            packgeMonth.put("packgeName",packgeName);
-            packgeMonth.put("id",bean.getInteger("id",-1));
+            packgeYear.put("packgeName",packgeName);
+            packgeYear.put("id",bean.getInteger("id",-1));
             packgeYear.put("price",bean.getString("yearly")+"元");
             packgeYear.put("amount",bean.getFloat("yearly",0f) * 100);
-            packgeMonth.put("type","yearly");
+            packgeYear.put("type","yearly");
             list.add(packgeYear);
             //设置默认选择
             boolean is_default = bean.getBoolean("is_default",false);
