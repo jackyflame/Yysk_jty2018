@@ -100,4 +100,11 @@ public class YyskDZApi extends YyskApi {
     public void getBuyRecord(ICallback<XBean> cb){
         invoke("10047", "20047", new XBean(), cb);
     }
+
+    /**
+     * 设备查询
+     * */
+    public void getDeviceList(ICallback<XBean> cb){
+        invoke("10048", "20048", new XBean(), cb);
+    }
 }

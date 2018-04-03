@@ -19,6 +19,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import im.socks.yysk.api.YyskApi;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -35,6 +37,8 @@ public class DevicesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterImpl adapter;
     private SmartRefreshLayout refreshLayout;
+
+    private final AppDZ app = Yysk.app;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,13 +68,46 @@ public class DevicesActivity extends AppCompatActivity {
     }
 
     private void initListData() {
-        //普通套餐：amount表示金额，单位为分
-        List<XBean> leftList = new ArrayList<>();;
-        leftList.add(new XBean("title", "同时登录设备（1台）"));
-        leftList.add(new XBean("device_name", "HUAWEI-P9"));
-        leftList.add(new XBean("title", "总登录设备（1台）"));
-        leftList.add(new XBean("device_name", "HUAWEI-P2"));
-        adapter.setItems(leftList);
+        ////普通套餐：amount表示金额，单位为分
+        //List<XBean> leftList = new ArrayList<>();;
+        //leftList.add(new XBean("title", "同时登录设备（1台）"));
+        //leftList.add(new XBean("model", "HUAWEI-P9"));
+        //leftList.add(new XBean("title", "总登录设备（1台）"));
+        //leftList.add(new XBean("model", "HUAWEI-P2"));
+        //adapter.setItems(leftList);
+
+        app.getApi().getDeviceList(new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                if(NetUtil.checkAndHandleRsp(result,DevicesActivity.this,"查询设备失败",null)){
+                    List<XBean> dataList = NetUtil.getRspDataList(result);
+                    combineList(dataList);
+                }
+            }
+        });
+    }
+
+    private void combineList(List<XBean> dataList){
+        List<XBean> deviceActiveList = new ArrayList<>();
+        List<XBean> deviceAllList = new ArrayList<>();
+        for(XBean item:dataList){
+            if(item.getBoolean("is_connected",false)){
+                deviceActiveList.add(item);
+            }
+            deviceAllList.add(item);
+        }
+        if(deviceActiveList.size() > 0){
+            XBean title = new XBean();
+            title.put("title","同时登录设备（"+deviceActiveList.size()+"台）");
+            deviceActiveList.add(0,title);
+        }
+        if(deviceAllList.size() > 0){
+            XBean title = new XBean();
+            title.put("title","总登录设备（"+deviceAllList.size()+"台）");
+            deviceAllList.add(0,title);
+        }
+        deviceActiveList.addAll(deviceAllList);
+        adapter.setItems(deviceActiveList);
     }
 
     private class AdapterImpl extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -134,7 +171,7 @@ public class DevicesActivity extends AppCompatActivity {
 
         public void bind(XBean data) {
             this.data = data;
-            txv_name.setText(data.getString("device_name"));
+            txv_name.setText(data.getString("model"));
         }
     }
 
