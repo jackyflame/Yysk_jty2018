@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,7 +25,8 @@ import java.util.List;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.Proxy;
-import im.socks.yysk.util.NetUtil;
+import im.socks.yysk.util.GlideApp;
+import im.socks.yysk.util.MyAppGlideModule;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -397,7 +397,9 @@ public class ProxyListFragment extends Fragment {
             this.data = data;
             if(data.getBoolean("title",false) == true){
                 lin_title.setVisibility(View.VISIBLE);
-                //img_nation
+                if(!data.isEmpty("stateImage")){
+                    GlideApp.with(img_nation.getContext()).load(data.getString("stateImage")).into(img_nation);
+                }
                 txv_nation.setText(data.getString("stateName"));
             }else{
                 lin_title.setVisibility(View.GONE);

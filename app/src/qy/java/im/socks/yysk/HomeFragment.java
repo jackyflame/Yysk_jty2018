@@ -64,8 +64,9 @@ public class HomeFragment extends Fragment {
         public void onEvent(String name, Object data) throws Exception {
             if (Yysk.EVENT_LOGIN.equals(name)) {
                 //checkVpnUpdate(false);
-            } else if (Yysk.EVENT_LOGOUT.equals(name)) {
                 updateMe();
+            } else if (Yysk.EVENT_LOGOUT.equals(name)) {
+                updateMe(true);
             } else if (Yysk.EVENT_PROXY_CHANGED.equals(name)) {
                 updateProxy((Proxy) data);
             }else if(Yysk.EVENT_PAY_SUCCESS.equals(name)||Yysk.EVENT_PAY_FAIL.equals(name)){
@@ -96,7 +97,9 @@ public class HomeFragment extends Fragment {
 
         updateVpnStatus();
 
-        updateMe();
+        if(app.getSessionManager().getSession().isLogin()){
+            updateMe();
+        }
 
 //        checkVpnUpdate(false);
 
@@ -385,6 +388,14 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateMe(){
+        updateMe(false);
+    }
+
+    private void updateMe(boolean isLogout){
+        if(isLogout == true){
+            txv_endtime.setText("");
+            return;
+        }
         if(app.getSessionManager().isUserInfoNeedUdate()){
             app.getApi().getUserInfo(new YyskApi.ICallback<XBean>() {
                 @Override

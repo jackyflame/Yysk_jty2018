@@ -24,6 +24,7 @@
     <color name="gray">#ABABAB</color>
     <color name="gray_light">#E3E3E3</color>
     <color name="white">#FFFFFF</color>
+    <color name="bg_home">#DDDDDD</color>
 
     <color name="bg_empty_gray">#fafafa</color>
 

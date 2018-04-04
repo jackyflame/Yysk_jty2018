@@ -1,10 +1,13 @@
 package im.socks.yysk.api;
 
 
+import android.os.Build;
+
 import java.util.List;
 
 import im.socks.yysk.App;
 import im.socks.yysk.AppDZ;
+import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 import im.socks.yysk.util.XRspBean;
 
@@ -35,6 +38,13 @@ public class YyskDZApi extends YyskApi {
     public void loginDZ(String strPhoneNum, String strPassword, final ICallback<XBean> cb) {
         //如果仅仅执行登录，感觉没有做任何事情，什么都不返回，token也没有
         final XBean loginParams = new XBean("mobile_number", strPhoneNum, "password", strPassword);
+        String model= android.os.Build.MODEL;
+        if(StringUtils.isEmpty(model)){
+            model = "android device";
+        }
+        loginParams.put("terminal_model",model);
+        String brand = Build.BRAND;
+        loginParams.put("terminal_number",brand);
         executor.execute(new Runnable() {
             @Override
             public void run() {

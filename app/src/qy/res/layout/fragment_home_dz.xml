@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@color/primary">
+                android:background="@color/bg_home">
 
                 <LinearLayout
                     android:id="@+id/lin_vpn"
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:textColor="@color/text_white"
+                    android:textColor="@color/black"
                     android:text="您还未连接"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="10dp"/>
