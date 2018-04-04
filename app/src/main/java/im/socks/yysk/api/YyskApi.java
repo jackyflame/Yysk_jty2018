@@ -203,8 +203,8 @@ public class YyskApi {
     public void createOrder(int packgeId, String channel, int amount, String subject, String body,String type,ICallback<XBean> cb) {
         //FIXME 注意：参数的名字为amout，而不是amount，应该是后台拼写错误了
         invoke("10005", "20005", new XBean("tariff_package_id", packgeId, "channel",
-                channel, "amount", amount,"subject",subject,"body",body,"tariff_package_type",type), cb);
-
+                channel, "amount", amount,"tariff_package_type",type), cb);
+        //"subject",subject,"body",body,
     }
 
     /* 查询订单状态
