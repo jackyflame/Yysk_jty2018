@@ -193,11 +193,11 @@ public class ProxyListFragment extends Fragment {
             if(nodes == null || nodes.size() == 0){
                 continue;
             }else{
-                String state_region = item.getString("state_region");
-                String img = item.getString("img");
-                nodes.get(0).put("title",true);
-                nodes.get(0).put("stateName",state_region);
-                nodes.get(0).put("stateImage",img);
+                //String state_region = item.getString("state_region");
+                //String img = item.getString("img");
+                //nodes.get(0).put("title",true);
+                //nodes.get(0).put("stateName",state_region);
+                //nodes.get(0).put("stateImage",img);
                 displayList.addAll(nodes);
             }
         }
