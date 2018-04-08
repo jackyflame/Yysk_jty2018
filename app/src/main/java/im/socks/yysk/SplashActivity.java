@@ -123,6 +123,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 Intent intent = new Intent(this,MainActivity.class);
                 intent.putExtra(Constants.EXTRA_JUMP,Constants.EXTRA_JUMP_REGIST);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.btn_login:
                 intent = new Intent(this,MainActivity.class);
