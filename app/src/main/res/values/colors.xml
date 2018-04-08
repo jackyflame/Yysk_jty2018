@@ -10,8 +10,8 @@
     <color name="transparent">#00000000</color>
 
     <!-- #009688 -->
-    <color name="primary">#9999ff</color>
-    <color name="primary_dark">#7F7FCF</color>
+    <color name="primary">#1296db</color>
+    <color name="primary_dark">#0050FF</color>
     <color name="primary_light">#B9B9ff</color>
     <color name="accent">#009688</color>
     <color name="primary_text">#212121</color>
@@ -24,7 +24,7 @@
     <color name="gray">#ABABAB</color>
     <color name="gray_light">#E3E3E3</color>
     <color name="white">#FFFFFF</color>
-    <color name="bg_home">#DDDDDD</color>
+    <color name="bg_home">@color/white</color>
 
     <color name="bg_empty_gray">#fafafa</color>
 

@@ -9,7 +9,7 @@
     <im.socks.yysk.PageBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:pb_title="充值"/>
+        app:pb_title="购买"/>
 
     <TextView
         android:layout_width="match_parent"

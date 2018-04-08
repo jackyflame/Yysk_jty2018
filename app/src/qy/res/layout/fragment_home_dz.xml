@@ -132,7 +132,7 @@
                             android:gravity="center_vertical"
                             android:drawableLeft="@mipmap/ic_vpn_lines"
                             android:drawablePadding="@dimen/padding_m"
-                            android:text="加速线路选择"/>
+                            android:text="线路选择"/>
 
                         <TextView
                             android:id="@+id/txv_line_name"

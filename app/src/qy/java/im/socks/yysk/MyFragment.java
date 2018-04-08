@@ -180,12 +180,14 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private void syncLoginStatus() {
         Session session = app.getSessionManager().getSession();
         if (!session.isLogin()) {
-            phoneNumberLayout.setVisibility(View.GONE);
+            phoneNumberView.setVisibility(View.GONE);
             logoutView.setEnabled(false);
+            txv_packge_title.setText("请点击登录");
         } else {
-            phoneNumberLayout.setVisibility(View.VISIBLE);
+            phoneNumberView.setVisibility(View.VISIBLE);
             phoneNumberView.setText(session.user.mobile_number);
             logoutView.setEnabled(true);
+            txv_packge_title.setText("");
             refreshUserInfo();
         }
     }

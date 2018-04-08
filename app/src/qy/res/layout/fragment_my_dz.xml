@@ -33,14 +33,15 @@
                 android:paddingTop="@dimen/padding_xl">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_header" />
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/ic_launcher" />
 
                 <LinearLayout
                     android:id="@+id/phoneNumberLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:layout_marginLeft="@dimen/padding_l"
                     android:orientation="vertical">
 

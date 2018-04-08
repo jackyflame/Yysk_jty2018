@@ -25,8 +25,6 @@ import java.util.List;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.Proxy;
-import im.socks.yysk.util.GlideApp;
-import im.socks.yysk.util.MyAppGlideModule;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -398,7 +396,7 @@ public class ProxyListFragment extends Fragment {
             if(data.getBoolean("title",false) == true){
                 lin_title.setVisibility(View.VISIBLE);
                 if(!data.isEmpty("stateImage")){
-                    GlideApp.with(img_nation.getContext()).load(data.getString("stateImage")).into(img_nation);
+                    //GlideApp.with(img_nation.getContext()).load(data.getString("stateImage")).into(img_nation);
                 }
                 txv_nation.setText(data.getString("stateName"));
             }else{
