@@ -2,13 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/home_24dp"
-        android:title="首页" />
-    <item
         android:id="@+id/navigation_buy"
         android:icon="@drawable/pay_24dp"
         android:title="购买" />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/home_24dp"
+        android:title="链接" />
+
     <item
         android:id="@+id/navigation_my"
         android:icon="@drawable/my"
