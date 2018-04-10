@@ -357,12 +357,12 @@ public class HomeFragment extends Fragment {
             //或者必须先登录
             //如果选择了代理
             if (app.getSessionManager().getProxy()!=null) {
-                if(pingTime <= 0){
-                    showVPNAlert("线路失效不可用，请联系客服");
-                    return;
-                }else{
-                    //showVPNAlert("线路可用");
-                }
+                //if(pingTime <= 0){
+                //    showVPNAlert("线路失效不可用，请联系客服");
+                //    return;
+                //}else{
+                //    //showVPNAlert("线路可用");
+                //}
                 app.getVpn().start(getActivity());
             } else {
                 //如果还没有proxy，就需要先选择
