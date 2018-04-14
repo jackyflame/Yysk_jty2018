@@ -13,6 +13,11 @@
         app:pb_backgroundColor="@color/bg_empty_gray_2"
         style="@style/pager_bar"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider"/>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"

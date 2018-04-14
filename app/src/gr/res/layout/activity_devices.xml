@@ -8,10 +8,14 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/title_bar"
+        app:pb_back_text="终端设备"
+        app:pb_back_show="true"
+        style="@style/pager_bar"/>
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pb_back="true"
-        app:pb_title=""/>
+        android:layout_height="1px"
+        android:background="@color/divider"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

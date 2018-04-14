@@ -8,20 +8,14 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pb_back="true"
-        app:pb_title=""/>
+        app:pb_back_text="消息列表"
+        app:pb_back_show="true"
+        style="@style/pager_bar"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="@dimen/padding_l"
-        android:drawableLeft="@mipmap/ic_msg_list"
-        android:drawablePadding="@dimen/padding_m"
-        android:textSize="@dimen/text_ml"
-        android:text="消息列表"/>
+        android:layout_height="1px"
+        android:background="@color/divider"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
