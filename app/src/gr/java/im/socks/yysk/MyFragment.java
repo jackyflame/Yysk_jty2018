@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,12 +14,12 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.Session;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 
 
@@ -28,103 +27,52 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     //
     private View loginLayout;
     private View phoneNumberLayout;
-    private View userIdLayout;
-
-    private TextView userIdView;
     private TextView phoneNumberView;
-    private TextView loginView;
-    private TextView siteView;
-    //private TextView qqView;
+    private TextView txv_packge_title;
     //
-    private TextView feedbackView;
-    //private TextView contactView;
-    private TextView notifyView;
-    private TextView hostView;
-    private TextView versionView;
-    private View versionLayout;
-
-
+    private View logoutView;
     //
-    private Button logoutView;
-    //
-    //private boolean isViewDestroyed=false;
     private EventBus.IListener eventListener = new EventBus.IListener() {
         @Override
         public void onEvent(String name, Object data) throws Exception {
             if (Yysk.EVENT_LOGIN.equals(name) || Yysk.EVENT_LOGOUT.equals(name)) {
                 syncLoginStatus();
             }
-
         }
     };
 
-
-    private final App app = Yysk.app;
+    private final AppDZ app = Yysk.app;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_my_dz, container, false);
         loginLayout = view.findViewById(R.id.loginLayout);
         phoneNumberLayout = view.findViewById(R.id.phoneNumberLayout);
-        userIdLayout = view.findViewById(R.id.userIdLayout);
-
-        loginView = view.findViewById(R.id.loginView);
+        txv_packge_title = view.findViewById(R.id.txv_packge_title);
         phoneNumberView = view.findViewById(R.id.phoneNumberView);
-        userIdView = view.findViewById(R.id.userIdView);
-        siteView = view.findViewById(R.id.siteView);
-        //
-        feedbackView = view.findViewById(R.id.feedbackView);
-        //contactView = view.findViewById(R.id.contactView);
-        notifyView = view.findViewById(R.id.notifyView);
-        hostView = view.findViewById(R.id.hostView);
-        versionView = view.findViewById(R.id.versionView);
-        versionLayout = view.findViewById(R.id.versionLayout);
-
-        //qqView = view.findViewById(R.id.qqView);
+        loginLayout.setOnClickListener(this);
+        phoneNumberView.setOnClickListener(this);
         //
         logoutView = view.findViewById(R.id.logoutView);
-        //
-        loginView.setOnClickListener(this);
-        phoneNumberView.setOnClickListener(this);
-        userIdView.setOnClickListener(this);
-        siteView.setOnClickListener(this);
-        //
-        feedbackView.setOnClickListener(this);
-        //contactView.setOnClickListener(this);
-        notifyView.setOnClickListener(this);
-        hostView.setOnClickListener(this);
-        //versionView.setOnClickListener(this);
-        versionLayout.setOnClickListener(this);
-        //
         logoutView.setOnClickListener(this);
-
-
-        versionView.setText(getVersion());
-
-        //qqView.setOnClickListener(this);
-
-
+        //修改密码
+        view.findViewById(R.id.btn_change_psw).setOnClickListener(this);
+        view.findViewById(R.id.btn_feedback).setOnClickListener(this);
+        view.findViewById(R.id.btn_msgs).setOnClickListener(this);
+        view.findViewById(R.id.btn_devices).setOnClickListener(this);
+        view.findViewById(R.id.btn_buy_records).setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adjustIconSize(loginView);
-        adjustIconSize(phoneNumberView);
-        adjustIconSize(userIdView);
-        adjustIconSize(siteView);
+        //adjustIconSize(loginView);
+        //adjustIconSize(phoneNumberView);
+        //adjustIconSize(siteView);
         //
-        adjustIconSize(feedbackView);
         //adjustIconSize(contactView);
-        adjustIconSize(hostView);
-        adjustIconSize(notifyView);
-        adjustIconSize((TextView) view.findViewById(R.id.versionLabelView));
-
-        //adjustIconSize(qqView);
-
-
+        //adjustIconSize((TextView) view.findViewById(R.id.versionLabelView));
     }
 
     private void adjustIconSize(TextView view) {
@@ -156,28 +104,29 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.loginView) {
+        if (id == R.id.loginLayout) {
             //or show_money
-            getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
+            if(app.getSessionManager().getSession().isLogin() == false){
+                getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
+            }
         } else if (id == R.id.phoneNumberView) {
-            getFragmentStack().show(MoneyFragment.newInstance(), null, false);
-        } else if (id == R.id.userIdView) {
-            //
-        } else if (id == R.id.siteView) {
-            openWebSite();
-        } else if (id == R.id.feedbackView) {
-            openFeedback();
-        }
-        else if (id == R.id.notifyView) {
-            //showError("显示通知，未实现");
-            openNotify();
-        } else if (id == R.id.hostView) {
-            //域名设置
-            showHostDialog();
+            //getFragmentStack().show(MoneyFragment.newInstance(), null, false);
+        } else if (id == R.id.btn_buy_records) {
+            startActivity(new Intent(getContext(),BuyRecordsActivity.class));
+        } else if (id == R.id.btn_devices) {
+            startActivity(new Intent(getContext(),DevicesActivity.class));
+        }else if (id == R.id.btn_msgs) {
+            startActivity(new Intent(getContext(),SystemMsgActivity.class));
+        } else if (id == R.id.btn_feedback) {
+            //startActivity(new Intent(getContext(),FeedbackActivity.class));
+            String url = "https://webchat.7moor.com/wapchat.html?accessId=559eecd0-c91e-11e7-8178-2573f743b2b9&fromUrl=android";
+            app.openUrl(url);
         } else if (id == R.id.versionLayout) {
-            checkUpdate();
+            startActivity(new Intent(getContext(),SystemMsgActivity.class));
         } else if (id == R.id.logoutView) {
             doLogout();
+        } else if (id == R.id.btn_change_psw) {
+            startActivity(new Intent(getContext(),ChangePswActivity.class));
         }
     }
 
@@ -214,11 +163,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         builder.show();
     }
 
-
     private FragmentStack getFragmentStack() {
         return ((MainActivity) getActivity()).getFragmentStack();
     }
-
 
     private String getVersion() {
         try {
@@ -233,23 +180,17 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private void syncLoginStatus() {
         Session session = app.getSessionManager().getSession();
         if (!session.isLogin()) {
-            loginLayout.setVisibility(View.VISIBLE);
-            userIdLayout.setVisibility(View.GONE);
-            phoneNumberLayout.setVisibility(View.GONE);
-
+            phoneNumberView.setVisibility(View.GONE);
             logoutView.setEnabled(false);
+            txv_packge_title.setText("请点击登录");
         } else {
-            loginLayout.setVisibility(View.GONE);
-            userIdLayout.setVisibility(View.VISIBLE);
-            phoneNumberLayout.setVisibility(View.VISIBLE);
-
-            userIdView.setText(session.user.id);
-            phoneNumberView.setText(session.user.phoneNumber);
-
+            phoneNumberView.setVisibility(View.VISIBLE);
+            phoneNumberView.setText(session.user.mobile_number);
             logoutView.setEnabled(true);
+            txv_packge_title.setText("");
+            refreshUserInfo();
         }
     }
-
 
     private void openNotify() {
         app.getApi().getAnnoUrl(new YyskApi.ICallback<String>() {
@@ -266,14 +207,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void openFeedback() {
-        //String url = "https://kefu.easemob.com/webim/im.html?configId=3806da3a-1fa7-4e6b-bcc2-6617529c088d";
-        String url = "https://webchat.7moor.com/wapchat.html?accessId=559eecd0-c91e-11e7-8178-2573f743b2b9&fromUrl=android";
-        app.openUrl(url);
-    }
-
     private void checkUpdate(){
-        app.checkUpdate(getActivity(),false);
+        app.checkUpdateDZ(getActivity(),false);
     }
 
     /**
@@ -281,13 +216,11 @@ public class MyFragment extends Fragment implements View.OnClickListener {
      */
     private void openWebSite() {
         //siteView.setEnabled(false);
-
-
         Session session = app.getSessionManager().getSession();
         if (session.isLogin()) {
             //如果没有登录?
         }
-        String phoneNumber = session.user.phoneNumber;
+        String phoneNumber = session.user.mobile_number;
         app.getApi().getSiteUrl(phoneNumber, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
@@ -308,11 +241,32 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         app.getSessionManager().onLogout();
     }
 
-
     public static MyFragment newInstance() {
         MyFragment fragment = new MyFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void refreshUserInfo(){
+        if(app.getSessionManager().isUserInfoNeedUdate()){
+            app.getApi().getUserInfo(new YyskApi.ICallback<XBean>() {
+                @Override
+                public void onResult(XBean result) {
+                    if(NetUtil.checkAndHandleRsp(result,getContext(),"获取个人信息失败",null)){
+                        XBean userInfo = NetUtil.getRspData(result);
+                        app.getSessionManager().onUserInfoUpdate(userInfo);
+                        XBean packgeInfo = userInfo.getXBean("tariff_package");
+                        txv_packge_title.setText("当前使用套餐 "+packgeInfo.getString("name"));
+                    }
+                }
+            });
+        }else{
+            XBean userInfo = app.getSessionManager().getSession().user.toJson();
+            XBean packgeInfo = userInfo.getXBean("tariff_package");
+            if(packgeInfo != null){
+                txv_packge_title.setText("当前使用套餐 "+packgeInfo.getString("name"));
+            }
+        }
     }
 }

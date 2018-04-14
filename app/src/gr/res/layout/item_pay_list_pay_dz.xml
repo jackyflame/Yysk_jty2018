@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_gray_border_item"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/txv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="left"
+        tools:text="包月套餐" />
+
+    <Button
+        android:id="@+id/btn_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/btn_height_m"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/buy_item_btn_selector"
+        android:textColor="@color/text_blue_dark"
+        android:textSize="@dimen/text_m"
+        tools:text="10元" />
+
+</RelativeLayout>

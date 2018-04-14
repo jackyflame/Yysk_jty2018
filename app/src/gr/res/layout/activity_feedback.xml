@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <im.socks.yysk.PageBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pb_back="true"
+        app:pb_title=""/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_l"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/padding_xl"
+        android:layout_marginLeft="@dimen/padding_l"
+        android:text="意见反馈"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_m"
+        android:layout_marginLeft="@dimen/padding_xl"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:text="您可以畅所欲言"/>
+
+    <EditText
+        android:id="@+id/txv_psw_orgin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/padding_l"
+        android:layout_marginLeft="@dimen/padding_xxxl"
+        android:layout_marginRight="@dimen/padding_xxxl"
+        android:background="@drawable/bg_white_solid_gray_border"
+        android:textSize="@dimen/text_m"
+        android:text=""/>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="@dimen/padding_xl"
+            android:layout_marginBottom="@dimen/padding_xl"
+            android:background="@color/blue"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/text_m"
+            android:text="提交意见"/>
+
+</LinearLayout>

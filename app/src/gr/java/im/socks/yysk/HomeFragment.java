@@ -1,7 +1,9 @@
 package im.socks.yysk;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
-import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,79 +12,66 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
-
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.Switch;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.Proxy;
 import im.socks.yysk.data.Session;
-import im.socks.yysk.util.FormatUtil;
+import im.socks.yysk.util.NetUtil;
+import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 import im.socks.yysk.vpn.IYyskService;
 import im.socks.yysk.vpn.IYyskServiceListener;
 
-
 public class HomeFragment extends Fragment {
 
-    private TextView vpnButton;
+    private ImageButton vpnButton;
+    private TextView txv_vpn_statu;
 
     //proxy part
-    private View proxyView;
-    private TextView proxyNameView;
-    private Switch bypassChinaView;
-    private View editAclView;
-
-
-    //me part
-    private TextView moneyView;
-    private TextView phoneNumberView;
-    private View loginLayout;
-    private View phoneNumberLayout;
-    private View moneyLayout;
-
-
-    //统计
-    private TextView txView;
-    private TextView rxView;
-    private TextView txRateView;
-    private TextView rxRateView;
-    private TextView startTimeView;
-    private TextView elapsedTimeView;
+    private View lin_vpn_lines;
+    private TextView txv_line_name;
+    private TextView txv_endtime;
+    private boolean isTimeEnd = false;
 
     //private long startTime;
+    private final AppDZ app = Yysk.app;
 
-    private final App app = Yysk.app;
-
-    /**
-     * true表示需要登录才可以连接，获得代理列表
-     */
+    /**true表示需要登录才可以连接，获得代理列表*/
     //private final boolean requireLogin = false;
 
+    private Ping ping = null;
+    private float pingTime = -1;
 
     private EventBus.IListener eventListener = new EventBus.IListener() {
         @Override
         public void onEvent(String name, Object data) throws Exception {
             if (Yysk.EVENT_LOGIN.equals(name)) {
-                updateMe(false);
+                //checkVpnUpdate(false);
+                updateMe();
             } else if (Yysk.EVENT_LOGOUT.equals(name)) {
-                updateMe(false);
+                updateMe(true);
             } else if (Yysk.EVENT_PROXY_CHANGED.equals(name)) {
                 updateProxy((Proxy) data);
             }else if(Yysk.EVENT_PAY_SUCCESS.equals(name)||Yysk.EVENT_PAY_FAIL.equals(name)){
                 //充值成功或者失败都更新一次
-                updateMe(false);
+                updateMe();
             }
         }
     };
@@ -91,23 +80,28 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_dz, container, false);
 
         initConnectLayout(view);
 
         initProxyLayout(view);
 
-        initMe(view);
+        view.findViewById(R.id.lin_invite).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),InviteActivity.class));
+            }
+        });
 
-        //统计
-        initStatLayout(view);
+        initRefreshLayout(view);
 
         updateVpnStatus();
 
-        updateMe(false);
+        if(app.getSessionManager().getSession().isLogin()){
+            updateMe();
+        }
 
-
-        initRefreshLayout(view);
+//        checkVpnUpdate(false);
 
         return view;
     }
@@ -117,12 +111,9 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                //refreshlayout.finishRefresh(3000,true);
-                updateVpnTime();
                 updateVpnStatus();
-                updateMe(false);
-                //需要更新吗？
-                updateProxy(app.getSessionManager().newProxy());
+                updateMe();
+                //updateProxy(app.getSessionManager().newProxy());
                 refreshlayout.finishRefresh(true);
             }
         });
@@ -130,85 +121,31 @@ public class HomeFragment extends Fragment {
 
     private void initConnectLayout(View view) {
         vpnButton = view.findViewById(R.id.vpnButton);
+        txv_vpn_statu = view.findViewById(R.id.txv_vpn_statu);
         vpnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleVpn();
+                if(isTimeEnd == true){
+                    showVPNAlert("加速时间已用完，请联系管理员");
+                }else{
+                    toggleVpn();
+                }
             }
         });
-    }
-
-    private void initMe(View view) {
-        View meLayout = view.findViewById(R.id.meLayout);
-        loginLayout = meLayout.findViewById(R.id.loginLayout);
-        phoneNumberLayout = meLayout.findViewById(R.id.phoneNumberLayout);
-        moneyLayout = meLayout.findViewById(R.id.moneyLayout);
-
-        phoneNumberView = meLayout.findViewById(R.id.phoneNumberView);
-        moneyView = meLayout.findViewById(R.id.moneyView);
-
-
-        loginLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
-            }
-        });
-        moneyLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateMe(true);
-            }
-        });
+        txv_endtime = view.findViewById(R.id.txv_endtime);
     }
 
     private void initProxyLayout(View view) {
-        View proxyLayout = view.findViewById(R.id.proxyLayout);
-        proxyView = proxyLayout.findViewById(R.id.proxyView);
-        proxyNameView = proxyLayout.findViewById(R.id.nameView);
-        proxyView.setOnClickListener(new View.OnClickListener() {
+        lin_vpn_lines = view.findViewById(R.id.lin_vpn_lines);
+        txv_line_name = view.findViewById(R.id.txv_line_name);
+        lin_vpn_lines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragmentStack().show(ProxyFragment.newInstance(),null,false);
             }
         });
-
-        bypassChinaView = proxyLayout.findViewById(R.id.bypassChinaView);
-        bypassChinaView.setChecked(app.getSettings().getData().getBoolean("bypass_china", VpnConfig.BYPASS_CHINA_DEFAULT));
-        bypassChinaView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                app.getSettings().set("bypass_china", isChecked);
-                app.getVpn().reload();
-
-            }
-        });
-
-        editAclView = proxyLayout.findViewById(R.id.editAclView);
-        editAclView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentStack().show(AclEditorFragment.newInstance(), null, false);
-            }
-        });
-        //
         updateProxy(app.getSessionManager().getProxy());
     }
-
-    private void initStatLayout(View view) {
-
-        View statLayout = view.findViewById(R.id.statLayout);
-        txView = statLayout.findViewById(R.id.txView);
-        rxView = statLayout.findViewById(R.id.rxView);
-        txRateView = statLayout.findViewById(R.id.txRateView);
-        rxRateView = statLayout.findViewById(R.id.rxRateView);
-        startTimeView = statLayout.findViewById(R.id.startTimeView);
-        elapsedTimeView = statLayout.findViewById(R.id.elapsedTimeView);
-
-        updateVpnTime();
-        updateVpnStat(0, 0, 0, 0);
-    }
-
 
     @Override
     public void onStart() {
@@ -248,115 +185,25 @@ public class HomeFragment extends Fragment {
             timer.cancel();
             timer = null;
         }
-
+        stopPing();
         app.getVpn().unbind(serviceConnection);
         app.getEventBus().un(Yysk.EVENT_ALL, eventListener);
 
     }
 
-
     private FragmentStack getFragmentStack() {
         return ((MainActivity) getActivity()).getFragmentStack();
     }
 
-
     private void updateProxy(Proxy proxy) {
-        if (proxy != null) {
+        if (proxy != null && proxy.data != null) {
             //设置text
-            proxyNameView.setText(proxy.name);
+            txv_line_name.setText(proxy.name);
+            String host = proxy.data.getString("host");
+            startPing(host);
         } else {
-            proxyNameView.setText("请选择代理");
+            txv_line_name.setText("请选择代理");
         }
-    }
-
-    private void updateMe(final boolean isManual) {
-        Session session = app.getSessionManager().getSession();
-        if (!session.isLogin()) {
-
-            loginLayout.setVisibility(View.VISIBLE);
-            phoneNumberLayout.setVisibility(View.GONE);
-            moneyLayout.setVisibility(View.GONE);
-
-            moneyView.setTag(R.id.tx_id, null);
-            moneyView.setText("");
-            //moneyLayout.setEnabled(true);
-        } else {
-            phoneNumberView.setText(session.user.phoneNumber);
-            loginLayout.setVisibility(View.GONE);
-            phoneNumberLayout.setVisibility(View.VISIBLE);
-            moneyLayout.setVisibility(View.VISIBLE);
-
-            if (moneyView.getTag(R.id.tx_id) != null) {
-                //表示正在查询,不需要处理
-                return;
-            }
-
-            //如果已经登录，就可以执行操作，为了安全，应该需要添加一个token验证的
-            final Long txId = System.currentTimeMillis();
-            moneyView.setTag(R.id.tx_id, txId);
-            if (isManual) {
-                moneyView.setText("正在查询...");
-                //moneyLayout.setEnabled(false);
-            }
-
-            app.getApi().getUserProfile(session.user.phoneNumber, new YyskApi.ICallback<XBean>() {
-                @Override
-                public void onResult(XBean result) {
-                    if (!txId.equals(moneyView.getTag(R.id.tx_id))) {
-                        return;
-                    }
-                    moneyView.setTag(R.id.tx_id, null);
-                    //moneyLayout.setEnabled(true);
-                    if (result != null) {
-                        if (result.isEquals("retcode", "succ")) {
-                            moneyView.setText(result.getString("money") + " 金币");
-                        } else {
-                            //获得失败
-                            if (isManual) {
-                                moneyView.setText("查询失败");
-                            }
-                        }
-                    } else {
-                        //查询失败
-                        if (isManual) {
-                            moneyView.setText("查询失败");
-                        }
-
-                    }
-                }
-            });
-        }
-    }
-
-    private void updateVpnTime() {
-        Context context = getContext();
-        long startTime = 0;
-        if (yyskService != null) {
-            try {
-                startTime = yyskService.getStartTime();
-            } catch (RemoteException e) {
-                MyLog.e(e);
-                startTime = 0;
-            }
-        }
-
-        if (startTime > 0) {
-            startTimeView.setText(FormatUtil.formatDate(context, startTime));
-            elapsedTimeView.setText(FormatUtil.formatDuration(context, System.currentTimeMillis() - startTime));
-        } else {
-            startTimeView.setText("");
-            elapsedTimeView.setText("");
-        }
-    }
-
-    private void updateVpnStat(long rxRate, long txRate, long rxTotal, long txTotal) {
-        Context context = getContext();
-
-        rxView.setText(FormatUtil.formatSize(context, rxTotal));
-        txView.setText(FormatUtil.formatSize(context, txTotal));//KB,
-
-        rxRateView.setText(FormatUtil.formatRate(context, rxRate));
-        txRateView.setText(FormatUtil.formatRate(context, txRate));
     }
 
     private void updateVpnStatus() {
@@ -375,31 +222,125 @@ public class HomeFragment extends Fragment {
         }
         this.vpnStatus = status;
         if (status == Yysk.STATUS_INIT || status == Yysk.STATUS_STOPPED) {
-            vpnButton.setText("连接");
+            txv_vpn_statu.setText("您还未连接");
             vpnButton.setEnabled(true);
+            vpnButton.setImageResource(R.drawable.ic_button_off);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
-            updateVpnStat(0, 0, 0, 0);
         } else if (status == Yysk.STATUS_CONNECTING) {
-            vpnButton.setText("连接中...");
+            txv_vpn_statu.setText("连接中...");
             vpnButton.setEnabled(false);
+            vpnButton.setImageResource(R.drawable.ic_button_off);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         } else if (status == Yysk.STATUS_STOPPING) {
-            vpnButton.setText("停止中...");
+            txv_vpn_statu.setText("停止中...");
             vpnButton.setEnabled(false);
+            vpnButton.setImageResource(R.drawable.ic_button_on);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
         } else if (status == Yysk.STATUS_CONNECTED) {
-            vpnButton.setText("停止");
+            //showVPNAlert("VPN 开启");
+            txv_vpn_statu.setText("已连接成功");
             vpnButton.setEnabled(true);
+            vpnButton.setImageResource(R.drawable.ic_button_on);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
-            updateVpnStat(0, 0, 0, 0);
         } else {
+            //
+            //showVPNAlert("VPN 已断开");
             //不可能的
-            vpnButton.setText("未知:" + status);
+            txv_vpn_statu.setText("未知:" + status);
             vpnButton.setEnabled(true);
+            vpnButton.setImageResource(R.drawable.ic_button_off);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         }
+    }
 
+    /**
+     * 自动更新代理并设置默认代理
+     * */
+    private void checkVpnUpdate(boolean isClick){
+        final Session session = app.getSessionManager().getSession();
+        if (session.isLogin()) {
+            final ProgressDialog dialog = new ProgressDialog(getContext());
+            dialog.setCancelable(false);
+            dialog.setMessage("正在刷新...");
+            dialog.show();
+            app.apiDZ.checkVpnUpdateVerson(session.user.mobile_number, session.user.password, new YyskApi.ICallback<XBean>() {
+                @Override
+                public void onResult(XBean result) {
+                    if(result != null && result.isEquals("errorcode", "succ")){
+                        final int vpnVersion = result.getInteger("versionid") != null
+                                ? result.getInteger("versionid") : -1;
+                        final int companyid = result.getInteger("companyid") != null
+                                ? result.getInteger("companyid") : -1;
+                        //版本过低则更新
+                        if(session.vpnVersion <= 0 || session.vpnVersion < vpnVersion){
+                            //获取公司代理列表
+                            app.getApi().getDZProxyList(session.user.mobile_number, new YyskApi.ICallback<XBean>() {
+                                @Override
+                                public void onResult(XBean result) {
+                                    if(result != null && result.hasKeys("data")){
+                                        List<XBean> porxList = result.getList("data");
+                                        if(porxList != null && porxList.size() > 0){
+                                            //缓存列表
+                                            app.getDzProxyManager().save(porxList);
+                                            //更新版本
+                                            app.getSessionManager().onVpnVerCheck(vpnVersion,companyid);
+                                            ////自动设置默认代理
+                                            //setDefaultProxy(result);
+                                        }
+                                    }
+                                }
+                            });
+                            //提示线路更新
+                            showVPNAlert("线路更新："+StringUtils.getNowTimeStr());
+                            //txv_vpn_update.setText("更新线路("+StringUtils.getNowTimeStr()+")");
+                        }else{
+                            showVPNAlert("线路无更新");
+                            if(session.vpnUpdateTime > 0){
+                                //txv_vpn_update.setText("更新线路("+StringUtils.getTimeStr(session.vpnUpdateTime)+")");
+                            }
+                        }
+                    }else{
+                        showVPNAlert("线路无更新");
+                    }
+                    dialog.dismiss();
+                }
+            });
+            //检查过期时间
+            checkEndTime(session.user.mobile_number);
+        }else if(isClick == true){
+            new AlertDialog.Builder(getContext())
+                    .setTitle("提醒")
+                    .setMessage("请先登录")
+                    .setPositiveButton("确定",null)
+                    .show();
+        }
+    }
 
+    /**
+     * 刷新剩余加速时间
+     * */
+    private void checkEndTime(String account){
+        app.apiDZ.checkVpnEndTime(account,new YyskApi.ICallback<XBean>(){
+            @Override
+            public void onResult(XBean result) {
+                if(result != null && result.hasKeys("enable")){
+                    //服务状态0：停用，1：启用
+                    int enable = result.getInteger("enable") != null
+                            ? result.getInteger("enable") : -1;
+                    //服务到期时间，10位数字时间，精确到秒
+                    long expire_date = result.getLong("expire_date") != null
+                            ? result.getLong("expire_date") : -1;
+                    //刷新到期时间
+                    if(enable != 1){
+                        isTimeEnd = true;
+                    }else{
+                        isTimeEnd = false;
+                    }
+                    txv_endtime.setVisibility(View.VISIBLE);
+                    txv_endtime.setText("到期时间："+StringUtils.getTimeStr(expire_date*1000));
+                }
+            }
+        });
     }
 
     private void toggleVpn() {
@@ -416,6 +357,12 @@ public class HomeFragment extends Fragment {
             //或者必须先登录
             //如果选择了代理
             if (app.getSessionManager().getProxy()!=null) {
+                if(pingTime <= 0){
+                    showVPNAlert("线路失效不可用，请联系客服");
+                    return;
+                }else{
+                    //showVPNAlert("线路可用");
+                }
                 app.getVpn().start(getActivity());
             } else {
                 //如果还没有proxy，就需要先选择
@@ -426,15 +373,48 @@ public class HomeFragment extends Fragment {
             //
         } else if (status == Yysk.STATUS_CONNECTED) {
             app.getVpn().stop();
+            //showVPNAlert("VPN 已关闭");
         } else {
             //
         }
     }
 
+    private void showVPNAlert(String msg){
+        new AlertDialog.Builder(getContext())
+                .setTitle("提醒")
+                .setMessage(msg)
+                .setPositiveButton("确定",null)
+                .show();
+    }
 
+    private void updateMe(){
+        updateMe(false);
+    }
+
+    private void updateMe(boolean isLogout){
+        if(isLogout == true){
+            txv_endtime.setText("");
+            return;
+        }
+        if(app.getSessionManager().isUserInfoNeedUdate()){
+            app.getApi().getUserInfo(new YyskApi.ICallback<XBean>() {
+                @Override
+                public void onResult(XBean result) {
+                    if(NetUtil.checkAndHandleRsp(result,getContext(),"获取个人信息失败",null)){
+                        XBean userInfo = NetUtil.getRspData(result);
+                        app.getSessionManager().onUserInfoUpdate(userInfo);
+                        String expertTime = userInfo.getString("expiring_time");
+                        expertTime = expertTime.replace("T"," ");
+                        txv_endtime.setText(expertTime);
+                    }
+                }
+            });
+        }else{
+            String expertTime = app.getSessionManager().getSession().user.expiring_time;
+            txv_endtime.setText(expertTime);
+        }
+    }
     //========================================
-
-
     private IYyskService yyskService;
     private int vpnStatus;
     private Timer timer;
@@ -445,18 +425,17 @@ public class HomeFragment extends Fragment {
                 updateVpnStatus();
             } else if (msg.what == 2) {
                 long[] args = (long[]) msg.obj;
-                updateVpnStat(args[0], args[1], args[2], args[3]);
+                //updateVpnStat(args[0], args[1], args[2], args[3]);
             } else if (msg.what == 3) {
-                updateVpnTime();
+                //updateVpnTime();
             } else if (msg.what == 4) {
-                updateMe(false);
+                //updateMe(false);
             } else {
                 super.handleMessage(msg);
             }
 
         }
     };
-
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -497,6 +476,7 @@ public class HomeFragment extends Fragment {
             //应该会先发出onServiceDisconnected事件
         }
     };
+
     private IYyskServiceListener serviceListener = new IYyskServiceListener.Stub() {
         @Override
         public void onStatusChanged(int status) throws RemoteException {
@@ -511,7 +491,6 @@ public class HomeFragment extends Fragment {
         }
     };
 
-
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -519,4 +498,57 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+    private void setDefaultProxy(List<XBean> result) {
+        //检查列表
+        if(result == null || result.size() == 0){
+            return;
+        }
+        //设置默认选择代理
+        for(XBean item:result){
+            if(item != null && !item.isEmpty("host") && !item.isEmpty("port")){
+                Proxy proxy = new Proxy();
+                proxy.name = item.getString("name");
+                proxy.data = item;
+                proxy.isCustom = false;
+                app.getSessionManager().setProxy(getActivity(), proxy, false, false);
+                updateProxy(app.getSessionManager().newProxy());
+                break;
+            }
+        }
+    }
+
+    /*---------------------------------------------------------------------*/
+    private void stopPing(){
+        if(ping!=null){
+            ping.close();
+            ping=null;
+        }
+        MyLog.d("-------------->>>>stopPing");
+    }
+
+    private void startPing(String host){
+        stopPing();
+        if(TextUtils.isEmpty(host)){
+            return;
+        }
+        MyLog.d("-------------->>>>startPing：" + host);
+        List<String> hosts = new ArrayList<>();
+        hosts.add(host);
+        ping = new Ping();
+        ping.setCount(5);
+        ping.setTimeout(30);
+        ping.ping(hosts, new Ping.IPingListener() {
+            @Override
+            public void onTime(String host, String time) {
+                MyLog.d("----->>Ping["+host+"]：" + time + "ms");
+                if(!TextUtils.isEmpty(time) && StringUtils.strIsFloat(time.trim())){
+                    pingTime = Float.valueOf(time.trim());
+                }else{
+                    pingTime = -1;
+                }
+            }
+        });
+    }
+
+    /*---------------------------------------------------------------------*/
 }

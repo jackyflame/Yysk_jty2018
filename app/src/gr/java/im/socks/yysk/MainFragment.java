@@ -1,5 +1,6 @@
 package im.socks.yysk;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,7 +9,6 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,30 +21,20 @@ import java.lang.reflect.Field;
  */
 
 public class MainFragment extends Fragment {
-    /**
-     * 主页
-     */
-    private Fragment homeFragment;
-    /**
-     * 充值
-     */
-    private Fragment payFragment;
-    /**
-     * 福利
-     */
-    private Fragment welfareFragment;
-    /**
-     * 我的
-     */
-    private Fragment myFragment;
 
+    /**主页*/
+    private Fragment homeFragment;
+    /**我的*/
+    private Fragment myFragment;
+    /**我的*/
+    private Fragment buyFragment;
 
     private BottomNavigationView navigationView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_dz, container, false);
         navigationView = view.findViewById(R.id.bottomNavigationView);
         disableShiftMode(navigationView);
 
@@ -78,27 +68,18 @@ public class MainFragment extends Fragment {
                 homeFragment = HomeFragment.newInstance();
             }
             currentFragment = homeFragment;
-
-        } else if (id == R.id.navigation_pay) {
-            if (payFragment == null) {
-                payFragment = PayFragment.newInstance();
-            }
-            currentFragment = payFragment;
-
-        } else if (id == R.id.navigation_welfare) {
-            if (welfareFragment == null) {
-                welfareFragment = WelfareFragment.newInstance();
-            }
-            currentFragment = welfareFragment;
-
         } else if (id == R.id.navigation_my) {
             if (myFragment == null) {
                 myFragment = MyFragment.newInstance();
             }
-
             currentFragment = myFragment;
+        }else if(id == R.id.navigation_buy){
+            if (buyFragment == null) {
+                buyFragment = PayFragment.newInstance();
+            }
+            currentFragment = buyFragment;
         }
-        Fragment[] fragments = new Fragment[]{homeFragment, payFragment, welfareFragment, myFragment};
+        Fragment[] fragments = new Fragment[]{homeFragment, buyFragment, myFragment};
         for (Fragment f : fragments) {
             if (f != currentFragment && f != null) {
                 ft.hide(f);
@@ -116,6 +97,7 @@ public class MainFragment extends Fragment {
     }
 
 
+    @SuppressLint("RestrictedApi")
     private static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {

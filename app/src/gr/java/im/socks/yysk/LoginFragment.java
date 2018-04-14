@@ -1,10 +1,11 @@
 package im.socks.yysk;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +13,34 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import im.socks.yysk.api.YyskApi;
+import im.socks.yysk.api.YyskDZApi;
+import im.socks.yysk.util.NetUtil;
+import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 
 /**
- * Created by cole on 2017/10/22.
+ * Created by Android Studio.
+ * ProjectName: Yysk
+ * Author: haozi
+ * Date: 2018/1/2
+ * Time: 17:24
  */
 
 public class LoginFragment extends Fragment {
 
     private EditText phoneNumberText;
     private EditText passwordText;
+    private PageBar title_bar;
 
-
-    private final App app = Yysk.app;
+    private final AppDZ app = Yysk.app;
 
     private String nextAction;
 
     private boolean isLoading = false;
+
+    private XBean loginRst;
+    private String phoneNumber;
+    private String password;
 
 
     @Override
@@ -43,7 +55,15 @@ public class LoginFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_login_dz, container, false);
+
+        title_bar = view.findViewById(R.id.title_bar);
+        title_bar.setBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentStack().back();
+            }
+        });
         View registerButton = view.findViewById(R.id.registerButton);
         View forgetPasswordButton = view.findViewById(R.id.forgetPasswordButton);
 
@@ -71,10 +91,12 @@ public class LoginFragment extends Fragment {
             }
         });
 
-
-        //for test
-        //phoneNumberText.setText("18011353062");
-        //passwordText.setText("12345678a");
+        if(app.getSessionManager().getSession().user != null){
+            String phoneNum = app.getSessionManager().getSession().user.mobile_number;
+            if(phoneNum != null){
+                phoneNumberText.setText(phoneNum);
+            }
+        }
 
         return view;
     }
@@ -84,46 +106,42 @@ public class LoginFragment extends Fragment {
     }
 
     private void doLogin() {
-
-        final String phoneNumber = phoneNumberText.getText().toString();
-        final String password = passwordText.getText().toString();
-
-        YyskApi api = app.getApi();
-
+        phoneNumber = phoneNumberText.getText().toString();
+        password = passwordText.getText().toString();
+        if(StringUtils.isEmpty(phoneNumber)){
+            showError("请输入电话号码");
+            return;
+        }
+        if(StringUtils.isEmpty(password)){
+            showError("请输入密码");
+            return;
+        }
+        YyskDZApi api = app.getApi();
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setCancelable(false);
         dialog.setMessage("正在登录...");
         dialog.show();
 
-
-        api.login(phoneNumber, password, new YyskApi.ICallback<XBean>() {
+        api.loginDZ(phoneNumber, password, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
                 MyLog.d("login=%s",result);
                 dialog.dismiss();
-                if (result != null) {
-                    //登录成功后什么都不返回，正常的实现应该返回一个token，然后其他操作都通过这个token来调用api
-                    //
-                    if (result.isEquals("retcode", "succ")) {
-                        //
-                        app.getSessionManager().onLogin(result.getString("uuid"), phoneNumber);
-
-                        //当前的fragment不需要保留在stack了，所以为替代
-                        if ("show_money".equals(nextAction)) {
-                            getFragmentStack().show(MoneyFragment.newInstance(), null, true);
-                        } else {
-                            getFragmentStack().back();
-                        }
-
-                    } else {
-                        //登录失败，显示错误信息
-                        showError("登录失败：" + result.getString("error"));
-                    }
-                } else {
-                    //登录失败，主要是api调用失败
-                    showError("登录失败，请检查你的本地网络是否通畅，或是登录服务器故障需要恢复后重新尝试登录");
+                String errorSuffix = "请检查你的本地网络是否通畅，或是登录服务器故障需要恢复后重新尝试登录";
+                if(NetUtil.checkAndHandleRsp(result,getContext(),"登录失败",errorSuffix,null)){
+                    //缓存登录信息
+                    loginRst = NetUtil.getRspData(result);
+                    //保存登录状态信息
+                    saveLoginRst(phoneNumber,password);
+                    //返回主页
+                    getFragmentStack().back();
+                    ////当前的fragment不需要保留在stack了，所以为替代
+                    //if ("show_money".equals(nextAction)) {
+                    //    getFragmentStack().show(MoneyFragment.newInstance(), null, true);
+                    //} else {
+                    //    getFragmentStack().back();
+                    //}
                 }
-
             }
         });
 
@@ -143,5 +161,92 @@ public class LoginFragment extends Fragment {
         args.putString("next_action", nextAction);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void showBindDialog(final String account, final XBean result){
+        //获取绑定数据
+        String terminal_num = result.getString("terminal_num");
+        String binded_terminal_num = result.getString("binded_terminal_num");
+        //根据绑定数据提示操作
+        if(!StringUtils.isInteger(terminal_num) || !StringUtils.isInteger(binded_terminal_num)){
+            new AlertDialog.Builder(getContext())
+                    .setTitle("提醒")
+                    .setMessage("获取绑定设备数据失败，请稍后再试")
+                    .setPositiveButton("确定",null)
+                    .show();
+        }else{
+            int terminalNum = Integer.valueOf(terminal_num);
+            int bindedNum = Integer.valueOf(binded_terminal_num);
+            if(terminalNum <= bindedNum){
+                new AlertDialog.Builder(getContext())
+                        .setTitle("提醒")
+                        .setMessage("请联系您团队的管理员授权设备数，否则无法获得使用权限！")
+                        .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                getFragmentStack().back();
+                            }
+                        })
+                        .show();
+            }else{
+                new AlertDialog.Builder(getContext())
+                        .setTitle("提醒")
+                        .setMessage("是否绑定该设备使用，将消耗一个设备数，您总共拥有"+terminal_num+"个设备数？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                doBindDevice(account,result);
+                            }
+                        })
+                        .setNegativeButton("取消",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                getFragmentStack().back();
+                            }
+                        })
+                        .show();
+            }
+        }
+    }
+
+    private void doBindDevice(String account, XBean result){
+
+        YyskDZApi api = app.getApi();
+
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setCancelable(false);
+        dialog.setMessage("正在绑定...");
+        dialog.show();
+
+        api.bindDevice(account, new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                MyLog.d("bindDevice=%s",result);
+                dialog.dismiss();
+                if (result != null) {
+                    if (result.isEquals("errorcode", "succ")) {
+                        //提示成功
+                        Toast.makeText(getContext(),"终端绑定成功",Toast.LENGTH_SHORT).show();
+                        //保存登录状态信息
+                        saveLoginRst(phoneNumber,password);
+                        //返回主页面
+                        getFragmentStack().back();
+                    }else{
+                        showError("绑定失败：" + result.getString("error"));
+                    }
+                } else {
+                    showError("绑定失败，请检查你的本地网络是否通畅，或是服务器故障需要恢复后重新尝试");
+                }
+            }
+        });
+    }
+
+    private void saveLoginRst(String phoneNum,String psw){
+        //判断是否登录成功
+        if(loginRst == null || loginRst.isEquals("retcode", "succ")){
+            return;
+        }
+        //保存登录状态信息
+        app.getSessionManager().onLogin(loginRst,phoneNum,psw);
     }
 }
