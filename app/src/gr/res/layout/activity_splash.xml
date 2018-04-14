@@ -2,13 +2,14 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/img_icon"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/ic_launcher"/>
 
@@ -39,26 +40,16 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/padding_xl"
         android:paddingRight="@dimen/padding_xl"
+        android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/padding_xxxl"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_regist"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/item_height_xl"
-            android:layout_weight="1"
-            android:textColor="@color/text_white"
-            android:textSize="@dimen/text_l"
-            android:background="@color/btn_orange"
-            android:text="注册"/>
-
-        <Button
             android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="@dimen/item_height_xl"
             android:layout_marginLeft="@dimen/padding_xl"
-            android:layout_weight="1"
             android:textColor="@color/text_white"
             android:textSize="@dimen/text_l"
             android:background="@color/btn_blue"

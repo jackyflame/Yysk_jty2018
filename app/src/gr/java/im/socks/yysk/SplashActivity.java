@@ -36,10 +36,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        findViewById(R.id.btn_regist).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);
         instance = this;
-        autoLogin();
     }
 
     private void postRunnable(final long delay) {
@@ -62,10 +60,12 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
 
     private void autoLogin(){
         if(app.getSessionManager() == null || app.getSessionManager().getSession() == null){
+            jumpToLogin();
             return;
         }
         User user = app.getSessionManager().getSession().user;
         if(user == null || StringUtils.isEmpty(user.mobile_number) || StringUtils.isEmpty(user.password)){
+            jumpToLogin();
             return;
         }
         final String phoneNumber = user.mobile_number;
@@ -92,6 +92,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     //跳转到主页面
                     startActivity(new Intent(SplashActivity.this,MainActivity.class));
                     finish();
+                }else{
+                    jumpToLogin();
                 }
             }
         });
@@ -106,6 +108,13 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         app.getSessionManager().onLogin(loginRst,phoneNum,psw);
     }
 
+    private void jumpToLogin(){
+        Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+        intent.putExtra(Constants.EXTRA_JUMP,Constants.EXTRA_JUMP_LOGIN);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onDestroy() {
         removeRunnable();
@@ -115,18 +124,12 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_regist:
-                //startActivity(new Intent(this,IntruduceActivity.class));
-                Intent intent = new Intent(this,MainActivity.class);
-                intent.putExtra(Constants.EXTRA_JUMP,Constants.EXTRA_JUMP_REGIST);
-                startActivity(intent);
-                finish();
-                break;
             case R.id.btn_login:
-                intent = new Intent(this,MainActivity.class);
-                intent.putExtra(Constants.EXTRA_JUMP,Constants.EXTRA_JUMP_LOGIN);
-                startActivity(intent);
-                finish();
+                if(app.getSessionManager().getSession().autoLogin){
+                    autoLogin();
+                }else{
+                    jumpToLogin();
+                }
                 break;
         }
     }

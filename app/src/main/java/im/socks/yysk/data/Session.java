@@ -26,6 +26,11 @@ public class Session implements Json.IJsonable<XBean> {
     /**UserInfo最后更新时间*/
     public long userUpdateTime;
 
+    /**记住密码*/
+    public boolean rememberPsw = true;
+    /**自动登录*/
+    public boolean autoLogin = true;
+
     public Session() {
     }
 

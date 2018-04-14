@@ -68,6 +68,9 @@ public class PageBar extends RelativeLayout {
         if(a.getBoolean(R.styleable.PageBar_pb_back,false)){
             backView.setVisibility(VISIBLE);
         }
+        if(a.getBoolean(R.styleable.PageBar_pb_back_text,true) == false){
+            backView.setText("");
+        }
 
         a.recycle();
     }

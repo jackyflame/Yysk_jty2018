@@ -248,4 +248,13 @@ public class SessionManager {
         }
         return true;
     }
+
+    public void saveLoginSet(boolean remberPsw,boolean autoLogin){
+        if(session == null || session.user == null){
+            return;
+        }
+        session.rememberPsw = remberPsw;
+        session.autoLogin = autoLogin;
+        saveSession(session);
+    }
 }
