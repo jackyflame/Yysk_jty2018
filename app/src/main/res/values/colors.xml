@@ -27,6 +27,7 @@
     <color name="bg_home">@color/white</color>
 
     <color name="bg_empty_gray">#fafafa</color>
+    <color name="bg_empty_gray_2">#f2f2f2</color>
 
     <color name="btn_orange">#ffa703</color>
     <color name="btn_blue">#199ed8</color>

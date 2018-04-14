@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -41,13 +42,12 @@ import im.socks.yysk.vpn.IYyskServiceListener;
 
 public class HomeFragment extends Fragment {
 
-    private ImageButton vpnButton;
-    private TextView txv_vpn_statu;
+    private Button vpnButton;
+    //private TextView txv_vpn_statu;
 
     //proxy part
     private View lin_vpn_lines;
     private TextView txv_line_name;
-    private TextView txv_endtime;
     private boolean isTimeEnd = false;
 
     //private long startTime;
@@ -86,13 +86,6 @@ public class HomeFragment extends Fragment {
 
         initProxyLayout(view);
 
-        view.findViewById(R.id.lin_invite).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(),InviteActivity.class));
-            }
-        });
-
         initRefreshLayout(view);
 
         updateVpnStatus();
@@ -102,6 +95,13 @@ public class HomeFragment extends Fragment {
         }
 
 //        checkVpnUpdate(false);
+
+        view.findViewById(R.id.backView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentStack().show(MyFragment.newInstance(),"MyFragment",false);
+            }
+        });
 
         return view;
     }
@@ -121,7 +121,6 @@ public class HomeFragment extends Fragment {
 
     private void initConnectLayout(View view) {
         vpnButton = view.findViewById(R.id.vpnButton);
-        txv_vpn_statu = view.findViewById(R.id.txv_vpn_statu);
         vpnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +131,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-        txv_endtime = view.findViewById(R.id.txv_endtime);
     }
 
     private void initProxyLayout(View view) {
@@ -222,33 +220,28 @@ public class HomeFragment extends Fragment {
         }
         this.vpnStatus = status;
         if (status == Yysk.STATUS_INIT || status == Yysk.STATUS_STOPPED) {
-            txv_vpn_statu.setText("您还未连接");
+            vpnButton.setText("点击连接");
             vpnButton.setEnabled(true);
-            vpnButton.setImageResource(R.drawable.ic_button_off);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         } else if (status == Yysk.STATUS_CONNECTING) {
-            txv_vpn_statu.setText("连接中...");
+            vpnButton.setText("连接中...");
             vpnButton.setEnabled(false);
-            vpnButton.setImageResource(R.drawable.ic_button_off);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         } else if (status == Yysk.STATUS_STOPPING) {
-            txv_vpn_statu.setText("停止中...");
+            vpnButton.setText("停止中...");
             vpnButton.setEnabled(false);
-            vpnButton.setImageResource(R.drawable.ic_button_on);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
         } else if (status == Yysk.STATUS_CONNECTED) {
             //showVPNAlert("VPN 开启");
-            txv_vpn_statu.setText("已连接成功");
+            vpnButton.setText("点击断开");
             vpnButton.setEnabled(true);
-            vpnButton.setImageResource(R.drawable.ic_button_on);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_on);
         } else {
             //
             //showVPNAlert("VPN 已断开");
             //不可能的
-            txv_vpn_statu.setText("未知:" + status);
+            vpnButton.setText("未知:" + status);
             vpnButton.setEnabled(true);
-            vpnButton.setImageResource(R.drawable.ic_button_off);
             vpnButton.setBackgroundResource(R.drawable.vpn_button_off);
         }
     }
@@ -305,8 +298,8 @@ public class HomeFragment extends Fragment {
                     dialog.dismiss();
                 }
             });
-            //检查过期时间
-            checkEndTime(session.user.mobile_number);
+            ////检查过期时间
+            //checkEndTime(session.user.mobile_number);
         }else if(isClick == true){
             new AlertDialog.Builder(getContext())
                     .setTitle("提醒")
@@ -336,8 +329,6 @@ public class HomeFragment extends Fragment {
                     }else{
                         isTimeEnd = false;
                     }
-                    txv_endtime.setVisibility(View.VISIBLE);
-                    txv_endtime.setText("到期时间："+StringUtils.getTimeStr(expire_date*1000));
                 }
             }
         });
@@ -393,7 +384,6 @@ public class HomeFragment extends Fragment {
 
     private void updateMe(boolean isLogout){
         if(isLogout == true){
-            txv_endtime.setText("");
             return;
         }
         if(app.getSessionManager().isUserInfoNeedUdate()){
@@ -405,13 +395,11 @@ public class HomeFragment extends Fragment {
                         app.getSessionManager().onUserInfoUpdate(userInfo);
                         String expertTime = userInfo.getString("expiring_time");
                         expertTime = expertTime.replace("T"," ");
-                        txv_endtime.setText(expertTime);
                     }
                 }
             });
         }else{
             String expertTime = app.getSessionManager().getSession().user.expiring_time;
-            txv_endtime.setText(expertTime);
         }
     }
     //========================================

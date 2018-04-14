@@ -3,15 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/bg_empty_gray_2"
     android:orientation="vertical"
     tools:context="im.socks.yysk.HomeFragment">
 
-    <im.socks.yysk.PageBar
-        android:id="@+id/pageBar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pb_title="@string/app_name"></im.socks.yysk.PageBar>
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/backView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_l"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@mipmap/ic_home_menu"
+            android:gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_xl"
+            android:text="@string/app_name"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -42,26 +69,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:background="@color/bg_home">
+                android:paddingTop="100dp"
+                android:background="@color/bg_empty_gray_2"
+                android:gravity="center">
 
-                <LinearLayout
-                    android:id="@+id/lin_vpn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:padding="@dimen/padding_m"
-                    android:background="@mipmap/bg_switch_white"
-                    android:layout_marginTop="20dp">
+                <Button
+                    android:id="@+id/vpnButton"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:text="点击连接"
+                    android:textSize="@dimen/text_xl"
+                    android:textColor="@color/white"
+                    android:background="@drawable/vpn_button_off"/>
 
-                    <ImageButton
-                        android:id="@+id/vpnButton"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:src="@drawable/ic_button_off"
-                        android:background="@drawable/vpn_button_off"/>
-
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/txv_vpn_statu"
@@ -71,6 +91,7 @@
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/black"
                     android:text="您还未连接"
+                    android:visibility="gone"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="10dp"/>
 
@@ -84,102 +105,40 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
                     android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/item_height_l"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/padding_xl"
-                        android:paddingRight="@dimen/padding_xl"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:drawableLeft="@mipmap/ic_vilable_time"
-                            android:drawablePadding="@dimen/padding_m"
-                            android:gravity="center_vertical"
-                            android:text="到期时间"/>
-
-                        <TextView
-                            android:id="@+id/txv_endtime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="@dimen/padding_xl"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            tools:text="24天12小时39分"/>
-
-                    </LinearLayout>
-
-                    <include layout="@layout/line" />
 
                     <LinearLayout
                         android:id="@+id/lin_vpn_lines"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/item_height_l"
+                        android:layout_height="@dimen/item_height_ml"
                         android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/padding_xl"
-                        android:paddingRight="@dimen/padding_xl"
+                        android:layout_marginLeft="@dimen/padding_xxl"
+                        android:layout_marginRight="@dimen/padding_xxl"
+                        android:paddingLeft="@dimen/padding_l"
+                        android:paddingRight="@dimen/padding_l"
+                        android:background="@drawable/bg_white_shap_cnr_15"
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/txv_line_name"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:drawableLeft="@mipmap/ic_vpn_lines"
                             android:drawablePadding="@dimen/padding_m"
-                            android:text="线路选择"/>
-
-                        <TextView
-                            android:id="@+id/txv_line_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="26dp"
-                            android:paddingLeft="@dimen/padding_m"
-                            android:paddingRight="@dimen/padding_m"
-                            android:gravity="center"
-                            android:textColor="@color/blue"
-                            android:background="@drawable/btn_blue_border"
+                            android:textColor="@color/black"
+                            android:hint="线路选择"
+                            android:textColorHint="@color/black"
                             tools:text="日本线路"/>
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/arrow_right"/>
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@mipmap/ic_trangel_right"/>
 
                     </LinearLayout>
-
-                    <include layout="@layout/line" />
-
-                    <LinearLayout
-                        android:id="@+id/lin_invite"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/item_height_l"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/padding_xl"
-                        android:paddingRight="@dimen/padding_xl"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:drawableLeft="@mipmap/ic_share"
-                            android:drawablePadding="@dimen/padding_m"
-                            android:text="邀请有奖"/>
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/arrow_right"/>
-
-                    </LinearLayout>
-
-                    <include layout="@layout/line" />
 
                 </LinearLayout>
 

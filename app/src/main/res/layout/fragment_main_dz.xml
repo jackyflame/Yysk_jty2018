@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         app:itemTextColor="@color/home_menu_color"
         app:itemIconTint="@color/home_menu_color"
+        android:visibility="gone"
         app:menu="@menu/navigation_main_dz">
 
     </android.support.design.widget.BottomNavigationView>
