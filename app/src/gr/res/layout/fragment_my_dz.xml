@@ -6,9 +6,8 @@
     android:orientation="vertical">
 
     <im.socks.yysk.PageBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pb_title="我的"/>
+        style="@style/pager_bar"
+        app:pb_title="个人中心"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -77,10 +76,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/btn_buy_records"
+                        android:id="@+id/btn_help_center"
                         style="@style/my_row_item"
-                        android:drawableTop="@mipmap/ic_buy_record"
-                        android:text="购买记录" />
+                        android:drawableTop="@mipmap/ic_help_center"
+                        android:text="帮助中心" />
 
                     <TextView
                         android:layout_width="1dp"

@@ -55,22 +55,33 @@ public class PageBar extends RelativeLayout {
         int textSize = a.getDimensionPixelSize(R.styleable.PageBar_pb_textSize, 24);//24sp?
         int backTextSize = a.getDimensionPixelSize(R.styleable.PageBar_pb_backTextSize, 22);//24sp?
         int textColor = a.getColor(R.styleable.PageBar_pb_textColor, 0xffffff);//
-
+        int backTextColor = a.getColor(R.styleable.PageBar_pb_back_textColor, 0xffffff);
+        if(backTextColor == 0xffffff && textColor != 0xffffff){
+            backTextColor = textColor;
+        }
 
         titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         backView.setTextSize(TypedValue.COMPLEX_UNIT_PX, backTextSize);
         actionView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
         titleView.setTextColor(textColor);
-        backView.setTextColor(textColor);
+        backView.setTextColor(backTextColor);
         actionView.setTextColor(textColor);
 
         if(a.getBoolean(R.styleable.PageBar_pb_back,false)){
             backView.setVisibility(VISIBLE);
         }
-        if(a.getBoolean(R.styleable.PageBar_pb_back_text,true) == false){
+        if(a.getBoolean(R.styleable.PageBar_pb_back_show,true) == false){
             backView.setText("");
+        }else{
+            String backText = a.getString(R.styleable.PageBar_pb_back_text);
+            if(backText != null && !backText.isEmpty()){
+                backView.setText(backText);
+            }else{
+                backView.setText("返回");
+            }
         }
+
 
         a.recycle();
     }

@@ -60,7 +60,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btn_feedback).setOnClickListener(this);
         view.findViewById(R.id.btn_msgs).setOnClickListener(this);
         view.findViewById(R.id.btn_devices).setOnClickListener(this);
-        view.findViewById(R.id.btn_buy_records).setOnClickListener(this);
+        view.findViewById(R.id.btn_help_center).setOnClickListener(this);
         return view;
     }
 
@@ -111,8 +111,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             }
         } else if (id == R.id.phoneNumberView) {
             //getFragmentStack().show(MoneyFragment.newInstance(), null, false);
-        } else if (id == R.id.btn_buy_records) {
-            startActivity(new Intent(getContext(),BuyRecordsActivity.class));
+        } else if (id == R.id.btn_help_center) {
+            startActivity(new Intent(getContext(),HelpActivity.class));
         } else if (id == R.id.btn_devices) {
             startActivity(new Intent(getContext(),DevicesActivity.class));
         }else if (id == R.id.btn_msgs) {
@@ -237,8 +237,25 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     }
 
     private void doLogout() {
-        //不需要调用api
-        app.getSessionManager().onLogout();
+        AlertDialog.Builder normalDialog =  new AlertDialog.Builder(getContext());
+        normalDialog.setTitle("提示");
+        normalDialog.setMessage("确认退出登录？");
+        normalDialog.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //不需要调用api
+                        app.getSessionManager().onLogout();
+                        dialog.dismiss();
+                    }
+                });
+        normalDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        // 显示
+        normalDialog.show();
     }
 
     public static MyFragment newInstance() {
