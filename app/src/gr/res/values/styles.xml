@@ -10,4 +10,11 @@
         <item name="pb_textColor">@color/black</item>
     </style>
 
+    <style name="my_row_item" parent="my_row_item_txv">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_white_shap_cnr_15</item>
+    </style>
+
 </resources>

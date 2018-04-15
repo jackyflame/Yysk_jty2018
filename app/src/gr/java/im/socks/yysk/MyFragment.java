@@ -28,7 +28,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private View loginLayout;
     private View phoneNumberLayout;
     private TextView phoneNumberView;
-    private TextView txv_packge_title;
+    private TextView txv_company_title;
+
+    private PageBar title_bar;
     //
     private View logoutView;
     //
@@ -48,13 +50,21 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_my_dz, container, false);
         loginLayout = view.findViewById(R.id.loginLayout);
         phoneNumberLayout = view.findViewById(R.id.phoneNumberLayout);
-        txv_packge_title = view.findViewById(R.id.txv_packge_title);
+        txv_company_title = view.findViewById(R.id.txv_company_title);
         phoneNumberView = view.findViewById(R.id.phoneNumberView);
         loginLayout.setOnClickListener(this);
         phoneNumberView.setOnClickListener(this);
         //
         logoutView = view.findViewById(R.id.logoutView);
         logoutView.setOnClickListener(this);
+        //标题退出
+        title_bar = view.findViewById(R.id.title_bar);
+        title_bar.setBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentStack().back();
+            }
+        });
         //修改密码
         view.findViewById(R.id.btn_change_psw).setOnClickListener(this);
         view.findViewById(R.id.btn_feedback).setOnClickListener(this);
@@ -182,12 +192,12 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         if (!session.isLogin()) {
             phoneNumberView.setVisibility(View.GONE);
             logoutView.setEnabled(false);
-            txv_packge_title.setText("请点击登录");
+            txv_company_title.setText("请点击登录");
         } else {
             phoneNumberView.setVisibility(View.VISIBLE);
             phoneNumberView.setText(session.user.mobile_number);
             logoutView.setEnabled(true);
-            txv_packge_title.setText("");
+            txv_company_title.setText("");
             refreshUserInfo();
         }
     }
@@ -273,16 +283,18 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                     if(NetUtil.checkAndHandleRsp(result,getContext(),"获取个人信息失败",null)){
                         XBean userInfo = NetUtil.getRspData(result);
                         app.getSessionManager().onUserInfoUpdate(userInfo);
-                        XBean packgeInfo = userInfo.getXBean("tariff_package");
-                        txv_packge_title.setText("当前使用套餐 "+packgeInfo.getString("name"));
+                        //XBean packgeInfo = userInfo.getXBean("tariff_package");
+                        String company = userInfo.getString("corporate_name");
+                        txv_company_title.setText(company != null ? company:"暂无");
                     }
                 }
             });
         }else{
             XBean userInfo = app.getSessionManager().getSession().user.toJson();
-            XBean packgeInfo = userInfo.getXBean("tariff_package");
-            if(packgeInfo != null){
-                txv_packge_title.setText("当前使用套餐 "+packgeInfo.getString("name"));
+            //XBean packgeInfo = userInfo.getXBean("tariff_package");
+            if(userInfo != null){
+                String company = userInfo.getString("corporate_name");
+                txv_company_title.setText(company != null ? company:"暂无");
             }
         }
     }
