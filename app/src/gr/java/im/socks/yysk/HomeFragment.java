@@ -527,8 +527,8 @@ public class HomeFragment extends Fragment {
         ping.setTimeout(30);
         ping.ping(hosts, new Ping.IPingListener() {
             @Override
-            public void onTime(String host, String time) {
-                MyLog.d("----->>Ping["+host+"]：" + time + "ms");
+            public void onTime(String host, String time, String name) {
+                MyLog.d("----->>Ping["+host+"("+name+")]：" + time + "ms");
                 if(!TextUtils.isEmpty(time) && StringUtils.strIsFloat(time.trim())){
                     pingTime = Float.valueOf(time.trim());
                 }else{

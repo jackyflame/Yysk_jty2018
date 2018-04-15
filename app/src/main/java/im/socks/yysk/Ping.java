@@ -36,7 +36,7 @@ public class Ping {
                 }
                 if (msg.what == 1) {
                     Object[] args = (Object[]) msg.obj;
-                    listener.onTime((String) args[0], (String) args[1]);
+                    listener.onTime((String) args[0], (String) args[1], (String) args[2]);
                 }
             }
         };
@@ -51,10 +51,19 @@ public class Ping {
     }
 
     public void ping(List<String> hosts, IPingListener listener) {
+       ping(hosts,null,listener);
+    }
+
+    public void ping(List<String> hosts, List<String> hostNames, IPingListener listener) {
         this.listener = listener;
         workers = new ArrayList<>();
         for (int i = 0; i < hosts.size(); i++) {
-            PingWorker worker = new PingWorker(hosts.get(i));
+            PingWorker worker;
+            if(hostNames != null){
+                worker = new PingWorker(hosts.get(i),hostNames.get(i));
+            }else{
+                worker = new PingWorker(hosts.get(i));
+            }
             worker.setDaemon(true);
             worker.start();
             workers.add(worker);
@@ -82,17 +91,23 @@ public class Ping {
          * @param host
          * @param time 如：32.33，单位为毫秒
          */
-        void onTime(String host, String time);
+        void onTime(String host, String time, String hostName);
         //void onEnd(String host);
     }
 
 
     private class PingWorker extends Thread {
         private String host;
+        private String hostName = "";
         private Process process;
 
         public PingWorker(String host) {
             this.host = host;
+        }
+
+        public PingWorker(String host,String hostName) {
+            this.host = host;
+            this.hostName = hostName;
         }
 
         @Override
@@ -109,19 +124,25 @@ public class Ping {
                 process = Runtime.getRuntime().exec(command);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "utf-8"));
                 String line;
+                String readMsg = "";
+                String timeLast = "超时";
                 while ((line = reader.readLine()) != null) {
                     //64 bytes from 14.215.177.39: icmp_seq=0 ttl=54 time=25.042 ms
                     String time = parseTime(line);
-                    MyLog.d("ping=%s,line=%s,time=%s", command, line, time);
+                    readMsg = readMsg + line + "\r\n";
+                    //MyLog.d("ping=[%s],line=[%s],time=[%s]", command, line, time);
                     if (time != null && time.length() > 0) {
-                        handler.sendMessage(handler.obtainMessage(1, new Object[]{host, time}));
+                        //handler.sendMessage(handler.obtainMessage(1, new Object[]{host, time}));
+                        timeLast = time;
                     }
-
                     //如果已经关闭了，就退出
                     if (isClosed) {
                         break;
                     }
                 }
+                //MyLog.d("--->>>command=[%s]\n[\n%s] -->> %s", command, readMsg, timeLast);
+                MyLog.d("--->>>host:%s[%s] -->> %s", host, hostName, timeLast);
+                handler.sendMessage(handler.obtainMessage(1, new Object[]{host, timeLast, hostName}));
 
             } catch (IOException e) {
                 MyLog.e(e);

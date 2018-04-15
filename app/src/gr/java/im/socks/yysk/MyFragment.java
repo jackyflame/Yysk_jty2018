@@ -192,12 +192,11 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         if (!session.isLogin()) {
             phoneNumberView.setVisibility(View.GONE);
             logoutView.setEnabled(false);
-            txv_company_title.setText("请点击登录");
+            phoneNumberView.setText("请点击登录");
         } else {
             phoneNumberView.setVisibility(View.VISIBLE);
             phoneNumberView.setText(session.user.mobile_number);
             logoutView.setEnabled(true);
-            txv_company_title.setText("");
             refreshUserInfo();
         }
     }
