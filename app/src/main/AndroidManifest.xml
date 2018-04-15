@@ -78,6 +78,11 @@
             android:theme="@style/AppThemeBase.NoActionBar" />
 
         <activity
+            android:name=".SystemMsgDetailActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeBase.NoActionBar" />
+
+        <activity
             android:name=".DevicesActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppThemeBase.NoActionBar" />

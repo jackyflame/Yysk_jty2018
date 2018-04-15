@@ -1,6 +1,7 @@
 package im.socks.yysk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -115,6 +116,12 @@ public class SystemMsgActivity extends AppCompatActivity {
             img_title = itemView.findViewById(R.id.img_title);
             txv_title = itemView.findViewById(R.id.txv_title);
             txv_time = itemView.findViewById(R.id.txv_time);
+            itemView.findViewById(R.id.lin_root).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(SystemMsgActivity.this,SystemMsgDetailActivity.class));
+                }
+            });
         }
 
         public void bind(XBean data) {
