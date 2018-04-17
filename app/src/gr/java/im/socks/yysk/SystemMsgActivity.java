@@ -20,6 +20,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import im.socks.yysk.api.YyskApi;
+import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -36,6 +38,8 @@ public class SystemMsgActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterImpl adapter;
     private SmartRefreshLayout refreshLayout;
+
+    private final AppDZ app = Yysk.app;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,12 +69,22 @@ public class SystemMsgActivity extends AppCompatActivity {
     }
 
     private void initListData() {
-        //普通套餐：amount表示金额，单位为分
-        List<XBean> leftList = new ArrayList<>();;
-        leftList.add(new XBean("title", "包月套餐1", "time", "1分钟前", "isOpen", false));
-        leftList.add(new XBean("title", "包月套餐2", "time", "1天前", "isOpen", false));
-        leftList.add(new XBean("title", "包月套餐3", "time", "一周前", "isOpen", true));
-        adapter.setItems(leftList);
+        app.getApi().getMsgList(new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                if(NetUtil.checkAndHandleRsp(result,SystemMsgActivity.this,"查询设备失败",null)){
+                    List<XBean> dataList = NetUtil.getRspDataList(result);
+                    adapter.setItems(dataList);
+                }
+            }
+        });
+
+        ////普通套餐：amount表示金额，单位为分
+        //List<XBean> leftList = new ArrayList<>();;
+        //leftList.add(new XBean("title", "包月套餐1", "created", "1分钟前", "is_read", false));
+        //leftList.add(new XBean("title", "包月套餐2", "created", "1天前", "is_read", false));
+        //leftList.add(new XBean("title", "包月套餐3", "created", "一周前", "is_read", true));
+        //adapter.setItems(leftList);
     }
 
     private class AdapterImpl extends RecyclerView.Adapter<MyHolder> {
@@ -99,7 +113,9 @@ public class SystemMsgActivity extends AppCompatActivity {
 
         public void setItems(List<XBean> items) {
             this.items.clear();
-            this.items.addAll(items);
+            if(items != null){
+                this.items.addAll(items);
+            }
             notifyDataSetChanged();
         }
     }
@@ -119,7 +135,10 @@ public class SystemMsgActivity extends AppCompatActivity {
             itemView.findViewById(R.id.lin_root).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(SystemMsgActivity.this,SystemMsgDetailActivity.class));
+                    long msgId = data.getLong("id");
+                    Intent intent = new Intent(SystemMsgActivity.this,SystemMsgDetailActivity.class);
+                    intent.putExtra("messageid", msgId);
+                    startActivity(intent);
                 }
             });
         }
@@ -127,8 +146,12 @@ public class SystemMsgActivity extends AppCompatActivity {
         public void bind(XBean data) {
             this.data = data;
             txv_title.setText(data.getString("title"));
-            txv_time.setText(data.getString("time"));
-            boolean isReaded = data.getBoolean("isOpen",false);
+            String time = data.getString("created");
+            if(time != null){
+                time = time.replace("T", " ");
+            }
+            txv_time.setText(time);
+            boolean isReaded = data.getBoolean("is_read",false);
             if(isReaded){
                 txv_title.setTextColor(getResources().getColor(R.color.gray));
                 img_title.setImageResource(R.mipmap.ic_msg_readed);

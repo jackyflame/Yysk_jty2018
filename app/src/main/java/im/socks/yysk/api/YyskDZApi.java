@@ -117,4 +117,32 @@ public class YyskDZApi extends YyskApi {
     public void getDeviceList(ICallback<XBean> cb){
         invoke("10048", "20048", new XBean(), cb);
     }
+
+    /**
+     * 常见问题列表
+     * */
+    public void getQuestionList(ICallback<XBean> cb){
+        invoke("10050", "20050", new XBean(), cb);
+    }
+
+    /**
+     * 用户消息列表
+     * */
+    public void getMsgList(ICallback<XBean> cb){
+        invoke("10051", "20051", new XBean(), cb);
+    }
+
+    /**
+     * 用户消息详情
+     * */
+    public void getMsgDetail(long messageid,ICallback<XBean> cb){
+        invoke("10052", "20052", new XBean("messageid",messageid), cb);
+    }
+
+    /**
+     * 用户访问规则列表
+     * */
+    public void getRuleList(ICallback<XBean> cb){
+        invoke("10053", "20053", new XBean(), cb);
+    }
 }

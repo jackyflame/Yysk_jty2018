@@ -49,6 +49,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/txv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -60,6 +61,7 @@
         android:minHeight="160dp"/>
 
     <TextView
+        android:id="@+id/txv_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
