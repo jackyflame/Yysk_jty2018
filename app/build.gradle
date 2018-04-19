@@ -9,10 +9,10 @@ android {
         //    storePassword '123456'
         //}
         //release {
-        //    keyAlias 'yysk_dz'
-        //    keyPassword '123456'
-        //    storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/dz_key.jks')
-        //    storePassword '123456'
+        //    keyAlias 'wanpas'
+        //    keyPassword '666666'
+        //    storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/wanpas_key.jks')
+        //    storePassword '666666'
         //}
         //release {
         //    keyAlias 'shendeng'
