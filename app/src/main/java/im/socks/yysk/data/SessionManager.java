@@ -91,6 +91,8 @@ public class SessionManager {
 
     public void onLogin(User user) {
 
+        User oldUser = app.getSessionManager().getSession().user;
+
         session = new Session();
         session.user = user;
         session.userUpdateTime = 0;
@@ -103,7 +105,8 @@ public class SessionManager {
         app.getEventBus().emit(Yysk.EVENT_LOGIN, session, false);
 
         //如果原来存在代理，且代理是用户的，就需要停止
-        if(proxy!=null &&!proxy.isCustom){
+        //if(proxy!=null &&!proxy.isCustom){
+        if(oldUser == null || oldUser.mobile_number != user.mobile_number){
             setProxy(null,null,true);
         }
     }
