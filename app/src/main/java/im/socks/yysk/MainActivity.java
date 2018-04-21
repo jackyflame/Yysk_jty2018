@@ -1,5 +1,7 @@
 package im.socks.yysk;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -72,7 +74,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (!fragmentStack.back()) {
-            super.onBackPressed();
+            //提示是否保存修改
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("是否退出APP?");
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    MainActivity.super.onBackPressed();
+                }
+            });
+            builder.show();
         }
     }
 
