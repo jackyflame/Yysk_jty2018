@@ -129,8 +129,8 @@ public class HelpActivity extends AppCompatActivity {
 
         public void bind(XBean data) {
             this.data = data;
-            txv_question.setText(data.getString("question"));
-            txv_answer.setText(data.getString("answer"));
+            txv_question.setText("Q:"+data.getString("question"));
+            txv_answer.setText("A:"+data.getString("answer"));
         }
     }
 

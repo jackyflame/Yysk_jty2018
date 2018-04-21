@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_ms"
+        android:textSize="@dimen/text_ml"
         android:textStyle="bold"
         tools:text="Q:访问不了youtube怎么办？"/>
 
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:layout_marginTop="@dimen/padding_m"
-        android:textSize="@dimen/text_ms"
+        android:textSize="@dimen/text_ml"
         tools:text="A:有两种情况，第一种您使用的是普通加速套餐，不支持视频类服务加速；第二种您正在使用的线路临时出现异常，可尝试更换线路。"/>
 
 </LinearLayout>
