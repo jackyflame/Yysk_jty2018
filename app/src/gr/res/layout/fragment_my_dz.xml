@@ -176,7 +176,7 @@
                         style="@style/my_row_item"
                         android:layout_marginLeft="@dimen/padding_xxxl"
                         android:drawableTop="@mipmap/ic_logoff"
-                        android:text="退出登录" />
+                        android:text="切换账号" />
 
                 </LinearLayout>
 

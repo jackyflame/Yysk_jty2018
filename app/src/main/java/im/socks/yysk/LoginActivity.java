@@ -18,9 +18,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        LoginFragment loginFragment = LoginFragment.newInstance("activity_login");
         //必需继承FragmentActivity,嵌套fragment只需要这行代码
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rootLayout, LoginFragment.newInstance("activity_login"))
+                .replace(R.id.rootLayout, loginFragment)
                 .commitAllowingStateLoss();
     }
 }

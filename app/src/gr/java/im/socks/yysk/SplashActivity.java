@@ -29,6 +29,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private int SPLASH_DURATION = 2500;
     private Handler mHandler = new Handler();
     private final AppDZ app = Yysk.app;
+    private boolean isJumpToLogin = true;
 
     private static SplashActivity instance;
 
@@ -38,13 +39,18 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_splash);
         findViewById(R.id.btn_login).setOnClickListener(this);
         instance = this;
+        if(app.getSessionManager().getSession().autoLogin){
+            autoLogin();
+        }else {
+            postRunnable(SPLASH_DURATION);
+        }
     }
 
     private void postRunnable(final long delay) {
         runnable = new Runnable() {
             @Override
             public void run() {
-                enterNextActivity();
+                enterNextActivity(isJumpToLogin);
             }
         };
         mHandler.postDelayed(runnable, delay);
@@ -54,18 +60,25 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         if (runnable != null && mHandler != null) mHandler.removeCallbacks(runnable);
     }
 
-    private void enterNextActivity() {
-
+    private void enterNextActivity(boolean isJumpToLogin) {
+        Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+        if(isJumpToLogin){
+            intent.putExtra(Constants.EXTRA_JUMP,Constants.EXTRA_JUMP_LOGIN);
+        }
+        startActivity(intent);
+        finish();
     }
 
     private void autoLogin(){
         if(app.getSessionManager() == null || app.getSessionManager().getSession() == null){
-            jumpToLogin();
+            isJumpToLogin = true;
+            postRunnable(SPLASH_DURATION);
             return;
         }
         User user = app.getSessionManager().getSession().user;
         if(user == null || StringUtils.isEmpty(user.mobile_number) || StringUtils.isEmpty(user.password)){
-            jumpToLogin();
+            isJumpToLogin = true;
+            postRunnable(SPLASH_DURATION);
             return;
         }
         final String phoneNumber = user.mobile_number;
@@ -93,7 +106,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     startActivity(new Intent(SplashActivity.this,MainActivity.class));
                     finish();
                 }else{
-                    jumpToLogin();
+                    isJumpToLogin = true;
+                    postRunnable(500);
                 }
             }
         });

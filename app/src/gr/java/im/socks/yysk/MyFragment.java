@@ -255,6 +255,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         //不需要调用api
                         app.getSessionManager().onLogout();
                         dialog.dismiss();
+                        getFragmentStack().show(LoginFragment.newInstance(null),"login",true);
                     }
                 });
         normalDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {

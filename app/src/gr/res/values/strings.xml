@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Wanpas</string>
+    <string name="app_name">WANPAS</string>
     <string name="invite_regist_tips">邀请1位好友加入后，\n您可以获得1天的免费同等级服务</string>
     <string name="invite_pay_tips">邀请的好友完成首单充值后，\n您可以再获得2天的免费同等级服务</string>
 
-    <string name="splash_msg"> Wanpas是一套安全简便的全球网络互联方案，拥有丰富、优质、安全的海外节点，智能选择最优线路一键实现流畅、稳定的全球网络访问，同时配备7*24小时运维值班，提供完善的售后服务保障。力争打造优质的全球网络服务品牌，为广大客户提供极致的全球网络互联服务。</string>
+    <string name="splash_msg"> WANPAS是一套安全简便的全球网络互联方案，拥有丰富、优质、安全的海外节点，智能选择最优线路一键实现流畅、稳定的全球网络访问，同时配备7*24小时运维值班，提供完善的售后服务保障。力争打造优质的全球网络服务品牌，为广大客户提供极致的全球网络互联服务。</string>
 </resources>
