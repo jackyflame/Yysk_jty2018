@@ -36,6 +36,12 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) == Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) {
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_splash);
         findViewById(R.id.btn_login).setOnClickListener(this);
         instance = this;

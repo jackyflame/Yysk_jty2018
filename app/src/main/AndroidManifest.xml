@@ -31,7 +31,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:theme="@style/AppThemeBase.NoActionBar">
         </activity>
 
