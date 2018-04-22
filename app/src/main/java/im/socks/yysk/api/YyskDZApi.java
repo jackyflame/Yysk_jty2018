@@ -145,4 +145,11 @@ public class YyskDZApi extends YyskApi {
     public void getRuleList(ICallback<XBean> cb){
         invoke("10053", "20053", new XBean(), cb);
     }
+
+    /**
+     * 用户提交工单(意见反馈)
+     * */
+    public void sendFeedBack(String content,ICallback<XBean> cb){
+        invoke("10055", "20055", new XBean("content",content), cb);
+    }
 }

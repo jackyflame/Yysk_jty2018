@@ -128,9 +128,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         }else if (id == R.id.btn_msgs) {
             startActivity(new Intent(getContext(),SystemMsgActivity.class));
         } else if (id == R.id.btn_feedback) {
-            //startActivity(new Intent(getContext(),FeedbackActivity.class));
-            String url = "https://webchat.7moor.com/wapchat.html?accessId=559eecd0-c91e-11e7-8178-2573f743b2b9&fromUrl=android";
-            app.openUrl(url);
+            startActivity(new Intent(getContext(),FeedbackActivity.class));
+            //String url = "https://webchat.7moor.com/wapchat.html?accessId=559eecd0-c91e-11e7-8178-2573f743b2b9&fromUrl=android";
+            //app.openUrl(url);
         } else if (id == R.id.versionLayout) {
             startActivity(new Intent(getContext(),SystemMsgActivity.class));
         } else if (id == R.id.logoutView) {
