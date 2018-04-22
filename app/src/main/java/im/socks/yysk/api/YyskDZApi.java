@@ -152,4 +152,25 @@ public class YyskDZApi extends YyskApi {
     public void sendFeedBack(String content,ICallback<XBean> cb){
         invoke("10055", "20055", new XBean("content",content), cb);
     }
+
+    /**
+     * 用户工单列表
+     * */
+    public void getFeedbackList(ICallback<XBean> cb){
+        invoke("10054", "20054", new XBean(), cb);
+    }
+
+    /**
+     * 用户工单详情
+     * */
+    public void getFeedbackDetail(long work_order_id,ICallback<XBean> cb){
+        invoke("10056", "20056", new XBean("work_order_id",work_order_id), cb);
+    }
+
+    /**
+     * 用户工单提交回复
+     * */
+    public void getFeedbackReply(long work_order_id,String content,ICallback<XBean> cb){
+        invoke("10057", "20057", new XBean("work_order_id",work_order_id,"content",content), cb);
+    }
 }

@@ -73,4 +73,34 @@ public class FormatUtil {
     public static String formatRate(Context context, long value) {
         return formatSize(context, value) + "/秒";
     }
+
+    public static String getFormatSendTime(long lastTime) {
+        long leftSecondsMM = System.currentTimeMillis() - lastTime;
+        if (leftSecondsMM > 0) {
+            long leftSeconds = leftSecondsMM / 1000;
+            long minutes = leftSeconds / 60;
+            long hours = minutes / 60;
+            long day = hours / 24;
+            if (day >= 1)
+            return formatDateMMddHHmm(lastTime);
+            if (hours >= 1)
+                return formatDateHHmm(lastTime);
+            if (minutes >= 1)
+                return minutes + "分钟前";
+            return "刚刚";
+        }
+        return "刚刚";
+    }
+
+    public static String formatDateMMddHHmm(long time) {
+        Date date = new Date(time);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd HH:mm");
+        return formatter.format(date);
+    }
+
+    public static String formatDateHHmm(long time) {
+        Date date = new Date(time);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        return formatter.format(date);
+    }
 }

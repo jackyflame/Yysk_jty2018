@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/padding_m"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/lin_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txv_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/btn_blue"
+            android:textSize="@dimen/text_ml"
+            android:textStyle="bold"
+            tools:text="访问不了youtube怎么办？访问不了youtube怎么办？访问不了youtube怎么办？"/>
+
+        <TextView
+            android:id="@+id/txv_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_xl"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_ml"
+            tools:text="未回复"/>
+
+    </LinearLayout>
+
+</LinearLayout>

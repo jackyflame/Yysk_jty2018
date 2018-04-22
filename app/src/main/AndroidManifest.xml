@@ -92,6 +92,16 @@
             android:theme="@style/AppThemeBase.NoActionBar" />
 
         <activity
+            android:name=".FeedbackLisActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeBase.NoActionBar" />
+
+        <activity
+            android:name=".FeedbackDetailActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeBase.NoActionBar" />
+
+        <activity
             android:name=".BuyRecordsActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppThemeBase.NoActionBar" />
