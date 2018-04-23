@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -294,16 +295,20 @@ public class ProxyListFragment extends Fragment {
             ping.setTimeout(30);
             ping.ping(hosts, new Ping.IPingListener() {
                 @Override
-                public void onTime(String host, String time) {
-                    updatePingTime(host,time);
+                public void onTime(String host, String time, String hostName) {
+                    updatePingTime(host,time,hostName);
                 }
             });
         }
 
-        private void updatePingTime(String host,String time){
+        private void updatePingTime(String host,String time,String name){
             for(int i=0;i<items.size();i++){
                 XBean item = items.get(i);
-                if(item.isEquals("host",host)){
+                if(!TextUtils.isEmpty(name) && item.isEquals("name",name)){
+                    item.put("ping_time",time+"ms");
+                    notifyItemChanged(i);
+                    break;
+                }else if(TextUtils.isEmpty(name)){
                     item.put("ping_time",time+"ms");
                     notifyItemChanged(i);
                     break;

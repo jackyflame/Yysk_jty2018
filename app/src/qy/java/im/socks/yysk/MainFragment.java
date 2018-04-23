@@ -36,6 +36,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_dz, container, false);
         navigationView = view.findViewById(R.id.bottomNavigationView);
+        navigationView.setVisibility(View.VISIBLE);
         disableShiftMode(navigationView);
 
         navigationView.setSelectedItemId(R.id.navigation_home);
@@ -55,6 +56,7 @@ public class MainFragment extends Fragment {
 
             }
         });
+
         return view;
     }
 
