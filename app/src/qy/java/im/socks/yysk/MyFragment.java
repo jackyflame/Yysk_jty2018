@@ -69,7 +69,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btn_feedback).setOnClickListener(this);
         view.findViewById(R.id.btn_msgs).setOnClickListener(this);
         view.findViewById(R.id.btn_devices).setOnClickListener(this);
-        view.findViewById(R.id.btn_buy_records).setOnClickListener(this);
+        view.findViewById(R.id.btn_help_center).setOnClickListener(this);
         return view;
     }
 
@@ -120,16 +120,16 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             }
         } else if (id == R.id.phoneNumberView) {
             //getFragmentStack().show(MoneyFragment.newInstance(), null, false);
-        } else if (id == R.id.btn_buy_records) {
-            startActivity(new Intent(getContext(),BuyRecordsActivity.class));
+        } else if (id == R.id.btn_help_center) {
+            startActivity(new Intent(getContext(),HelpActivity.class));
         } else if (id == R.id.btn_devices) {
             startActivity(new Intent(getContext(),DevicesActivity.class));
         }else if (id == R.id.btn_msgs) {
             startActivity(new Intent(getContext(),SystemMsgActivity.class));
         } else if (id == R.id.btn_feedback) {
-            //startActivity(new Intent(getContext(),FeedbackActivity.class));
-            String url = "https://webchat.7moor.com/wapchat.html?accessId=559eecd0-c91e-11e7-8178-2573f743b2b9&fromUrl=android";
-            app.openUrl(url);
+            startActivity(new Intent(getContext(),FeedbackActivity.class));
+            //String url = "https://webchat.7moor.com/wapchat.html?accessId=559eecd0-c91e-11e7-8178-2573f743b2b9&fromUrl=android";
+            //app.openUrl(url);
         } else if (id == R.id.versionLayout) {
             startActivity(new Intent(getContext(),SystemMsgActivity.class));
         } else if (id == R.id.logoutView) {
