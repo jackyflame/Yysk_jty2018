@@ -135,7 +135,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableTop="@mipmap/ic_msgs"
-                            android:text="我的消息" />
+                            android:text="系统公告" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
                         style="@style/my_row_item"
                         android:layout_marginLeft="@dimen/padding_xxxl"
                         android:drawableTop="@mipmap/ic_advice"
-                        android:text="意见反馈" />
+                        android:text="问题反馈" />
 
                 </LinearLayout>
 
