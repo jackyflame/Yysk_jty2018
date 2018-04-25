@@ -71,5 +71,16 @@
         <item name="android:focusable">true</item>
     </style>
 
+
+    <style name="pager_bar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="pb_backgroundColor">@color/transparent</item>
+        <item name="pb_back_show">false</item>
+        <item name="pb_back">true</item>
+        <item name="pb_textColor">@color/black</item>
+        <item name="pb_backTextSize">@dimen/text_l</item>
+    </style>
+
 </resources>
 

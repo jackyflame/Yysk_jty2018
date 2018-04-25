@@ -10,8 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -28,11 +29,10 @@ import im.socks.yysk.util.XBean;
  * Created by Android Studio.
  * ProjectName: Yysk_jty2018
  * Author: Haozi
- * Date: 2018/3/25
- * Time: 23:19
+ * Date: 2018/4/22
+ * Time: 18:19
  */
-
-public class SystemMsgActivity extends AppCompatActivity {
+public class FeedbackLisActivity extends AppCompatActivity {
 
     private PageBar title_bar;
     private RecyclerView recyclerView;
@@ -44,7 +44,7 @@ public class SystemMsgActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_system_msg);
+        setContentView(R.layout.activity_feedback_list);
         title_bar = findViewById(R.id.title_bar);
         title_bar.setBackListener(new View.OnClickListener() {
             @Override
@@ -57,11 +57,18 @@ public class SystemMsgActivity extends AppCompatActivity {
         adapter = new AdapterImpl(this);
         recyclerView.setAdapter(adapter);
 
-        SmartRefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+        refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(true);
+                initListData();
+            }
+        });
+
+        findViewById(R.id.submitButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FeedbackLisActivity.this,FeedbackActivity.class));
             }
         });
 
@@ -69,25 +76,21 @@ public class SystemMsgActivity extends AppCompatActivity {
     }
 
     private void initListData() {
-        app.getApi().getMsgList(new YyskApi.ICallback<XBean>() {
+        app.getApi().getFeedbackList(new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
-                if(NetUtil.checkAndHandleRsp(result,SystemMsgActivity.this,"查询设备失败",null)){
+                if(NetUtil.checkAndHandleRsp(result,FeedbackLisActivity.this,"查询失败",null)){
                     List<XBean> dataList = NetUtil.getRspDataList(result);
                     adapter.setItems(dataList);
+                    refreshLayout.finishRefresh(true);
+                }else{
+                    refreshLayout.finishRefresh(true);
                 }
             }
         });
-
-        ////普通套餐：amount表示金额，单位为分
-        //List<XBean> leftList = new ArrayList<>();;
-        //leftList.add(new XBean("title", "包月套餐1", "created", "1分钟前", "is_read", false));
-        //leftList.add(new XBean("title", "包月套餐2", "created", "1天前", "is_read", false));
-        //leftList.add(new XBean("title", "包月套餐3", "created", "一周前", "is_read", true));
-        //adapter.setItems(leftList);
     }
 
-    private class AdapterImpl extends RecyclerView.Adapter<MyHolder> {
+    private class AdapterImpl extends RecyclerView.Adapter<ItemHolder> {
         private Context context;
         private List<XBean> items = new ArrayList<>();
 
@@ -96,13 +99,13 @@ public class SystemMsgActivity extends AppCompatActivity {
         }
 
         @Override
-        public MyHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_sysmsg_list_dz, viewGroup, false);
-            return new MyHolder(view);
+        public ItemHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_feedback_list_item, viewGroup, false);
+            return new ItemHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(MyHolder holder, int position) {
+        public void onBindViewHolder(ItemHolder holder, int position) {
             holder.bind(items.get(position));
         }
 
@@ -113,31 +116,33 @@ public class SystemMsgActivity extends AppCompatActivity {
 
         public void setItems(List<XBean> items) {
             this.items.clear();
-            if(items != null){
-                this.items.addAll(items);
-            }
+            this.items.addAll(items);
             notifyDataSetChanged();
         }
     }
 
-    private class MyHolder extends RecyclerView.ViewHolder{
+    private class ItemHolder extends RecyclerView.ViewHolder{
 
-        private ImageView img_title;
-        private TextView txv_title;
-        private TextView txv_time;
+        private LinearLayout lin_row;
+        private TextView txv_content;
+        private TextView txv_reply;
         private XBean data;
 
-        public MyHolder(View itemView) {
+        public ItemHolder(View itemView) {
             super(itemView);
-            img_title = itemView.findViewById(R.id.img_title);
-            txv_title = itemView.findViewById(R.id.txv_title);
-            txv_time = itemView.findViewById(R.id.txv_time);
-            itemView.findViewById(R.id.lin_root).setOnClickListener(new View.OnClickListener() {
+            lin_row = itemView.findViewById(R.id.lin_row);
+            txv_content = itemView.findViewById(R.id.txv_content);
+            txv_reply = itemView.findViewById(R.id.txv_reply);
+            lin_row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    long msgId = data.getLong("id");
-                    Intent intent = new Intent(SystemMsgActivity.this,SystemMsgDetailActivity.class);
-                    intent.putExtra("messageid", msgId);
+                    long id = data.getLong("id",-1l);
+                    if(id < 0){
+                        showError("获取信息失败，请稍后重试");
+                        return;
+                    }
+                    Intent intent = new Intent(FeedbackLisActivity.this,FeedbackDetailActivity.class);
+                    intent.putExtra("work_order_id", id);
                     startActivity(intent);
                 }
             });
@@ -145,20 +150,18 @@ public class SystemMsgActivity extends AppCompatActivity {
 
         public void bind(XBean data) {
             this.data = data;
-            txv_title.setText(data.getString("title"));
-            String time = data.getString("created");
-            if(time != null){
-                time = time.replace("T", " ");
-            }
-            txv_time.setText(time);
-            boolean isReaded = data.getBoolean("is_read",false);
-            if(isReaded){
-                txv_title.setTextColor(getResources().getColor(R.color.gray));
-                img_title.setImageResource(R.mipmap.ic_msg_readed);
+            txv_content.setText(data.getString("content", ""));
+            if(data.getBoolean("is_handled", false)){
+                txv_reply.setText("已解决");
+            }else if(data.getBoolean("is_resolved", false)){
+                txv_reply.setText("已回复");
             }else{
-                txv_title.setTextColor(getResources().getColor(R.color.blue));
-                img_title.setImageResource(R.mipmap.ic_msg_unread);
+                txv_reply.setText("未回复");
             }
         }
+    }
+
+    private void showError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

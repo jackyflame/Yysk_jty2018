@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/txv_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_ml"
+        android:textStyle="bold"
+        tools:text="Q:访问不了youtube怎么办？"/>
+
+    <TextView
+        android:id="@+id/txv_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/padding_m"
+        android:textSize="@dimen/text_ml"
+        tools:text="A:有两种情况，第一种您使用的是普通加速套餐，不支持视频类服务加速；第二种您正在使用的线路临时出现异常，可尝试更换线路。"/>
+
+</LinearLayout>

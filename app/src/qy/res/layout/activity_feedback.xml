@@ -8,21 +8,10 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pb_back="true"
-        app:pb_title=""/>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_l"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/padding_xl"
-        android:layout_marginLeft="@dimen/padding_l"
-        android:text="意见反馈"
-        android:textStyle="bold"/>
+        app:pb_back_text="意见反馈"
+        app:pb_back_show="true"
+        app:pb_backgroundColor="@color/bg_empty_gray_2"
+        style="@style/pager_bar"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -34,19 +23,22 @@
         android:text="您可以畅所欲言"/>
 
     <EditText
-        android:id="@+id/txv_psw_orgin"
+        android:id="@+id/txv_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="@dimen/padding_l"
         android:layout_marginLeft="@dimen/padding_xxxl"
         android:layout_marginRight="@dimen/padding_xxxl"
+        android:gravity="top|left"
         android:background="@drawable/bg_white_solid_gray_border"
         android:textSize="@dimen/text_m"
+        android:padding="@dimen/padding_m"
+        android:hint="请输入意见内容"
         android:text=""/>
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/btn_height"
             android:layout_marginLeft="50dp"
