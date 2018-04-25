@@ -29,6 +29,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private View phoneNumberLayout;
     private TextView phoneNumberView;
     private TextView txv_packge_title;
+    private PageBar title_bar;
     //
     private View logoutView;
     //
@@ -55,6 +56,14 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         //
         logoutView = view.findViewById(R.id.logoutView);
         logoutView.setOnClickListener(this);
+        //标题退出
+        title_bar = view.findViewById(R.id.title_bar);
+        title_bar.setBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentStack().back();
+            }
+        });
         //修改密码
         view.findViewById(R.id.btn_change_psw).setOnClickListener(this);
         view.findViewById(R.id.btn_feedback).setOnClickListener(this);
