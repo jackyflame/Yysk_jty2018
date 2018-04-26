@@ -6,10 +6,9 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/pageBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pb_title="代理"
-        app:pb_back="true"/>
+        app:pb_back_show="true"
+        app:pb_back_text="线路选择"
+        style="@style/pager_bar"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"

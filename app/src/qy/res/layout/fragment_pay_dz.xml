@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bg_empty_gray_2"
     tools:context="im.socks.yysk.PayFragment">
 
     <im.socks.yysk.PageBar
@@ -11,23 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/pager_bar"
-        app:pb_title="购买"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_l"
-        android:drawableLeft="@mipmap/ic_buy_chart"
-        android:textColor="@color/text_red"
-        android:gravity="center_vertical"
-        android:background="@color/text_white"
-        android:text="购买加速套餐"/>
+        app:pb_title="购买套餐"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/padding_l"
-        android:paddingRight="@dimen/padding_l"
         android:background="@color/text_white"
         android:orientation="horizontal">
 
@@ -47,7 +36,6 @@
             style="@style/buy_tab"
             android:layout_marginLeft="-1dp"
             android:text="SVPI加速"/>
-
 
     </LinearLayout>
 
@@ -75,10 +63,42 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/bg_empty_gray_2"
             android:layout_margin="@dimen/padding_l"
-            android:padding="@dimen/padding_m"
-            android:background="@drawable/bg_white_solid_gray_border" />
+            android:padding="@dimen/padding_m"/>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_buy_record"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_ml"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/padding_m"
+        android:layout_marginLeft="@dimen/padding_xxl"
+        android:layout_marginRight="@dimen/padding_xxl"
+        android:layout_marginBottom="@dimen/padding_xl"
+        android:paddingLeft="@dimen/padding_l"
+        android:paddingRight="@dimen/padding_l"
+        android:background="@drawable/bg_white_shap_cnr_15"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/padding_l"
+            android:gravity="center_vertical"
+            android:drawableLeft="@mipmap/ic_buy_record"
+            android:drawablePadding="@dimen/padding_m"
+            android:textColor="@color/black"
+            android:text="购买记录"/>
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@mipmap/ic_trangel_right"/>
+
+    </LinearLayout>
 
 </LinearLayout>

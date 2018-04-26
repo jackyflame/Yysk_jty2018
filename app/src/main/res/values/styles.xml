@@ -68,6 +68,7 @@
         <item name="android:background">@drawable/buy_tab_selector</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_ml</item>
+        <item name="android:textColor">@color/buy_tab_txt_color</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
     </style>

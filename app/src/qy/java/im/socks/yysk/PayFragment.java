@@ -74,6 +74,13 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        view.findViewById(R.id.lin_buy_record).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),BuyRecordsActivity.class));
+            }
+        });
+
         adapter = new AdapterImpl(getActivity());
         recyclerView.setAdapter(adapter);
 

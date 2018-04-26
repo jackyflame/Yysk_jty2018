@@ -10,14 +10,15 @@
         android:id="@+id/txv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_blue_dark"
         android:textSize="@dimen/text_m"
+        android:textColor="@color/black"
         tools:text="描述：支持网页浏览加速服务。" />
 
     <TextView
         android:id="@+id/txv_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:textSize="@dimen/text_m"
         android:layout_marginTop="@dimen/padding_m"
         tools:text="支持使用谷歌等互联网基础服务,网页浏览，包括网页搜索，社交网站等，不支持油管视频；" />

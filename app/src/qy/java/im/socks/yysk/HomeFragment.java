@@ -115,6 +115,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.lin_end_time).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentStack().show(PayFragment.newInstance(),"PayFragment",false);
+            }
+        });
+
         view.findViewById(R.id.img_buy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -3,8 +3,9 @@
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/padding_l"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg_gray_border_item"
+    android:background="@drawable/bg_white_solid_gray_border"
     android:padding="10dp">
 
     <TextView
@@ -21,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/btn_height_m"
         android:layout_alignParentRight="true"
-        android:background="@drawable/buy_item_btn_selector"
-        android:textColor="@color/text_blue_dark"
+        android:background="@drawable/btn_red_shap_cnr_5"
+        android:textColor="@color/text_white"
         android:textSize="@dimen/text_m"
         tools:text="10元" />
 

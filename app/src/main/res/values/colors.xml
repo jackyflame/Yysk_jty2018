@@ -25,6 +25,7 @@
     <color name="gray_light">#E3E3E3</color>
     <color name="white">#FFFFFF</color>
     <color name="bg_home">@color/white</color>
+    <color name="red_light">#ff5c33</color>
 
     <color name="bg_empty_gray">#fafafa</color>
     <color name="bg_empty_gray_2">#f2f2f2</color>
@@ -32,10 +33,10 @@
     <color name="btn_orange">#ffa703</color>
     <color name="btn_blue">#199ed8</color>
     <color name="btn_blue_light">#87CEFA</color>
-    <color name="btn_red">#FF0000</color>
+    <color name="btn_red">#ff3300</color>
 
     <color name="text_white">@color/white</color>
-    <color name="text_red">#FF0000</color>
+    <color name="text_red">#ff3300</color>
     <color name="text_blue_dark">@color/blue_dark</color>
     <color name="text_green">#66CD00</color>
 

@@ -8,21 +8,10 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pb_back="true"
-        app:pb_title="充值记录"/>
+        app:pb_back_show="true"
+        app:pb_back_text="购买记录"
+        style="@style/pager_bar"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingTop="@dimen/padding_m"
-        android:paddingBottom="@dimen/padding_m"
-        android:paddingLeft="14dp"
-        android:textSize="@dimen/text_m"
-        android:textColor="@color/black"
-        android:text="购买记录"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="@dimen/text_m"
             android:text="支付方式"/>
