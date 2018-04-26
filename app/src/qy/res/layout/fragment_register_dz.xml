@@ -11,6 +11,11 @@
         style="@style/pager_bar"
         app:pb_back="true"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +30,7 @@
             android:textSize="@dimen/text_xl"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="20dp"
+            android:textColor="@color/black"
             android:text="账号注册"
             android:textStyle="bold"
             android:gravity="center"/>
@@ -67,7 +73,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_l"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 

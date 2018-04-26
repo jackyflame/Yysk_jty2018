@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import im.socks.yysk.api.YyskApi;
+import im.socks.yysk.util.CodeUtils;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 import im.socks.yysk.util.XRspBean;
@@ -30,6 +32,10 @@ public class RegisterFragment extends Fragment {
     private EditText passwordText;
     private Button registerButton;
     private Button sendVerifyCodeButton;
+
+    private EditText edt_imgcode;
+    private ImageView img_code;
+    private String imageCode;
 
     private final AppDZ app = Yysk.app;
 
@@ -63,6 +69,16 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        edt_imgcode = view.findViewById(R.id.edt_imgcode);
+        img_code = view.findViewById(R.id.img_code);
+        img_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshImageCode();
+            }
+        });
+        refreshImageCode();
+
         return view;
     }
 
@@ -75,6 +91,20 @@ public class RegisterFragment extends Fragment {
     }
 
     private void sendVerifyCode() {
+
+        if(edt_imgcode.getText() == null || edt_imgcode.getText().length() <= 0){
+            showError("请输入图形验证码");
+            return;
+        }
+        String imgCodeInput = edt_imgcode.getText().toString();
+        if(!imgCodeInput.equalsIgnoreCase(imageCode)){
+            showError("图形验证码错误");
+            return;
+        }
+        if(phoneNumberText.getText() == null || phoneNumberText.getText().length() <= 0){
+            showError("请输电话号码");
+            return;
+        }
         String phoneNumber = phoneNumberText.getText().toString();
         sendVerifyCodeButton.setEnabled(false);
         app.getApi().getVerifyCode(phoneNumber,false,new YyskApi.ICallback<XBean>() {
@@ -84,6 +114,9 @@ public class RegisterFragment extends Fragment {
                 sendVerifyCodeButton.setEnabled(true);
                 if(NetUtil.checkAndHandleRsp(result,getContext(),"发送验证码失败",null)){
                     showError("发送验证码成功，请查收短信");
+                    refreshImageCode();
+                }else{
+                    refreshImageCode();
                 }
             }
         });
@@ -151,5 +184,13 @@ public class RegisterFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void refreshImageCode(){
+        if(img_code == null){
+            return;
+        }
+        img_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
+        imageCode = CodeUtils.getInstance().getCode();
     }
 }
