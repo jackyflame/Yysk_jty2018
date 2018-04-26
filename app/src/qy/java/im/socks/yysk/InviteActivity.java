@@ -1,5 +1,6 @@
 package im.socks.yysk;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -51,7 +52,7 @@ public class InviteActivity extends AppCompatActivity {
         findViewById(R.id.txv_detail).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(InviteActivity.this,InviteDetailActivity.class));
             }
         });
 
