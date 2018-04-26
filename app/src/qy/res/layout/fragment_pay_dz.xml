@@ -7,8 +7,10 @@
     tools:context="im.socks.yysk.PayFragment">
 
     <im.socks.yysk.PageBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/pager_bar"
         app:pb_title="购买"/>
 
     <TextView

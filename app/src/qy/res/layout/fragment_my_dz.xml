@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <im.socks.yysk.PageBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/pager_bar"
@@ -176,7 +177,7 @@
                         android:id="@+id/logoutView"
                         style="@style/my_row_item"
                         android:layout_marginLeft="@dimen/padding_xxxl"
-                        android:drawableTop="@mipmap/ic_logoff"
+                        android:drawableTop="@mipmap/ic_change_account"
                         android:text="切换帐号" />
 
                 </LinearLayout>

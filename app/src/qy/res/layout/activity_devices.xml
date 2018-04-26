@@ -10,8 +10,9 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/pager_bar"
         app:pb_back="true"
-        app:pb_title=""/>
+        app:pb_back_text="终端设备"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
