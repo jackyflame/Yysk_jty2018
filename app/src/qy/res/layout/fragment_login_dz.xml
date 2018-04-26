@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:clickable="true"
+    android:background="@color/white"
     android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <im.socks.yysk.PageBar
         android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pb_back="true"
-        app:pb_title="登录"></im.socks.yysk.PageBar>
+        style="@style/pager_bar"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,6 +56,27 @@
         android:hint="请输入登录密码"
         android:text=""/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/cb_rember_psw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_m"
+                android:text="记住密码"/>
+
+            <CheckBox
+                android:id="@+id/cb_auto_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_m"
+                android:layout_alignParentRight="true"
+                android:text="自动登录"/>
+
+        </RelativeLayout>
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
@@ -67,16 +90,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
+
         <TextView
             android:id="@+id/registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:textColor="@color/blue"
-            android:text="注册账号"
-            />
+            android:visibility="visible"
+            android:text="注册账号"/>
 
         <TextView
             android:id="@+id/forgetPasswordButton"

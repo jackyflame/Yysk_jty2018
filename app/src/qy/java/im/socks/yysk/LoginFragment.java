@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,6 +32,8 @@ public class LoginFragment extends Fragment {
     private EditText phoneNumberText;
     private EditText passwordText;
     private PageBar title_bar;
+    private CheckBox cb_rember_psw;
+    private CheckBox cb_auto_login;
 
     private final AppDZ app = Yysk.app;
 
@@ -81,6 +84,19 @@ public class LoginFragment extends Fragment {
         });
 
 
+        cb_rember_psw = view.findViewById(R.id.cb_rember_psw);
+        if(app.getSessionManager().getSession().rememberPsw){
+            cb_rember_psw.setChecked(true);
+        }else{
+            cb_rember_psw.setChecked(false);
+        }
+        cb_auto_login = view.findViewById(R.id.cb_auto_login);
+        if(app.getSessionManager().getSession().autoLogin){
+            cb_auto_login.setChecked(true);
+        }else{
+            cb_auto_login.setChecked(false);
+        }
+
         View loginButton = view.findViewById(R.id.loginButton);
         phoneNumberText = view.findViewById(R.id.phoneNumberView);
         passwordText = view.findViewById(R.id.passwordView);
@@ -95,6 +111,12 @@ public class LoginFragment extends Fragment {
             String phoneNum = app.getSessionManager().getSession().user.mobile_number;
             if(phoneNum != null){
                 phoneNumberText.setText(phoneNum);
+            }
+            if(app.getSessionManager().getSession().rememberPsw){
+                String psw = app.getSessionManager().getSession().user.password;
+                if(psw != null && !psw.isEmpty()){
+                    passwordText.setText(psw);
+                }
             }
         }
 
@@ -133,6 +155,8 @@ public class LoginFragment extends Fragment {
                     loginRst = NetUtil.getRspData(result);
                     //保存登录状态信息
                     saveLoginRst(phoneNumber,password);
+                    //保存记住密码和自动登录状态
+                    saveLoginSet();
                     //返回主页
                     getFragmentStack().back();
                     ////当前的fragment不需要保留在stack了，所以为替代
@@ -145,6 +169,12 @@ public class LoginFragment extends Fragment {
             }
         });
 
+    }
+
+    private void saveLoginSet() {
+        boolean remberPsw = cb_rember_psw.isChecked();
+        boolean autoLogin = cb_auto_login.isChecked();
+        app.getSessionManager().saveLoginSet(remberPsw,autoLogin);
     }
 
     private void showError(String msg) {
