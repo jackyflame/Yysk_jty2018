@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.User;
@@ -24,6 +25,8 @@ public class InviteActivity extends AppCompatActivity {
     private PageBar title_bar;
     private final AppDZ app = Yysk.app;
     private String inviteCode = "暂无";
+    private TextView txv_invite_code;
+    private TextView txv_invite_count;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,18 +39,22 @@ public class InviteActivity extends AppCompatActivity {
                 finish();
             }
         });
+        txv_invite_code = findViewById(R.id.txv_invite_code);
+        txv_invite_count = findViewById(R.id.txv_invite_count);
         refreshUserInfo();
         findViewById(R.id.btn_invite).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 创建对话框构建器
-                AlertDialog.Builder builder = new AlertDialog.Builder(InviteActivity.this);
-                builder.setTitle("邀请")
-                        .setMessage("您的邀请码是："+inviteCode)
-                        .setNegativeButton("确定",null)
-                        .create().show();
+
             }
         });
+        findViewById(R.id.txv_detail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     private void refreshUserInfo(){
@@ -65,6 +72,7 @@ public class InviteActivity extends AppCompatActivity {
         }else{
             inviteCode = app.getSessionManager().getSession().user.invite_code;
         }
+        txv_invite_code.setText(inviteCode);
     }
 
 }

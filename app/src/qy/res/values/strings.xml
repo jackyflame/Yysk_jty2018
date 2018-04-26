@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">易加速</string>
-    <string name="invite_regist_tips">邀请1位好友加入后，\n您可以获得1天的免费同等级服务</string>
-    <string name="invite_pay_tips">邀请的好友完成首单充值后，\n您可以再获得2天的免费同等级服务</string>
+    <string name="invite_regist_tips">邀请好友加入后，TA可以获得3天的免费加速服\n务，你可以获得1天的免费加速服务</string>
+    <string name="invite_pay_tips">邀请的好友完成首单充值后，您可以再获得2天的\n免费同等级服务</string>
 </resources>
