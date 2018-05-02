@@ -3,10 +3,10 @@
 
     <!-- 如果不需要支持某平台，可缺省该平台的配置-->
     <!-- 各个平台的KEY仅供DEMO演示，开发者要集成发布需要改成自己的KEY-->
-    <SinaWeibo
-        AppKey="374535501"
-        AppSecret="baccd12c166f1df96736b51ffbf600a2"
-        RedirectUrl="https://www.jiguang.cn"/>
+    <!--<SinaWeibo-->
+        <!--AppKey="374535501"-->
+        <!--AppSecret="baccd12c166f1df96736b51ffbf600a2"-->
+        <!--RedirectUrl="https://www.jiguang.cn"/>-->
 
     <QQ
         AppId="1106011004"

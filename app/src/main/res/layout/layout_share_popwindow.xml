@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_empty_gray_2"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/padding_l"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txv_invite_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="分享你的邀请码:9ZF149"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_m"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txv_wechat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawableTop="@mipmap/ic_wechat"
+            android:drawablePadding="@dimen/padding_m"
+            android:text="微信好友"/>
+
+        <TextView
+            android:id="@+id/txv_friend_cycle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawableTop="@mipmap/ic_friend_cycle"
+            android:drawablePadding="@dimen/padding_m"
+            android:text="朋友圈"/>
+
+        <TextView
+            android:id="@+id/txv_qq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawableTop="@mipmap/ic_qq"
+            android:drawablePadding="@dimen/padding_m"
+            android:text="QQ好友"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_m"
+        android:text="取消"/>
+
+</LinearLayout>
