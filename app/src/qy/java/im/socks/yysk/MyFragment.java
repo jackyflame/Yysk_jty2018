@@ -266,7 +266,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         XBean userInfo = NetUtil.getRspData(result);
                         app.getSessionManager().onUserInfoUpdate(userInfo);
                         XBean packgeInfo = userInfo.getXBean("tariff_package");
-                        txv_packge_title.setText("当前使用套餐 "+packgeInfo.getString("name"));
+                        txv_packge_title.setText(packgeInfo.getString("name"));
                     }
                 }
             });
@@ -274,7 +274,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             XBean userInfo = app.getSessionManager().getSession().user.toJson();
             XBean packgeInfo = userInfo.getXBean("tariff_package");
             if(packgeInfo != null){
-                txv_packge_title.setText("当前使用套餐 "+packgeInfo.getString("name"));
+                txv_packge_title.setText(packgeInfo.getString("name"));
             }
         }
     }

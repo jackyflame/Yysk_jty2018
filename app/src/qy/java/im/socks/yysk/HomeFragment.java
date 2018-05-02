@@ -226,7 +226,7 @@ public class HomeFragment extends Fragment {
             String host = proxy.data.getString("host");
             startPing(host);
         } else {
-            txv_line_name.setText("请选择代理");
+            txv_line_name.setText("线路选择");
         }
     }
 
