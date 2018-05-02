@@ -8,7 +8,7 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/title_bar"
-        app:pb_back_text="意见反馈"
+        app:pb_back_text="问题反馈"
         app:pb_back_show="true"
         style="@style/pager_bar"/>
 
