@@ -2,6 +2,8 @@ package im.socks.yysk;
 
 import android.app.Application;
 
+import com.socks.yyskjtyqy.share.AssertCopyUtil;
+
 import cn.jiguang.share.android.api.JShareInterface;
 import cn.jiguang.share.android.api.PlatformConfig;
 
@@ -32,5 +34,7 @@ public class YyskApplication extends Application {
                 .setWechat("wxc40e16f3ba6ebabc", "dcad950cd0633a27e353477c4ec12e7a")
                 .setQQ("1106011004", "YIbPvONmBQBZUGaN");
         JShareInterface.init(this,platformConfig);
+        //复制ICON图标用于分享
+        AssertCopyUtil.copyResurces(this,"ic_launcher.png");
     }
 }

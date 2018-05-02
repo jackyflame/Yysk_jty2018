@@ -1,20 +1,12 @@
 package im.socks.yysk;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
-import cn.jiguang.share.qqmodel.QQ;
-import cn.jiguang.share.wechat.Wechat;
-import cn.jiguang.share.wechat.WechatMoments;
 
 public class SharePopWindow extends PopupWindow {
 
@@ -56,6 +48,7 @@ public class SharePopWindow extends PopupWindow {
                 if(mListener != null){
                     mListener.wechatClick();
                 }
+                dismiss();
             }
         });
         view.findViewById(R.id.txv_friend_cycle).setOnClickListener(new View.OnClickListener() {
@@ -64,6 +57,7 @@ public class SharePopWindow extends PopupWindow {
                 if(mListener != null){
                     mListener.friendCycleClick();
                 }
+                dismiss();
             }
         });
         view.findViewById(R.id.txv_qq).setOnClickListener(new View.OnClickListener() {
@@ -72,6 +66,7 @@ public class SharePopWindow extends PopupWindow {
                 if(mListener != null){
                     mListener.qqClick();
                 }
+                dismiss();
             }
         });
 

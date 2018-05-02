@@ -2,6 +2,7 @@ package im.socks.yysk;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,8 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.socks.yyskjtyqy.share.AssertCopyUtil;
 
 import java.util.HashMap;
 
@@ -141,9 +144,16 @@ public class InviteActivity extends AppCompatActivity {
         //创建分享参数
         ShareParams shareParams = new ShareParams();
         //设置分享的数据类型
-        shareParams.setShareType(Platform.SHARE_TEXT);
-        shareParams.setText("邀请有奖");
-        shareParams.setTitle("易加速邀请您使用，邀请码："+inviteCode);
+        if(QQ.Name.equals(name)){
+            shareParams.setShareType(Platform.SHARE_WEBPAGE);
+            shareParams.setUrl("http//:www.baidu.com");
+            String filePaht = AssertCopyUtil.getAbsoluteFilePath("ic_launcher.png");
+            shareParams.setImagePath(filePaht);
+        }else{
+            shareParams.setShareType(Platform.SHARE_TEXT);
+        }
+        shareParams.setTitle("邀请有奖");
+        shareParams.setText("易加速邀请您使用，邀请码："+inviteCode);
         JShareInterface.share(name, shareParams, new PlatActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
@@ -155,7 +165,7 @@ public class InviteActivity extends AppCompatActivity {
             }
             @Override
             public void onCancel(Platform platform, int i) {
-                showError("用户取消了分享");
+                //showError("用户取消了分享");
             }
         });
     }
