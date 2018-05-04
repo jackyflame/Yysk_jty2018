@@ -146,7 +146,7 @@ public class InviteActivity extends AppCompatActivity {
         //设置分享的数据类型
         if(QQ.Name.equals(name)){
             shareParams.setShareType(Platform.SHARE_WEBPAGE);
-            shareParams.setUrl("http//:www.baidu.com");
+            shareParams.setUrl("http://www.1jiasu.com");
             String filePaht = AssertCopyUtil.getAbsoluteFilePath("ic_launcher.png");
             shareParams.setImagePath(filePaht);
         }else{
@@ -165,7 +165,7 @@ public class InviteActivity extends AppCompatActivity {
             }
             @Override
             public void onCancel(Platform platform, int i) {
-                //showError("用户取消了分享");
+                showError("用户取消了分享");
             }
         });
     }

@@ -2,12 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        //debug {
-        //    keyAlias 'yysk'
-        //    keyPassword '123456'
-        //    storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk/key.jks')
-        //    storePassword '123456'
-        //}
         //release {
         //    keyAlias 'wanpas'
         //    keyPassword '666666'
@@ -20,6 +14,12 @@ android {
         //    storeFile file('D:\\UserData\\AndroidStudioProjects\\Yysk_jty2018/shendeng.jks')
         //    storePassword '666666'
         //}
+        debug {
+            keyAlias 'shendeng'
+            keyPassword '666666'
+            storeFile file('D:/Deverloper/Yysk_jty2018/shendeng_key.jks')
+            storePassword '666666'
+        }
     }
     compileSdkVersion 26
     buildToolsVersion '27.0.3'
@@ -63,7 +63,7 @@ android {
         }
         debug {
             jniDebuggable true
-            //signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
             minifyEnabled false
         }
     }
