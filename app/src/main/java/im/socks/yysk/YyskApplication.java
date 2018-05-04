@@ -31,8 +31,8 @@ public class YyskApplication extends Application {
     private void initJShare(){
         JShareInterface.setDebugMode(true);
         PlatformConfig platformConfig = new PlatformConfig()
-                .setWechat("wxc40e16f3ba6ebabc", "dcad950cd0633a27e353477c4ec12e7a")
-                .setQQ("1106011004", "YIbPvONmBQBZUGaN");
+                .setWechat("wxdc9b5aba869d61d5", "f23fd623263459b3670b560826c92a28")
+                .setQQ("1106872392", "G4gpB4RGu5WDkubq");
         JShareInterface.init(this,platformConfig);
         //复制ICON图标用于分享
         AssertCopyUtil.copyResurces(this,"ic_launcher.png");
