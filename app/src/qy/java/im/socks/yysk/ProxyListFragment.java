@@ -286,14 +286,17 @@ public class ProxyListFragment extends Fragment {
                 return;
             }
             List<String> hosts = new ArrayList<>();
+            List<String> hostsNames = new ArrayList<>();
             for(XBean item:items){
                 String host = item.getString("host");
                 hosts.add(host);
+                String hostsName = item.getString("name");
+                hostsNames.add(hostsName);
             }
             ping = new Ping();
             ping.setCount(5);
             ping.setTimeout(30);
-            ping.ping(hosts, new Ping.IPingListener() {
+            ping.ping(hosts, hostsNames, new Ping.IPingListener() {
                 @Override
                 public void onTime(String host, String time, String hostName) {
                     updatePingTime(host,time,hostName);

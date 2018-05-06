@@ -17,7 +17,8 @@ android {
         debug {
             keyAlias 'shendeng'
             keyPassword '666666'
-            storeFile file('D:/Deverloper/Yysk_jty2018/shendeng_key.jks')
+            //storeFile file('D:/Deverloper/Yysk_jty2018/shendeng_key.jks')
+            storeFile file('D:/UserData/AndroidStudioProjects/Yysk_jty2018/shendeng_key.jks')
             storePassword '666666'
         }
     }
