@@ -307,7 +307,7 @@ public class ProxyListFragment extends Fragment {
         private void updatePingTime(String host,String time,String name){
             for(int i=0;i<items.size();i++){
                 XBean item = items.get(i);
-                if(!TextUtils.isEmpty(name) && item.isEquals("name",name)){
+                if(!TextUtils.isEmpty(name) && item.isEquals(Proxy.BEANNAME_NAME,name)){
                     item.put("ping_time",time+"ms");
                     notifyItemChanged(i);
                     break;
@@ -359,10 +359,10 @@ public class ProxyListFragment extends Fragment {
         }
 
         private int indexOf(XBean proxy){
-            String id = proxy.getString("id");
+            String id = proxy.getString(Proxy.BEANNAME_ID);
             for(int i=0;i<items.size();i++){
                 XBean item = items.get(i);
-                if(item.isEquals("id",id)){
+                if(item.isEquals(Proxy.BEANNAME_ID,id)){
                     return i;
                 }
             }
@@ -410,14 +410,14 @@ public class ProxyListFragment extends Fragment {
             }else{
                 lin_title.setVisibility(View.GONE);
             }
-            txv_name.setText(data.getString("name"));
+            txv_name.setText(data.getString(Proxy.BEANNAME_NAME));
             txv_speed.setText(data.getString("ping_time","正在测试"));
         }
 
         private void onSelect() {
             //发出一个事件，然后HomeFragment就可以监听到了
             Proxy proxy = new Proxy();
-            proxy.name = data.getString("name");
+            proxy.name = data.getString(Proxy.BEANNAME_NAME);
             proxy.data = data;
             proxy.isCustom = false;
             //所在的activity需要实现onActivityResult => app.getVpn().onActivityResult()

@@ -33,10 +33,10 @@ public class CustomProxyManager {
     public void save(XBean proxy){
         boolean isUpdated=false;
         List<XBean> items = load();
-        String id = proxy.getString("id");
+        String id = proxy.getString(Proxy.BEANNAME_ID);
         for(int i=0;i<items.size();i++){
             XBean item = items.get(i);
-            if(item.isEquals("id",id)){
+            if(item.isEquals(Proxy.BEANNAME_ID,id)){
                 items.set(i,proxy);
                 save(items);
                 isUpdated=true;
@@ -53,7 +53,7 @@ public class CustomProxyManager {
         }
 
         Proxy oldProxy = app.getSessionManager().getProxy();
-        if(oldProxy!=null&& oldProxy.isCustom&&proxy.isEquals("id",oldProxy.id)){
+        if(oldProxy!=null&& oldProxy.isCustom&&proxy.isEquals(Proxy.BEANNAME_ID,oldProxy.id)){
             //如果代理修改了
             Proxy newProxy = app.getCustomProxyManager().newProxy(proxy);
             app.getSessionManager().setProxy(null,newProxy,true);
@@ -67,10 +67,10 @@ public class CustomProxyManager {
      */
     public void remove(XBean proxy){
         List<XBean> items = load();
-        String id = proxy.getString("id");
+        String id = proxy.getString(Proxy.BEANNAME_ID);
         for(int i=0;i<items.size();i++){
             XBean item = items.get(i);
-            if(item.isEquals("id",id)){
+            if(item.isEquals(Proxy.BEANNAME_ID,id)){
                 items.remove(i);
                 save(items);
                 break;
@@ -80,7 +80,7 @@ public class CustomProxyManager {
         app.getEventBus().emit(Yysk.EVENT_CUSTOM_PROXY_REMOVE,proxy,false);
 
         Proxy oldProxy = app.getSessionManager().getProxy();
-        if(oldProxy!=null&& oldProxy.isCustom&&proxy.isEquals("id",oldProxy.id)){
+        if(oldProxy!=null&& oldProxy.isCustom&&proxy.isEquals(Proxy.BEANNAME_ID,oldProxy.id)){
             //如果删除，当前的必须停止
             app.getSessionManager().setProxy(null,null,true);
         }
@@ -104,7 +104,7 @@ public class CustomProxyManager {
         }
         List<XBean> items = load();
         for(XBean item : items){
-            if(item.isEquals("id",id)){
+            if(item.isEquals(Proxy.BEANNAME_ID,id)){
                 return item;
             }
         }
@@ -112,14 +112,14 @@ public class CustomProxyManager {
     }
     public Proxy newProxy(XBean proxy){
         Proxy newProxy = new Proxy();
-        newProxy.id = proxy.getString("id");
+        newProxy.id = proxy.getString(Proxy.BEANNAME_ID);
         newProxy.name = buildName(proxy);
         newProxy.isCustom=true;
         //newProxy.data=null;//就不需要存储了
         return newProxy;
     }
     public String buildName(XBean proxy){
-        String name = proxy.getString("name",null);
+        String name = proxy.getString(Proxy.BEANNAME_NAME,null);
         String host = proxy.getString("host","");
         String port = proxy.getString("port","");
         if(name!=null){

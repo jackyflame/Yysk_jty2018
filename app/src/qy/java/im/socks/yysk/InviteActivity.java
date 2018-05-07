@@ -31,6 +31,7 @@ import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.User;
 import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
+import im.socks.yysk.vpn.VpnConfig;
 
 /**
  * Created by Android Studio.
@@ -144,14 +145,12 @@ public class InviteActivity extends AppCompatActivity {
         //创建分享参数
         ShareParams shareParams = new ShareParams();
         //设置分享的数据类型
-        if(QQ.Name.equals(name)){
-            shareParams.setShareType(Platform.SHARE_WEBPAGE);
-            shareParams.setUrl("http://www.1jiasu.com");
-            String filePaht = AssertCopyUtil.getAbsoluteFilePath("ic_launcher.png");
-            shareParams.setImagePath(filePaht);
-        }else{
-            shareParams.setShareType(Platform.SHARE_TEXT);
-        }
+        shareParams.setShareType(Platform.SHARE_WEBPAGE);
+        //分享URL
+        shareParams.setUrl(VpnConfig.API_SHARE_URL+inviteCode);
+        String filePaht = AssertCopyUtil.getAbsoluteFilePath("ic_launcher.png");
+        shareParams.setImagePath(filePaht);
+        //标题内容
         shareParams.setTitle("邀请有奖");
         shareParams.setText("易加速邀请您使用，邀请码："+inviteCode);
         JShareInterface.share(name, shareParams, new PlatActionListener() {
