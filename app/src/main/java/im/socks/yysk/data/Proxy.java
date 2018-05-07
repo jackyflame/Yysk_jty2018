@@ -15,8 +15,8 @@ public class Proxy implements Json.IJsonable<XBean> {
     /**true表示为自己添加的，false表示系统提供的*/
     public boolean isCustom=false;
 
-    public static final String BEANNAME_ID = "id";
-    public static final String BEANNAME_NAME = "name";
+    public static final String BEANNAME_ID = "lineid";
+    public static final String BEANNAME_NAME = "linename";
 
     /**
      * 如果不是自定义的，表示为那个用户的代理
