@@ -172,6 +172,22 @@ public class SessionManager {
         onProxyChanged(activity, proxy, isReload, isAutoOpen);
     }
 
+    /**
+     * @param activity 这个activity需要重写onActivityResult且调用YyskVpn.onActivityResult()，处理授权结果
+     * @param proxy
+     * @param isReload true表示reload vpn，也就是如果当前为停止的，还是停止，当前为开始，就使用新的代理，false表示如果proxy不为null，就开启vpn
+     */
+    public void setProxyWithServer(Proxy proxy, boolean isReload) {
+        this.proxy = proxy;
+        saveProxy(proxy);
+        app.getEventBus().emit(Yysk.EVENT_PROXY_CHANGED_SERVER, proxy, false);
+        if (proxy == null) {
+            app.getVpn().stop();
+        } else if (isReload) {
+            app.getVpn().reload();
+        }
+    }
+
     private Session loadSession() {
         Session session = new Session();
         XBean data = IOUtil.load(app.getDataFile("session.json"), XBean.class);

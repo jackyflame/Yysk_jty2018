@@ -90,6 +90,26 @@ public class YyskDZApi extends YyskApi {
         invoke("10014", "20014", new XBean("mobile_number", strPhoneNum), cb);
     }
 
+    /** 获取动态加速节点
+     * */
+    public void getProxyInfo(String lineId, ICallback<XBean> cb) {
+        String model= android.os.Build.MODEL;
+        if(StringUtils.isEmpty(model)){
+            model = "android device";
+        }
+        invoke("10058", "20058", new XBean("line_id", lineId,"terminal_model",model), cb);
+    }
+
+    /** 关闭动态加速节点
+     * */
+    public void sendProxyClose(String lineId, ICallback<XBean> cb) {
+        String model= android.os.Build.MODEL;
+        if(StringUtils.isEmpty(model)){
+            model = "android device";
+        }
+        invoke("10059", "20059", new XBean("line_id", lineId,"terminal_model",model), cb);
+    }
+
     /**
      * 获取资费套餐列表
      * */

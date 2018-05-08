@@ -70,6 +70,9 @@ public class HomeFragment extends Fragment {
                 updateMe(true);
             } else if (Yysk.EVENT_PROXY_CHANGED.equals(name)) {
                 updateProxy((Proxy) data);
+            } else if(Yysk.EVENT_PROXY_CHANGED_SERVER.equals(name)){
+                updateProxy((Proxy) data);
+                startVPNWithServer();
             }else if(Yysk.EVENT_PAY_SUCCESS.equals(name)||Yysk.EVENT_PAY_FAIL.equals(name)){
                 //充值成功或者失败都更新一次
                 updateMe();
@@ -376,13 +379,7 @@ public class HomeFragment extends Fragment {
             //或者必须先登录
             //如果选择了代理
             if (app.getSessionManager().getProxy()!=null) {
-                //if(pingTime <= 0){
-                //    showVPNAlert("线路失效不可用，请联系客服");
-                //    return;
-                //}else{
-                //    //showVPNAlert("线路可用");
-                //}
-                app.getVpn().start(getActivity());
+                startVPNWithServer();
             } else {
                 //如果还没有proxy，就需要先选择
                 getFragmentStack().show(ProxyFragment.newInstance(), null, false);
@@ -391,7 +388,7 @@ public class HomeFragment extends Fragment {
         } else if (status == Yysk.STATUS_CONNECTING) {
             //
         } else if (status == Yysk.STATUS_CONNECTED) {
-            app.getVpn().stop();
+            stopVPNWithServer();
             //showVPNAlert("VPN 已关闭");
         } else {
             //
@@ -432,6 +429,40 @@ public class HomeFragment extends Fragment {
             String expertTime = app.getSessionManager().getSession().user.expiring_time;
             txv_endtime.setText(expertTime);
         }
+    }
+
+    private void startVPNWithServer(){
+        //获取选择的线路
+        final Proxy proxy = app.getSessionManager().getProxy();
+        //获取服务器动态端口信息
+        app.getApi().getProxyInfo(proxy.id, new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                if(NetUtil.checkAndHandleRsp(result,getContext(),"获取VPN节点失败",null)){
+                    Proxy proxyNew = new Proxy();
+                    XBean data = NetUtil.getRspData(result);
+                    data.put(Proxy.BEANNAME_ID, proxy.id);
+                    data.put(Proxy.BEANNAME_NAME, proxy.name);
+                    proxyNew.id = proxy.id;
+                    proxyNew.name = proxy.name;
+                    proxyNew.data = data;
+                    proxyNew.isCustom = false;
+                    app.getSessionManager().setProxy(getActivity(), proxyNew, false);
+                }
+            }
+        });
+    }
+
+    private void stopVPNWithServer(){
+        //获取选择的线路
+        Proxy proxy = app.getSessionManager().getProxy();
+        //获取服务器动态端口信息
+        app.getApi().sendProxyClose(proxy.id, new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                app.getVpn().stop();
+            }
+        });
     }
     //========================================
     private IYyskService yyskService;

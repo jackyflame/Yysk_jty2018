@@ -10,6 +10,7 @@ public class Yysk {
      */
     public static final String EVENT_ALL = "*";
     public static final String EVENT_PROXY_CHANGED = "proxy_changed";
+    public static final String EVENT_PROXY_CHANGED_SERVER = "proxy_changed_server";
     public static final String EVENT_LOGIN = "login";
     public static final String EVENT_LOGOUT = "logout";
     public static final String EVENT_SETTINGS = "settings";

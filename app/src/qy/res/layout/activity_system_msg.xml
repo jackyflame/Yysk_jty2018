@@ -8,7 +8,7 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/title_bar"
-        app:pb_back_text="消息列表"
+        app:pb_back_text="公告列表"
         app:pb_back_show="true"
         style="@style/pager_bar"/>
 

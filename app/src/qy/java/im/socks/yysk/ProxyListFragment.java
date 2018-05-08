@@ -417,13 +417,13 @@ public class ProxyListFragment extends Fragment {
         private void onSelect() {
             //发出一个事件，然后HomeFragment就可以监听到了
             Proxy proxy = new Proxy();
+            proxy.id = data.getString(Proxy.BEANNAME_ID);
             proxy.name = data.getString(Proxy.BEANNAME_NAME);
             proxy.data = data;
             proxy.isCustom = false;
             //所在的activity需要实现onActivityResult => app.getVpn().onActivityResult()
-            Activity activity = getActivity();
             getFragmentStack().back();
-            app.getSessionManager().setProxy(activity, proxy, isReloadVpn);
+            app.getSessionManager().setProxyWithServer( proxy, false);
         }
     }
 
