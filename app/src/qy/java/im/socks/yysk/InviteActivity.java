@@ -148,8 +148,7 @@ public class InviteActivity extends AppCompatActivity {
         shareParams.setShareType(Platform.SHARE_WEBPAGE);
         //分享URL
         shareParams.setUrl(VpnConfig.API_SHARE_URL+inviteCode);
-        String filePaht = AssertCopyUtil.getAbsoluteFilePath("ic_launcher.png");
-        shareParams.setImagePath(filePaht);
+        shareParams.setImageUrl(VpnConfig.API_SHAREIMAGE_URL);
         //标题内容
         shareParams.setTitle("邀请有奖");
         shareParams.setText("易加速邀请您使用，邀请码："+inviteCode);
