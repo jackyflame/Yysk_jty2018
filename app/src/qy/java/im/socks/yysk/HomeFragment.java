@@ -441,8 +441,10 @@ public class HomeFragment extends Fragment {
                 if(NetUtil.checkAndHandleRsp(result,getContext(),"获取VPN节点失败",null)){
                     Proxy proxyNew = new Proxy();
                     XBean data = NetUtil.getRspData(result);
+                    //重新装填字段（兼容老版本）
                     data.put(Proxy.BEANNAME_ID, proxy.id);
                     data.put(Proxy.BEANNAME_NAME, proxy.name);
+                    //设置数据
                     proxyNew.id = proxy.id;
                     proxyNew.name = proxy.name;
                     proxyNew.data = data;
