@@ -79,19 +79,19 @@ public class FeedbackDetailActivity extends AppCompatActivity {
     private void initDate(){
         long feedId = getIntent().getLongExtra("work_order_id", -1);
         if(feedId < 0){
-            showError("获取反馈意见详情失败");
+            showError("获取问题详情失败");
             finish();
         }
         app.getApi().getFeedbackDetail(feedId, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
-                if(NetUtil.checkAndHandleRsp(result,FeedbackDetailActivity.this,"获取反馈意见详情失败",null)){
+                if(NetUtil.checkAndHandleRsp(result,FeedbackDetailActivity.this,"获取问题详情失败",null)){
                     XBean data = NetUtil.getRspData(result);
                     refreshUI(data);
                     refreshLayout.finishRefresh(true);
                 }else{
                     refreshLayout.finishRefresh(true);
-                    showError("获取反馈意见详情失败");
+                    showError("获取问题详情失败");
                     finish();
                 }
             }

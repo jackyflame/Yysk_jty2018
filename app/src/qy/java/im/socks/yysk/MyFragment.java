@@ -246,8 +246,26 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     }
 
     private void doLogout() {
-        //不需要调用api
-        app.getSessionManager().onLogout();
+        AlertDialog.Builder normalDialog =  new AlertDialog.Builder(getContext());
+        normalDialog.setTitle("提示");
+        normalDialog.setMessage("确认退出登录？");
+        normalDialog.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //不需要调用api
+                app.getSessionManager().onLogout();
+                dialog.dismiss();
+                getFragmentStack().show(LoginFragment.newInstance(null),"login",true);
+            }
+        });
+        normalDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        // 显示
+        normalDialog.show();
     }
 
     public static MyFragment newInstance() {

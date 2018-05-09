@@ -9,7 +9,7 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/title_bar"
-        app:pb_back_text="意见反馈"
+        app:pb_back_text="问题反馈"
         app:pb_back_show="true"
         app:pb_backgroundColor="@color/bg_empty_gray_2"
         style="@style/pager_bar"/>
@@ -21,7 +21,7 @@
         android:layout_marginLeft="@dimen/padding_l"
         android:textColor="@color/black"
         android:textSize="12sp"
-        android:text="意见"/>
+        android:text="问题"/>
 
     <TextView
         android:id="@+id/txv_content"
@@ -33,7 +33,7 @@
         android:background="@color/white"
         android:textSize="@dimen/text_m"
         android:padding="@dimen/padding_m"
-        tools:text="意见内容"
+        tools:text="问题内容"
         android:text=""/>
 
     <TextView
