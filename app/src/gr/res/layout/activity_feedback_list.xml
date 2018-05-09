@@ -57,6 +57,6 @@
         android:background="@color/blue"
         android:textColor="@color/text_white"
         android:textSize="@dimen/text_m"
-        android:text="+新添意见"/>
+        android:text="+新添问题"/>
 
 </LinearLayout>

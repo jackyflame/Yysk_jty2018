@@ -409,12 +409,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void startVPNWithServer(){
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setCancelable(false);
+        dialog.setMessage("连接中...");
+        dialog.show();
         //获取选择的线路
         final Proxy proxy = app.getSessionManager().getProxy();
         //获取服务器动态端口信息
         app.getApi().getProxyInfo(proxy.id, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
+                dialog.dismiss();
                 if(NetUtil.checkAndHandleRsp(result,getContext(),"获取VPN节点失败",null)){
                     Proxy proxyNew = new Proxy();
                     XBean data = NetUtil.getRspData(result);
@@ -433,12 +438,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void stopVPNWithServer(){
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setCancelable(false);
+        dialog.setMessage("断开中...");
+        dialog.show();
         //获取选择的线路
         Proxy proxy = app.getSessionManager().getProxy();
         //获取服务器动态端口信息
         app.getApi().sendProxyClose(proxy.id, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
+                dialog.dismiss();
                 app.getVpn().stop();
             }
         });
