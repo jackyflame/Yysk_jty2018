@@ -8,6 +8,6 @@ public class VpnConfig {
 
     public final static boolean BYPASS_CHINA_DEFAULT = true;
 
-    public final static String API_URL_DEFAULT = "http://117.23.50.120:8080/ApiServer/SsrHandle?Msg=";
+    public final static String API_URL_DEFAULT = "http://api.wanpas.com:8080/wanpas/SsrHandle?Msg=";
 
 }

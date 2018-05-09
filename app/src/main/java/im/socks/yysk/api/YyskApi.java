@@ -427,6 +427,17 @@ public class YyskApi {
         return invoke(msgId,acKMsgId,mobile_number,params);
     }
 
+    protected <T> T invoke(String msgId, String acKMsgId, XBean params,boolean autoTerminalNumber){
+        String mobile_number = "";
+        if(params.isEmpty("mobile_number")){
+            mobile_number = getMobileNumber();
+        }
+        if(autoTerminalNumber){
+            params.put("terminal_number", deviceId);
+        }
+        return invoke(msgId,acKMsgId,mobile_number,params);
+    }
+
     protected <T> T invoke(String msgId, String acKMsgId, String phoneNum, XBean params) {
         //设备ID
         params.put("deviceid", deviceId);

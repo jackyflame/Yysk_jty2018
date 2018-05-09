@@ -173,7 +173,6 @@ public class SessionManager {
     }
 
     /**
-     * @param activity 这个activity需要重写onActivityResult且调用YyskVpn.onActivityResult()，处理授权结果
      * @param proxy
      * @param isReload true表示reload vpn，也就是如果当前为停止的，还是停止，当前为开始，就使用新的代理，false表示如果proxy不为null，就开启vpn
      */

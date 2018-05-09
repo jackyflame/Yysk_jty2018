@@ -6,8 +6,7 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/pageBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/pager_bar"
         app:pb_title="线路选择"
         app:pb_back="true"/>
 

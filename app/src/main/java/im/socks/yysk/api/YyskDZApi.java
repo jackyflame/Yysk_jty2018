@@ -43,13 +43,13 @@ public class YyskDZApi extends YyskApi {
             model = "android device";
         }
         loginParams.put("terminal_model",model);
-        String brand = Build.BRAND;
-        loginParams.put("terminal_number",brand);
+        //String brand = Build.BRAND;
+        //loginParams.put("terminal_number",brand);
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 //先登录，不登录也不影响，实际上应该返回用户的基本信息，如：user_id+token(控制api的访问)
-                XBean result = invoke("10020", "20020", loginParams);
+                XBean result = invoke("10020", "20020", loginParams,true);
                 if (cb != null) {
                     final XBean result2 = result;
                     handler.post(new Runnable() {

@@ -24,6 +24,7 @@ import java.util.List;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.util.NetUtil;
+import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
 
 /**
@@ -99,7 +100,11 @@ public class FeedbackDetailActivity extends AppCompatActivity {
     }
 
     private void refreshUI(XBean data){
-        txv_content.setText(data.getString("content", ""));
+        String content = data.getString("content", "");
+        if(StringUtils.isEmpty(content)){
+            content = data.getString("title","");
+        }
+        txv_content.setText(content);
         String time = data.getString("created","");
         if(time != null){
             time = time.replaceAll("T", " ");
