@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="10dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -35,6 +36,13 @@
             android:textColor="@color/gray"
             android:textSize="@dimen/text_ml"
             tools:text="未回复"/>
+
+        <TextView
+            android:id="@+id/txv_unread"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="@dimen/padding_m"
+            android:background="@drawable/bg_red_round"/>
 
     </LinearLayout>
 

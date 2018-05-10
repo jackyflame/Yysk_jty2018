@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@color/bg_empty_gray"
     android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -20,14 +21,14 @@
         android:layout_marginTop="@dimen/padding_m"
         android:layout_marginLeft="@dimen/padding_l"
         android:textColor="@color/black"
-        android:textSize="12sp"
-        android:text="问题"/>
+        android:textSize="@dimen/text_m"
+        android:text="标题"/>
 
     <TextView
         android:id="@+id/txv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="60dp"
+        android:minHeight="30dp"
         android:layout_marginTop="@dimen/padding_m"
         android:gravity="top|left"
         android:background="@color/white"
@@ -44,23 +45,26 @@
         android:background="@color/white"
         android:textSize="@dimen/text_m"
         android:padding="@dimen/padding_m"
+        android:visibility="gone"
         tools:text="5天前"
         android:text=""/>
 
     <LinearLayout
         android:id="@+id/lin_reply"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_m"
+            android:layout_marginBottom="@dimen/padding_m"
             android:layout_marginLeft="@dimen/padding_l"
             android:textColor="@color/black"
-            android:textSize="12sp"
-            android:text="反馈"/>
+            android:textSize="@dimen/text_m"
+            android:text="沟通记录"/>
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
@@ -92,5 +96,30 @@
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/edt_reply"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="@dimen/padding_xl"
+        android:layout_marginRight="@dimen/padding_xl"
+        android:maxLines="500"
+        android:gravity="top|left"
+        android:background="@drawable/bg_white_solid_gray_border"
+        android:textSize="@dimen/text_m"
+        android:padding="@dimen/padding_m"
+        android:hint="请输入回复内容"
+        android:text=""/>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginTop="@dimen/padding_xl"
+        android:layout_marginBottom="@dimen/padding_xl"
+        android:background="@color/blue"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/text_m"
+        android:text="提交"/>
 
 </LinearLayout>

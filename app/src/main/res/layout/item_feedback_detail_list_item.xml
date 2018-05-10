@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/padding_m"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/lin_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txv_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_m"
+                android:padding="@dimen/padding_m"
+                android:textColor="@color/blue"
+                android:text="用户"/>
+
+            <TextView
+                android:id="@+id/txv_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_m"
+                android:padding="@dimen/padding_m"
+                tools:text="5天前"
+                android:text=""/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|left"
+            android:textSize="@dimen/text_m"
+            android:padding="@dimen/padding_m"
+            tools:text="意见内容"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/secondary_text"/>
+
+</LinearLayout>

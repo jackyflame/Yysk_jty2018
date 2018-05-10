@@ -126,6 +126,7 @@ public class FeedbackLisActivity extends AppCompatActivity {
         private LinearLayout lin_row;
         private TextView txv_content;
         private TextView txv_reply;
+        private TextView txv_unread;
         private XBean data;
 
         public ItemHolder(View itemView) {
@@ -133,6 +134,7 @@ public class FeedbackLisActivity extends AppCompatActivity {
             lin_row = itemView.findViewById(R.id.lin_row);
             txv_content = itemView.findViewById(R.id.txv_content);
             txv_reply = itemView.findViewById(R.id.txv_reply);
+            txv_unread = itemView.findViewById(R.id.txv_unread);
             lin_row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -157,6 +159,11 @@ public class FeedbackLisActivity extends AppCompatActivity {
                 txv_reply.setText("已回复");
             }else{
                 txv_reply.setText("未回复");
+            }
+            if(data.getBoolean("has_new", false)){
+                txv_unread.setVisibility(View.VISIBLE);
+            }else{
+                txv_unread.setVisibility(View.INVISIBLE);
             }
         }
     }

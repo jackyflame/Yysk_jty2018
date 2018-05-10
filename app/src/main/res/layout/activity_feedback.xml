@@ -8,7 +8,7 @@
 
     <im.socks.yysk.PageBar
         android:id="@+id/title_bar"
-        app:pb_back_text="意见反馈"
+        app:pb_back_text="问题反馈"
         app:pb_back_show="true"
         app:pb_backgroundColor="@color/bg_empty_gray_2"
         style="@style/pager_bar"/>
@@ -22,19 +22,51 @@
         android:textSize="12sp"
         android:text="您可以畅所欲言"/>
 
-    <EditText
-        android:id="@+id/txv_content"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_m"
+        android:layout_marginLeft="@dimen/padding_xl"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:text="问题标题"/>
+
+    <EditText
+        android:id="@+id/edt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_l"
-        android:layout_marginLeft="@dimen/padding_xxxl"
-        android:layout_marginRight="@dimen/padding_xxxl"
+        android:layout_marginLeft="@dimen/padding_xxl"
+        android:layout_marginRight="@dimen/padding_xxl"
         android:gravity="top|left"
         android:background="@drawable/bg_white_solid_gray_border"
         android:textSize="@dimen/text_m"
         android:padding="@dimen/padding_m"
-        android:hint="请输入意见内容"
+        android:hint="请输入问题标题"
+        android:text=""/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_m"
+        android:layout_marginLeft="@dimen/padding_xl"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:text="问题描述"/>
+
+    <EditText
+        android:id="@+id/edt_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/padding_l"
+        android:layout_marginLeft="@dimen/padding_xxl"
+        android:layout_marginRight="@dimen/padding_xxl"
+        android:gravity="top|left"
+        android:background="@drawable/bg_white_solid_gray_border"
+        android:textSize="@dimen/text_m"
+        android:padding="@dimen/padding_m"
+        android:hint="请输入问题描述"
         android:text=""/>
 
         <Button
@@ -48,6 +80,6 @@
             android:background="@color/blue"
             android:textColor="@color/text_white"
             android:textSize="@dimen/text_m"
-            android:text="提交意见"/>
+            android:text="提交问题"/>
 
 </LinearLayout>
