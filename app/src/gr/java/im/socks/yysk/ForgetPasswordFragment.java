@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import im.socks.yysk.api.YyskApi;
+import im.socks.yysk.util.CodeUtils;
 import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 import im.socks.yysk.util.XRspBean;
@@ -26,6 +28,10 @@ public class ForgetPasswordFragment extends Fragment {
     private EditText phoneNumberView;
     private EditText verifyCodeView;
     private EditText passwordView;
+
+    private EditText edt_imgcode;
+    private ImageView img_code;
+    private String imageCode;
 
     private Button getVerifyCodeView;
     private Button submitView;
@@ -49,6 +55,16 @@ public class ForgetPasswordFragment extends Fragment {
         verifyCodeView = view.findViewById(R.id.verifyCodeView);
         passwordView = view.findViewById(R.id.passwordView);
         submitView = view.findViewById(R.id.submitView);
+
+        edt_imgcode = view.findViewById(R.id.edt_imgcode);
+        img_code = view.findViewById(R.id.img_code);
+        img_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshImageCode();
+            }
+        });
+        refreshImageCode();
 
         getVerifyCodeView = view.findViewById(R.id.getVerifyCodeView);
         getVerifyCodeView.setOnClickListener(new View.OnClickListener() {
@@ -75,10 +91,22 @@ public class ForgetPasswordFragment extends Fragment {
     }
 
     private void sendVerifyCode() {
+        if(edt_imgcode.getText() == null || edt_imgcode.getText().length() <= 0){
+            showError("请输入图形验证码");
+            return;
+        }
+        String imgCodeInput = edt_imgcode.getText().toString();
+        if(!imgCodeInput.equalsIgnoreCase(imageCode)){
+            showError("图形验证码错误");
+            return;
+        }
+        if(phoneNumberView.getText() == null || phoneNumberView.getText().length() <= 0){
+            showError("请输电话号码");
+            return;
+        }
         String phoneNumber = phoneNumberView.getText().toString();
         //检查手机号是否正确
         getVerifyCodeView.setEnabled(false);
-
         app.getApi().getVerifyCode(phoneNumber,true,new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
@@ -146,5 +174,13 @@ public class ForgetPasswordFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void refreshImageCode(){
+        if(img_code == null){
+            return;
+        }
+        img_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
+        imageCode = CodeUtils.getInstance().getCode();
     }
 }

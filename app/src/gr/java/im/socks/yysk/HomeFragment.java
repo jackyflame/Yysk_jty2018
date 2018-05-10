@@ -97,12 +97,12 @@ public class HomeFragment extends Fragment {
             updateMe();
         }
 
-//        checkVpnUpdate(false);
-
         view.findViewById(R.id.backView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentStack().show(MyFragment.newInstance(),"MyFragment",false);
+                if(checkLogin()) {
+                    getFragmentStack().show(MyFragment.newInstance(), "MyFragment", false);
+                }
             }
         });
 
@@ -127,6 +127,9 @@ public class HomeFragment extends Fragment {
         vpnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!checkLogin()){
+                    return;
+                }
                 if(isTimeEnd == true){
                     showVPNAlert("加速时间已用完，请联系管理员");
                 }else{
@@ -142,7 +145,9 @@ public class HomeFragment extends Fragment {
         lin_vpn_lines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentStack().show(ProxyFragment.newInstance(),null,false);
+                if(checkLogin()){
+                    getFragmentStack().show(ProxyFragment.newInstance(),null,false);
+                }
             }
         });
         updateProxy(app.getSessionManager().getProxy());
@@ -398,8 +403,8 @@ public class HomeFragment extends Fragment {
                     if(NetUtil.checkAndHandleRsp(result,getContext(),"获取个人信息失败",null)){
                         XBean userInfo = NetUtil.getRspData(result);
                         app.getSessionManager().onUserInfoUpdate(userInfo);
-                        String expertTime = userInfo.getString("expiring_time");
-                        expertTime = expertTime.replace("T"," ");
+                        //String expertTime = userInfo.getString("expiring_time");
+                        //expertTime = expertTime.replace("T"," ");
                     }
                 }
             });
@@ -588,6 +593,13 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
     /*---------------------------------------------------------------------*/
+
+    private boolean checkLogin(){
+        if(!app.getSessionManager().getSession().isLogin()){
+            getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
+            return false;
+        }
+        return true;
+    }
 }

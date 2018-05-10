@@ -107,28 +107,36 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.lin_invite).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),InviteActivity.class));
+                if(checkLogin()){
+                    startActivity(new Intent(getContext(),InviteActivity.class));
+                }
             }
         });
 
         view.findViewById(R.id.backView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentStack().show(MyFragment.newInstance(),"MyFragment",false);
+                if(checkLogin()) {
+                    getFragmentStack().show(MyFragment.newInstance(), "MyFragment", false);
+                }
             }
         });
 
         view.findViewById(R.id.lin_end_time).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentStack().show(PayFragment.newInstance(),"PayFragment",false);
+                if(checkLogin()) {
+                    getFragmentStack().show(PayFragment.newInstance(), "PayFragment", false);
+                }
             }
         });
 
         view.findViewById(R.id.img_buy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentStack().show(PayFragment.newInstance(),"PayFragment",false);
+                if(checkLogin()) {
+                    getFragmentStack().show(PayFragment.newInstance(), "PayFragment", false);
+                }
             }
         });
     }
@@ -152,6 +160,9 @@ public class HomeFragment extends Fragment {
         vpnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!checkLogin()) {
+                    return;
+                }
                 if(isTimeEnd == true){
                     showVPNAlert("加速时间已用完，请联系管理员");
                 }else{
@@ -613,4 +624,12 @@ public class HomeFragment extends Fragment {
     }
 
     /*---------------------------------------------------------------------*/
+
+    private boolean checkLogin(){
+        if(!app.getSessionManager().getSession().isLogin()){
+            getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
+            return false;
+        }
+        return true;
+    }
 }
