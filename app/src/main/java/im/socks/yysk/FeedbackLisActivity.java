@@ -152,7 +152,11 @@ public class FeedbackLisActivity extends AppCompatActivity {
 
         public void bind(XBean data) {
             this.data = data;
-            txv_content.setText(data.getString("title", ""));
+            String display = data.getString("title", "");
+            if(display == null || display.isEmpty()){
+                display = data.getString("content", "");
+            }
+            txv_content.setText(display);
             if(data.getBoolean("is_handled", false)){
                 txv_reply.setText("已解决");
             }else if(data.getBoolean("is_resolved", false)){
