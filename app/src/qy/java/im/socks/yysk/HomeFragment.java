@@ -431,8 +431,10 @@ public class HomeFragment extends Fragment {
                         XBean userInfo = NetUtil.getRspData(result);
                         app.getSessionManager().onUserInfoUpdate(userInfo);
                         String expertTime = userInfo.getString("expiring_time");
-                        expertTime = expertTime.replace("T"," ");
-                        txv_endtime.setText(expertTime);
+                        if(expertTime != null && !expertTime.isEmpty()){
+                            expertTime = expertTime.replace("T"," ");
+                            txv_endtime.setText(expertTime);
+                        }
                     }
                 }
             });
