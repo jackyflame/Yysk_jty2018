@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.Session;
@@ -29,6 +32,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private View phoneNumberLayout;
     private TextView phoneNumberView;
     private TextView txv_company_title;
+    private TextView txv_unread;
 
     private PageBar title_bar;
     //
@@ -52,6 +56,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         phoneNumberLayout = view.findViewById(R.id.phoneNumberLayout);
         txv_company_title = view.findViewById(R.id.txv_company_title);
         phoneNumberView = view.findViewById(R.id.phoneNumberView);
+        txv_unread = view.findViewById(R.id.txv_unread);
         loginLayout.setOnClickListener(this);
         phoneNumberView.setOnClickListener(this);
         //
@@ -303,6 +308,39 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     }
 
     private void refreshUnreadMsg(){
-
+        app.getApi().getMsgList(new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                if(NetUtil.checkAndHandleRsp(result,getContext(),"获取公告失败",null)){
+                    List<XBean> dataList = NetUtil.getRspDataList(result);
+                    new AsyncTask<List<XBean>, Void, Integer>(){
+                        @Override
+                        protected Integer doInBackground(List<XBean>... lists) {
+                            List<XBean> msglist = lists[0];
+                            if(msglist == null || msglist.isEmpty()){
+                                return 0;
+                            }
+                            int count = 0;
+                            for(XBean item:msglist){
+                                boolean isReaded = item.getBoolean("is_read",true);
+                                if(isReaded == false){
+                                    count++;
+                                }
+                            }
+                            return count;
+                        }
+                        @Override
+                        protected void onPostExecute(Integer count) {
+                            if(count != null && count > 0){
+                                txv_unread.setVisibility(View.VISIBLE);
+                                txv_unread.setText(String.valueOf(count));
+                            }else{
+                                txv_unread.setVisibility(View.GONE);
+                            }
+                        }
+                    }.execute(dataList);
+                }
+            }
+        });
     }
 }
