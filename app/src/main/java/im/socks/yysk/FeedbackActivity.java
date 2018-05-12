@@ -42,7 +42,7 @@ public class FeedbackActivity extends AppCompatActivity {
         findViewById(R.id.submitButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                uploadMsg();
             }
         });
     }
@@ -58,7 +58,7 @@ public class FeedbackActivity extends AppCompatActivity {
             showError("请输入问题内容");
             return;
         }
-        app.getApi().sendFeedBack(edt_content.getText().toString(), new YyskApi.ICallback<XBean>() {
+        app.getApi().sendFeedBack(title,content, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
                 if(NetUtil.checkAndHandleRsp(result,FeedbackActivity.this,"提交失败",null)){

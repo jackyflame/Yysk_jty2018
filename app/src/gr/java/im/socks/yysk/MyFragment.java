@@ -71,6 +71,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btn_msgs).setOnClickListener(this);
         view.findViewById(R.id.btn_devices).setOnClickListener(this);
         view.findViewById(R.id.btn_help_center).setOnClickListener(this);
+        //刷新消息未读数
+        refreshUnreadMsg();
+        //返回页面
         return view;
     }
 
@@ -297,5 +300,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 txv_company_title.setText(company != null ? company:"暂无");
             }
         }
+    }
+
+    private void refreshUnreadMsg(){
+
     }
 }

@@ -72,7 +72,7 @@ public class FeedbackLisActivity extends AppCompatActivity {
             }
         });
 
-        initListData();
+        //initListData();
     }
 
     private void initListData() {
@@ -170,5 +170,11 @@ public class FeedbackLisActivity extends AppCompatActivity {
 
     private void showError(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initListData();
     }
 }
