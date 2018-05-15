@@ -440,6 +440,10 @@ public class HomeFragment extends Fragment {
             });
         }else{
             String expertTime = app.getSessionManager().getSession().user.expiring_time;
+            if(expertTime != null && !expertTime.isEmpty()){
+                expertTime = expertTime.replace("T"," ");
+                txv_endtime.setText(expertTime);
+            }
             txv_endtime.setText(expertTime);
         }
     }
