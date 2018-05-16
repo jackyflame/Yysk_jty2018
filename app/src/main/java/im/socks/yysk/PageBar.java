@@ -2,6 +2,8 @@ package im.socks.yysk;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -23,14 +25,16 @@ public class PageBar extends RelativeLayout {
     }
 
     public PageBar(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.pageBarStyle);
-
+        super(context, attrs, R.attr.pageBarStyle);
+        init(context, attrs, R.attr.pageBarStyle, 0);
     }
 
     public PageBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, R.attr.pageBarStyle, 0);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public PageBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs, defStyleAttr, defStyleRes);

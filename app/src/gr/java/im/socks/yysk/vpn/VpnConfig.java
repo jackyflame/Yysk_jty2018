@@ -4,6 +4,7 @@ package im.socks.yysk.vpn;
  * Created by admin on 2018/3/13.
  */
 
+
 public class VpnConfig {
 
     public final static boolean BYPASS_CHINA_DEFAULT = true;
