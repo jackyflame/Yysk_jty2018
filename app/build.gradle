@@ -26,7 +26,7 @@ android {
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "im.socks.yysk"
-        minSdkVersion 21
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 6
         versionName "1.3.2"
