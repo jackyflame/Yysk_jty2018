@@ -134,6 +134,7 @@ public class Ping {
                     if (time != null && time.length() > 0) {
                         //handler.sendMessage(handler.obtainMessage(1, new Object[]{host, time}));
                         timeLast = time;
+                        break;
                     }
                     //如果已经关闭了，就退出
                     if (isClosed) {
