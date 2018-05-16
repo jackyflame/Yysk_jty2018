@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
 
     private RecyclerView recyclerView;
     private AdapterImpl adapter;
+    private LinearLayout lin_tabrow;
     private TextView btn_left;
     private TextView btn_center;
     private TextView btn_right;
@@ -55,6 +57,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pay_dz, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
+        lin_tabrow = view.findViewById(R.id.lin_tabrow);
         btn_left = view.findViewById(R.id.btn_left);
         btn_left.setSelected(true);
         btn_left.setOnClickListener(this);
@@ -117,6 +120,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
                     if(datalist == null || result.size() == 0){
                         adapter.setItems(null);
                     }else{
+                        lin_tabrow.setVisibility(View.VISIBLE);
                         handleDataList(datalist);
                     }
                 }else{
