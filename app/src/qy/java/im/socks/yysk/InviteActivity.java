@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.socks.yyskjtyqy.share.AssertCopyUtil;
 
 import java.util.HashMap;
+import java.util.List;
 
 import cn.jiguang.share.android.api.JShareInterface;
 import cn.jiguang.share.android.api.PlatActionListener;
@@ -32,6 +33,8 @@ import im.socks.yysk.data.User;
 import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 import im.socks.yysk.vpn.VpnConfig;
+
+import static com.zhy.http.okhttp.utils.Utils.getContext;
 
 /**
  * Created by Android Studio.
@@ -83,7 +86,7 @@ public class InviteActivity extends AppCompatActivity {
                 startActivity(new Intent(InviteActivity.this,InviteDetailActivity.class));
             }
         });
-
+        refreshInviteCount();
     }
 
     private void refreshUserInfo(){
@@ -164,6 +167,22 @@ public class InviteActivity extends AppCompatActivity {
             @Override
             public void onCancel(Platform platform, int i) {
                 showError("用户取消了分享");
+            }
+        });
+    }
+
+    private void refreshInviteCount(){
+        app.getApi().getInviteList(new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                if (NetUtil.checkAndHandleRsp(result, InviteActivity.this, "获取邀请信息失败", null)) {
+                    XBean data = NetUtil.getRspData(result);
+                    if(data != null){
+                        int inviteCount = data.getInteger("invite_users_num", 0);
+                        int payCount = data.getInteger("charged_users_num", 0);
+                        txv_invite_count.setText("您已成功邀请"+inviteCount+"位好友注册，"+payCount+"位好友首充！");
+                    }
+                }
             }
         });
     }

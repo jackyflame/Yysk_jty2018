@@ -193,4 +193,11 @@ public class YyskDZApi extends YyskApi {
     public void getFeedbackReply(long work_order_id,String content,ICallback<XBean> cb){
         invoke("10057", "20057", new XBean("work_order_id",work_order_id,"content",content), cb);
     }
+
+    /**
+     * 获取邀请列表
+     * */
+    public void getInviteList(ICallback<XBean> cb){
+        invoke("10060", "20060", new XBean(), cb);
+    }
 }

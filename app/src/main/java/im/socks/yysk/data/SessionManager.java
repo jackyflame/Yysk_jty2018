@@ -260,8 +260,8 @@ public class SessionManager {
         if(session == null || session.user == null){
             return true;
         }
-        //超过5分钟
-        if((System.currentTimeMillis() - session.userUpdateTime) < 1000*60*5){
+        //超过2分钟
+        if((System.currentTimeMillis() - session.userUpdateTime) < 1000*60*2){
             return false;
         }
         return true;

@@ -25,6 +25,8 @@ import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.XBean;
 
+import static com.zhy.http.okhttp.utils.Utils.getContext;
+
 /**
  * Created by Android Studio.
  * ProjectName: Yysk_jty2018
@@ -68,11 +70,25 @@ public class InviteDetailActivity extends AppCompatActivity {
     }
 
     private void initListData() {
-        List<XBean> leftList = new ArrayList<>();;
-        leftList.add(new XBean("phone", "18100000000", "is_pay", false));
-        leftList.add(new XBean("phone", "18100000001", "is_pay", false));
-        leftList.add(new XBean("phone", "18100000002", "is_pay", true));
-        adapter.setItems(leftList);
+        app.getApi().getInviteList(new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                if (NetUtil.checkAndHandleRsp(result, InviteDetailActivity.this, "获取邀请信息失败", null)) {
+                    XBean data = NetUtil.getRspData(result);
+                    if(data != null && data.hasKeys("invite_users")){
+                        List<XBean> leftList = data.getList("invite_users");
+                        if(leftList != null){
+                            adapter.setItems(leftList);
+                        }
+                    }
+                }
+            }
+        });
+        //List<XBean> leftList = new ArrayList<>();;
+        //leftList.add(new XBean("phone", "18100000000", "is_pay", false));
+        //leftList.add(new XBean("phone", "18100000001", "is_pay", false));
+        //leftList.add(new XBean("phone", "18100000002", "is_pay", true));
+        //adapter.setItems(leftList);
     }
 
     private class AdapterImpl extends RecyclerView.Adapter<ItemHolder> {
@@ -126,8 +142,8 @@ public class InviteDetailActivity extends AppCompatActivity {
 
         public void bind(XBean data) {
             this.data = data;
-            txv_phone.setText(data.getString("phone", ""));
-            if(data.getBoolean("is_pay", false)){
+            txv_phone.setText(data.getString("mobile_number", ""));
+            if(data.getBoolean("is_charged", false)){
                 txv_statu.setText("已充值");
             }else{
                 txv_statu.setText("已注册");
