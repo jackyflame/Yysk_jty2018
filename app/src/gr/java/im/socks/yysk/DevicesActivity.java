@@ -97,7 +97,7 @@ public class DevicesActivity extends AppCompatActivity {
             }
             deviceAllList.add(item);
         }
-        if(deviceActiveList.size() > 0){
+        if(deviceActiveList.size() >= 0){
             XBean title = new XBean();
             title.put("title","同时登录设备（"+deviceActiveList.size()+"台）");
             deviceActiveList.add(0,title);
