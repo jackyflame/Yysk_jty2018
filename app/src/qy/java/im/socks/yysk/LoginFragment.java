@@ -27,7 +27,7 @@ import im.socks.yysk.util.XBean;
  * Time: 17:24
  */
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements OnBackListener{
 
     private EditText phoneNumberText;
     private EditText passwordText;
@@ -278,5 +278,10 @@ public class LoginFragment extends Fragment {
         }
         //保存登录状态信息
         app.getSessionManager().onLogin(loginRst,phoneNum,psw);
+    }
+
+    @Override
+    public boolean onBack() {
+        return true;
     }
 }
