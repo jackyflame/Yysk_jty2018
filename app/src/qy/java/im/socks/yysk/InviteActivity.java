@@ -153,8 +153,8 @@ public class InviteActivity extends AppCompatActivity {
         shareParams.setUrl(VpnConfig.API_SHARE_URL+inviteCode);
         shareParams.setImageUrl(VpnConfig.API_SHAREIMAGE_URL);
         //标题内容
-        shareParams.setTitle("邀请有奖");
-        shareParams.setText("易加速邀请您使用，邀请码："+inviteCode);
+        shareParams.setTitle("易加速-放眼看世界");
+        shareParams.setText("我在使用易加速访问全球网络，小伙伴们快来注册吧！");
         JShareInterface.share(name, shareParams, new PlatActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
