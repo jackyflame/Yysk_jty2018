@@ -460,7 +460,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResult(XBean result) {
                 dialog.dismiss();
-                if(NetUtil.checkAndHandleRsp(result,getContext(),"获取VPN节点失败",null)){
+                if(NetUtil.checkAndHandleRspWithData(result,getContext(),"获取线路失败",null)){
                     Proxy proxyNew = new Proxy();
                     XBean data = NetUtil.getRspData(result);
                     //重新装填字段（兼容老版本）

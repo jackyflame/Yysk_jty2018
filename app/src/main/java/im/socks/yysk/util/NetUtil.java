@@ -10,20 +10,40 @@ import java.util.List;
 public class NetUtil {
 
     public static boolean checkAndHandleRsp(XBean result, Context context, String errorPrefix,ProgressDialog dialog){
-        return checkAndHandleRsp(result,context,errorPrefix,null,dialog);
+        return checkAndHandleRsp(result,context, errorPrefix,null,dialog,false);
     }
 
     public static boolean checkAndHandleRsp(XBean result, Context context, String errorPrefix, String errorSuffix,ProgressDialog dialog){
+        return checkAndHandleRsp(result,context, errorPrefix,errorSuffix,dialog,false);
+    }
+
+    public static boolean checkAndHandleRspWithData(XBean result, Context context, String errorPrefix,ProgressDialog dialog){
+        return checkAndHandleRspWithData(result,context,errorPrefix,null,dialog);
+    }
+
+    public static boolean checkAndHandleRspWithData(XBean result, Context context, String errorPrefix, String errorSuffix,ProgressDialog dialog){
+        return checkAndHandleRsp(result,context, errorPrefix,errorSuffix,dialog,true);
+    }
+
+    public static boolean checkAndHandleRsp(XBean result, Context context, String errorPrefix, String errorSuffix,ProgressDialog dialog,boolean isCheckData){
         if(dialog != null){
             dialog.dismiss();
         }
         if (result != null) {
-            if (isRspSuccess(result)) {
+            boolean isSuccess = isRspSuccess(result);
+            if(isCheckData){
+                isSuccess = isSuccess && !result.isEmpty("data");
+            }
+            if (isSuccess) {
                return true;
             } else {
                 //错误提示
                 if(!StringUtils.isEmpty(errorPrefix)){
-                    String msg = (errorPrefix + ":" + getRspError(result));
+                    String rspError = getRspError(result);
+                    String msg = errorPrefix;
+                    if(rspError != null && !rspError.isEmpty()){
+                        msg = msg + ":" + rspError;
+                    }
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
             }
