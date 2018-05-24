@@ -40,6 +40,7 @@ public class LoginFragment extends Fragment implements OnBackListener{
     private String nextAction;
 
     private boolean isLoading = false;
+    private boolean canNotBack = true;
 
     private XBean loginRst;
     private String phoneNumber;
@@ -67,6 +68,8 @@ public class LoginFragment extends Fragment implements OnBackListener{
                 getFragmentStack().back();
             }
         });
+        setCanNotBack(true);
+
         View registerButton = view.findViewById(R.id.registerButton);
         View forgetPasswordButton = view.findViewById(R.id.forgetPasswordButton);
 
@@ -158,6 +161,7 @@ public class LoginFragment extends Fragment implements OnBackListener{
                     //保存记住密码和自动登录状态
                     saveLoginSet();
                     //返回主页
+                    canNotBack = false;
                     getFragmentStack().back();
                     ////当前的fragment不需要保留在stack了，所以为替代
                     //if ("show_money".equals(nextAction)) {
@@ -260,6 +264,7 @@ public class LoginFragment extends Fragment implements OnBackListener{
                         //保存登录状态信息
                         saveLoginRst(phoneNumber,password);
                         //返回主页面
+                        canNotBack = false;
                         getFragmentStack().back();
                     }else{
                         showError("绑定失败：" + result.getString("error"));
@@ -282,6 +287,17 @@ public class LoginFragment extends Fragment implements OnBackListener{
 
     @Override
     public boolean onBack() {
-        return true;
+        return canNotBack;
+    }
+
+    private void setCanNotBack(boolean flag){
+        this.canNotBack = flag;
+        if(title_bar != null){
+            if(canNotBack){
+                title_bar.setVisibility(View.INVISIBLE);
+            }else{
+                title_bar.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }
