@@ -38,6 +38,8 @@ public class InviteDetailActivity extends AppCompatActivity {
 
     private PageBar title_bar;
     private RecyclerView recyclerView;
+    private TextView txv_invite_reward;
+    private TextView txv_invite_count;
     private AdapterImpl adapter;
     private SmartRefreshLayout refreshLayout;
     private final AppDZ app = Yysk.app;
@@ -66,6 +68,9 @@ public class InviteDetailActivity extends AppCompatActivity {
                 initListData();
             }
         });
+        txv_invite_count = findViewById(R.id.txv_invite_count);
+        txv_invite_reward = findViewById(R.id.txv_invite_reward);
+
         initListData();
     }
 
@@ -80,7 +85,14 @@ public class InviteDetailActivity extends AppCompatActivity {
                         if(leftList != null){
                             adapter.setItems(leftList);
                         }
+                        //刷新统计数据
+                        txv_invite_count.setText("您已成功邀请"+data.getInteger("invite_users_num",0)
+                                +"位好友注册，"+data.getInteger("charged_users_num",0)+"位好友首充！");
+                        txv_invite_reward.setText("您已获得  "+data.getInteger("award_days",0)+"天免费时长");
                     }
+                    refreshLayout.finishRefresh(true);
+                }else{
+                    refreshLayout.finishRefresh(true);
                 }
             }
         });
