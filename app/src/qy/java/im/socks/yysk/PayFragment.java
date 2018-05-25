@@ -176,7 +176,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             }
         }
         if(isSetDefault == false){
-            btn_left.performClick();
+            btn_center.performClick();
         }
     }
 
