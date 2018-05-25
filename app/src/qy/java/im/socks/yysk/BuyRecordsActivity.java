@@ -168,7 +168,11 @@ public class BuyRecordsActivity extends AppCompatActivity {
             txv_name.setText(data.getString("name"));
             txv_type.setText(data.getString("type"));
             txv_money.setText(data.getString("cost"));
-            txv_time.setText(data.getString("time"));
+            String time = data.getString("time");
+            if(time != null){
+                time = time.replace("T"," ");
+            }
+            txv_time.setText(time);
         }
     }
 }
