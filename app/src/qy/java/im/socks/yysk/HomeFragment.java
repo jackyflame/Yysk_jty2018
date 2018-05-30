@@ -17,16 +17,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -74,8 +75,9 @@ public class HomeFragment extends Fragment {
                 updateProxy((Proxy) data);
                 startVPNWithServer();
             }else if(Yysk.EVENT_PAY_SUCCESS.equals(name)||Yysk.EVENT_PAY_FAIL.equals(name)){
-                //充值成功或者失败都更新一次
-                updateMe();
+                if(Yysk.EVENT_PAY_SUCCESS.equals(name)){
+                    updateAcl();
+                }
             }
         }
     };
@@ -107,9 +109,10 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.lin_invite).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkLogin()){
-                    startActivity(new Intent(getContext(),InviteActivity.class));
-                }
+//                if(checkLogin()){
+//                    startActivity(new Intent(getContext(),InviteActivity.class));
+//                }
+                updateAcl();
             }
         });
 
@@ -637,5 +640,58 @@ public class HomeFragment extends Fragment {
             return false;
         }
         return true;
+    }
+
+    private void updateAcl(){
+        //关闭连接
+        stopVPNWithServer();
+        //更新规则
+        app.getApi().getRuleList(new YyskApi.ICallback<XBean>() {
+            @Override
+            public void onResult(XBean result) {
+                updateProxy(null);
+                if(NetUtil.checkAndHandleRspWithData(result,getContext(),"更新规则失败",null)){
+                    String listStr = result.getString("data");
+                    if(listStr == null || listStr.isEmpty()){
+                        return;
+                    }
+                    JSONArray jsonArray = JSON.parseArray(listStr);
+                    if(jsonArray == null || jsonArray.size() == 0){
+                        return;
+                    }
+                    new android.os.AsyncTask<JSONArray, Void, StringBuffer>(){
+                        @Override
+                        protected StringBuffer doInBackground(JSONArray... jsonArrays) {
+                            JSONArray msgList = jsonArrays[0];
+                            StringBuffer rst = new StringBuffer();
+                            if(msgList == null || msgList.isEmpty()){
+                                return rst;
+                            }
+                            for (Iterator iterator = msgList.iterator(); iterator.hasNext();) {
+                                JSONObject item = (JSONObject) iterator.next();
+                                String value = item.getString("value");
+                                if(value == null || value.isEmpty()){
+                                    continue;
+                                }
+                                if(rst.length() == 0){
+                                    rst.append(value);
+                                }else{
+                                    rst.append("\n").append(value);
+                                }
+                            }
+                            //保存规则数据
+                            app.getSettings().set("acl", rst);
+                            //返回数据
+                            return rst;
+                        }
+
+                        @Override
+                        protected void onPostExecute(StringBuffer text) {
+
+                        }
+                    }.execute(jsonArray);
+                }
+            }
+        });
     }
 }
