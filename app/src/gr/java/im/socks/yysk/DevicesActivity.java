@@ -99,12 +99,12 @@ public class DevicesActivity extends AppCompatActivity {
         }
         if(deviceActiveList.size() >= 0){
             XBean title = new XBean();
-            title.put("title","同时登录设备（"+deviceActiveList.size()+"台）");
+            title.put("title","同时加速设备（"+deviceActiveList.size()+"台）");
             deviceActiveList.add(0,title);
         }
         if(deviceAllList.size() > 0){
             XBean title = new XBean();
-            title.put("title","总登录设备（"+deviceAllList.size()+"台）");
+            title.put("title","总加速设备（"+deviceAllList.size()+"台）");
             deviceAllList.add(0,title);
         }
         deviceActiveList.addAll(deviceAllList);

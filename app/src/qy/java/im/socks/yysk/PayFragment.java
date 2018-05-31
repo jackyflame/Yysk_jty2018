@@ -269,7 +269,8 @@ public class PayFragment extends Fragment implements View.OnClickListener{
         if ("success".equals(result)) {
             //支付成功
             app.getEventBus().emit(Yysk.EVENT_PAY_SUCCESS,null,false);
-            showMessage("支付成功");
+            //showMessage("支付成功");
+            showUpdateDialog();
         } else if ("fail".equals(result)) {
             //支付失败
             app.getEventBus().emit(Yysk.EVENT_PAY_FAIL,null,false);
@@ -294,6 +295,20 @@ public class PayFragment extends Fragment implements View.OnClickListener{
 
     private void showMessage(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+    }
+
+    private void showUpdateDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("提醒");
+        builder.setMessage("支付成功！由于套餐更新需要，当前加速链接已断开并进行了线路更新，需要您再次手动建立连接！");
+        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                getFragmentStack().back();
+            }
+        });
+        builder.show();
     }
 
     private static boolean isWeixinInstalled(Context context) {

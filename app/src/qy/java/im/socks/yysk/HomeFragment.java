@@ -109,10 +109,9 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.lin_invite).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(checkLogin()){
-//                    startActivity(new Intent(getContext(),InviteActivity.class));
-//                }
-                updateAcl();
+                if(checkLogin()){
+                    startActivity(new Intent(getContext(),InviteActivity.class));
+                }
             }
         });
 
@@ -643,20 +642,29 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateAcl(){
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setCancelable(false);
+        dialog.setMessage("更新中...");
+        dialog.show();
         //关闭连接
         stopVPNWithServer();
+        //清空本地选择节点
+        updateProxy(null);
+        //清空列表缓存
+        app.dzProxyManager.save(new ArrayList<XBean>());
         //更新规则
         app.getApi().getRuleList(new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
-                updateProxy(null);
                 if(NetUtil.checkAndHandleRspWithData(result,getContext(),"更新规则失败",null)){
                     String listStr = result.getString("data");
                     if(listStr == null || listStr.isEmpty()){
+                        dialog.dismiss();
                         return;
                     }
                     JSONArray jsonArray = JSON.parseArray(listStr);
                     if(jsonArray == null || jsonArray.size() == 0){
+                        dialog.dismiss();
                         return;
                     }
                     new android.os.AsyncTask<JSONArray, Void, StringBuffer>(){
@@ -687,7 +695,7 @@ public class HomeFragment extends Fragment {
 
                         @Override
                         protected void onPostExecute(StringBuffer text) {
-
+                            dialog.dismiss();
                         }
                     }.execute(jsonArray);
                 }

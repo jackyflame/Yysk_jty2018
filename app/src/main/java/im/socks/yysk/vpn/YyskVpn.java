@@ -232,7 +232,10 @@ public class YyskVpn {
 
         //每次都是使用一个最新的
         XBean cfg = app.getSettings().newData();
-        List<String> acl = parseAcl(cfg.getString("acl", null));
+        String aclStr = cfg.getString("acl", null);
+        MyLog.d("--------------》》》》》》 aclStr=%s",aclStr);
+        List<String> acl = parseAcl(aclStr);
+        MyLog.d("--------------》》》》》》 acl-size=%s",acl != null ? String.valueOf(acl.size()) : "empty");
         profile.acl = acl;
         profile.bypass_china = cfg.getBoolean("bypass_china", VpnConfig.BYPASS_CHINA_DEFAULT);
 
