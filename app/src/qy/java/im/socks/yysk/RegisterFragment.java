@@ -127,10 +127,6 @@ public class RegisterFragment extends Fragment {
         final String phoneNumber = StringUtils.getTextViewStr(phoneNumberText);
         String verifyCode = StringUtils.getTextViewStr(verifyCodeText);
         final String password = StringUtils.getTextViewStr(passwordText);
-        if(StringUtils.isEmpty(inviteCode)){
-            showError("请输入邀请码");
-            return;
-        }
         if(StringUtils.isEmpty(phoneNumber)){
             showError("请输入电话号码");
             return;

@@ -177,7 +177,7 @@ public class ProxyListFragment extends Fragment {
                 loginView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 adapter.setItems(displayList);
-                Toast.makeText(getContext(),"为了获得准确的ping时间，建议先断开连接",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"为了获得准确的ping时间，建议先断开vpn连接",Toast.LENGTH_LONG).show();
             }
         }
     }
