@@ -43,7 +43,7 @@
             android:drawableLeft="@mipmap/ic_invite_code"
             android:drawablePadding="@dimen/padding_m"
             android:textSize="@dimen/text_ml"
-            android:hint="填入好友邀请码领福利(必填)"/>
+            android:hint="填入好友邀请码领福利"/>
 
 
         <LinearLayout
@@ -172,6 +172,13 @@
             android:textColor="@color/text_white"
             android:textSize="@dimen/text_l"
             android:text="注册"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_m"
+            android:textSize="@dimen/text_m"
+            android:text="注册即代表您同意易加速服务条款和易加速个人隐私保护政策"/>
 
     </LinearLayout>
 
