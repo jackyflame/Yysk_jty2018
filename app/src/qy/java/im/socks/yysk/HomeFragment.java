@@ -650,6 +650,7 @@ public class HomeFragment extends Fragment {
         stopVPNWithServer();
         //清空本地选择节点
         updateProxy(null);
+        app.getSessionManager().setProxy(getActivity(),null, false, false);
         //清空列表缓存
         app.dzProxyManager.save(new ArrayList<XBean>());
         //更新规则
