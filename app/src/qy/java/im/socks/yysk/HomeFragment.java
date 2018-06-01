@@ -489,11 +489,6 @@ public class HomeFragment extends Fragment {
 
     private void stopVPNWithServer(final ProgressDialog dialog){
         //获取选择的线路
-        stopVPNWithServer(dialog);
-    }
-
-    private void stopVPNWithServer(final ProgressDialog dialog){
-        //获取选择的线路
         Proxy proxy = app.getSessionManager().getProxy();
         if(proxy == null){
             return;
