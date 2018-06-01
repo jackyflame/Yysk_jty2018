@@ -4,12 +4,20 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import im.socks.yysk.api.YyskApi;
@@ -78,6 +86,10 @@ public class RegisterFragment extends Fragment {
             }
         });
         refreshImageCode();
+
+        TextView txv_link = view.findViewById(R.id.txv_link);
+        String linkStr = "注册即代表同意<a href='https://reg.1jiasu.com/clauses'>易加速服务条款</a>和<a href='https://reg.1jiasu.com/privacy'>易加速个人隐私保护政策</a>";
+        stripUnderlines(txv_link,linkStr);
 
         return view;
     }
@@ -196,5 +208,32 @@ public class RegisterFragment extends Fragment {
         }
         img_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
         imageCode = CodeUtils.getInstance().getCode();
+    }
+
+    private void stripUnderlines(TextView textView,String content) {
+        Spanned spannedHtml = Html.fromHtml(content);
+        SpannableStringBuilder clickableHtmlBuilder = new SpannableStringBuilder(spannedHtml);
+        URLSpan[] urls = clickableHtmlBuilder.getSpans(0, spannedHtml.length(), URLSpan.class);
+        if(urls != null && urls.length > 0){
+            for (URLSpan span: urls) {
+                int start = clickableHtmlBuilder.getSpanStart(span);
+                int end = clickableHtmlBuilder.getSpanEnd(span);
+                clickableHtmlBuilder.removeSpan(span);
+                span = new URLSpanNoUnderline(span.getURL());
+                clickableHtmlBuilder.setSpan(span, start, end, 0);
+            }
+        }
+        textView.setText(clickableHtmlBuilder);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    private class URLSpanNoUnderline extends URLSpan {
+        public URLSpanNoUnderline(String url) {
+            super(url);
+        }
+        @Override public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+            ds.setUnderlineText(false);
+        }
     }
 }
