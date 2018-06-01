@@ -485,12 +485,22 @@ public class HomeFragment extends Fragment {
         dialog.setMessage("断开中...");
         dialog.show();
         //获取选择的线路
+        stopVPNWithServer(dialog);
+    }
+
+    private void stopVPNWithServer(final ProgressDialog dialog){
+        //获取选择的线路
         Proxy proxy = app.getSessionManager().getProxy();
+        if(proxy == null){
+            return;
+        }
         //获取服务器动态端口信息
         app.getApi().sendProxyClose(proxy.id, new YyskApi.ICallback<XBean>() {
             @Override
             public void onResult(XBean result) {
-                dialog.dismiss();
+                if(dialog != null){
+                    dialog.dismiss();
+                }
                 app.getVpn().stop();
             }
         });
@@ -647,7 +657,7 @@ public class HomeFragment extends Fragment {
         dialog.setMessage("更新中...");
         dialog.show();
         //关闭连接
-        stopVPNWithServer();
+        stopVPNWithServer(null);
         //清空本地选择节点
         updateProxy(null);
         app.getSessionManager().setProxy(getActivity(),null, false, false);
