@@ -484,6 +484,10 @@ public class HomeFragment extends Fragment {
         dialog.setCancelable(false);
         dialog.setMessage("断开中...");
         dialog.show();
+        stopVPNWithServer(dialog);
+    }
+
+    private void stopVPNWithServer(final ProgressDialog dialog){
         //获取选择的线路
         stopVPNWithServer(dialog);
     }
