@@ -4,12 +4,14 @@
         <attr name="pb_title" format="string|reference"></attr>
         <attr name="pb_back" format="boolean|reference"></attr>
         <attr name="pb_back_show" format="boolean|reference"></attr>
+        <attr name="pb_action_show" format="boolean|reference"></attr>
         <attr name="pb_backgroundColor" format="color|reference"></attr>
         <attr name="pb_textSize" format="dimension|reference"></attr>
         <attr name="pb_backTextSize" format="dimension|reference"></attr>
         <attr name="pb_textColor" format="color|reference"></attr>
         <attr name="pb_back_textColor" format="color|reference"></attr>\
         <attr name="pb_back_text" format="string|reference"></attr>
+        <attr name="pb_action_text" format="string|reference"></attr>
     </declare-styleable>
 
     <attr name="pageBarStyle" format="reference"></attr>

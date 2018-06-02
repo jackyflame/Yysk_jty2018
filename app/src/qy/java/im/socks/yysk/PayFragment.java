@@ -77,6 +77,22 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        title_bar.setActionListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("购买规则");
+                builder.setMessage("易加速套餐只能平级或升级购买，平级购买是当前时间与新套餐时间的累加，升级购买会自动折算时间，折算规则如下：折算天数=升级套餐天数/升级套餐价格*当前套餐剩余天数/当前套餐天数*当前套餐价格");
+                builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+            }
+        });
+
         view.findViewById(R.id.lin_buy_record).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

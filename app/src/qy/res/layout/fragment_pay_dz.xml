@@ -11,6 +11,8 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:pb_action_show="true"
+        app:pb_action_text="规则"
         style="@style/pager_bar"
         app:pb_title="购买套餐"/>
 

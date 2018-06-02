@@ -18,6 +18,7 @@ public class PageBar extends RelativeLayout {
 
     TextView titleView;
     TextView backView;
+    TextView actionView;
 
     public PageBar(Context context) {
         this(context, null);
@@ -46,7 +47,7 @@ public class PageBar extends RelativeLayout {
 
         titleView = findViewById(R.id.titleView);
         backView = findViewById(R.id.backView);
-        TextView actionView = findViewById(R.id.actionView);
+        actionView = findViewById(R.id.actionView);
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PageBar, defStyleAttr, defStyleRes);
         titleView.setText(a.getText(R.styleable.PageBar_pb_title));
@@ -86,6 +87,18 @@ public class PageBar extends RelativeLayout {
             }
         }
 
+        if(a.getBoolean(R.styleable.PageBar_pb_action_show,false) == false){
+            actionView.setText("");
+            actionView.setVisibility(GONE);
+        }else{
+            actionView.setVisibility(VISIBLE);
+            String actionText = a.getString(R.styleable.PageBar_pb_action_text);
+            if(actionText != null && !actionText.isEmpty()){
+                actionView.setText(actionText);
+            }else{
+                actionView.setText("菜单");
+            }
+        }
 
         a.recycle();
     }
@@ -99,6 +112,12 @@ public class PageBar extends RelativeLayout {
     public void setBackListener(OnClickListener onClickListener){
         if(backView != null){
             backView.setOnClickListener(onClickListener);
+        }
+    }
+
+    public void setActionListener(OnClickListener onClickListener){
+        if(actionView != null){
+            actionView.setOnClickListener(onClickListener);
         }
     }
 }
