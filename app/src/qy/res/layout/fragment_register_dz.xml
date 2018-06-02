@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <im.socks.yysk.PageBar
@@ -43,7 +45,7 @@
             android:drawableLeft="@mipmap/ic_invite_code"
             android:drawablePadding="@dimen/padding_m"
             android:textSize="@dimen/text_ml"
-            android:hint="填入好友邀请码领福利(必填)"/>
+            android:hint="填入好友邀请码领福利"/>
 
 
         <LinearLayout
