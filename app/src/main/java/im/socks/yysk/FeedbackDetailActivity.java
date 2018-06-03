@@ -130,9 +130,9 @@ public class FeedbackDetailActivity extends AppCompatActivity {
         if(replyList == null){
             replyList = new ArrayList<>();
         }
-        //添加用户问题内容
-        XBean first = new XBean("created",time,"content",content);
-        replyList.add(first);
+        ////添加用户问题内容
+        //XBean first = new XBean("created",time,"content",content);
+        //replyList.add(first);
         if(replyList == null || replyList.size() == 0){
             lin_reply.setVisibility(View.INVISIBLE);
         }else{
