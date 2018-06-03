@@ -7,14 +7,42 @@
     android:background="@color/bg_empty_gray_2"
     tools:context="im.socks.yysk.PayFragment">
 
-    <im.socks.yysk.PageBar
-        android:id="@+id/title_bar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pb_action_show="true"
-        app:pb_action_text="规则"
-        style="@style/pager_bar"
-        app:pb_title="购买套餐"/>
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/backView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_l"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@mipmap/ic_back"
+            android:gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_xl"
+            android:text="购买套餐"/>
+
+        <ImageView
+            android:id="@+id/img_action"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:padding="@dimen/padding_m"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/padding_l"
+            android:src="@mipmap/ic_action"/>
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/lin_tabrow"

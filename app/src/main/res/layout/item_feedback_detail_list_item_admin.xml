@@ -36,7 +36,7 @@
                 android:textSize="@dimen/text_m"
                 android:padding="@dimen/padding_m"
                 android:textColor="@color/blue"
-                android:text="管理员"/>
+                android:text="客服"/>
         </LinearLayout>
 
         <TextView

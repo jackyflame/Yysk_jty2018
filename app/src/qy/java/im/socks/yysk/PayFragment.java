@@ -44,7 +44,6 @@ public class PayFragment extends Fragment implements View.OnClickListener{
     private TextView btn_left;
     private TextView btn_center;
     private TextView btn_right;
-    private PageBar title_bar;
     private final AppDZ app = Yysk.app;
 
     private List<XBean> leftList = new ArrayList<>();
@@ -69,15 +68,14 @@ public class PayFragment extends Fragment implements View.OnClickListener{
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
         //标题退出
-        title_bar = view.findViewById(R.id.title_bar);
-        title_bar.setBackListener(new View.OnClickListener() {
+        view.findViewById(R.id.backView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragmentStack().back();
             }
         });
 
-        title_bar.setActionListener(new View.OnClickListener() {
+        view.findViewById(R.id.img_action).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
