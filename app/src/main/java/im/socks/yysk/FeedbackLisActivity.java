@@ -157,12 +157,16 @@ public class FeedbackLisActivity extends AppCompatActivity {
                 display = data.getString("content", "");
             }
             txv_content.setText(display);
-            if(data.getBoolean("is_handled", false)){
+            boolean is_handled = data.getBoolean("is_handled", false);
+            boolean is_resolved = data.getBoolean("is_resolved", false);
+            if(is_handled && is_resolved){
                 txv_reply.setText("已解决");
-            }else if(data.getBoolean("is_resolved", false)){
-                txv_reply.setText("已回复");
+            }else if(is_handled && !is_resolved){
+                txv_reply.setText("处理中");
+            }else if(!is_handled && !is_resolved){
+                txv_reply.setText("未处理");
             }else{
-                txv_reply.setText("未回复");
+                txv_reply.setText("状态正在处理中");
             }
             if(data.getBoolean("has_new", false)){
                 txv_unread.setVisibility(View.VISIBLE);
