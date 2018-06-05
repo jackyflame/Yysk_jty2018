@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -45,6 +46,7 @@ public class HomeFragment extends Fragment {
 
     private Button vpnButton;
     private TextView txv_vpn_statu;
+    private VerticalTextview txv_chuxiao_name;
 
     //proxy part
     private View lin_vpn_lines;
@@ -173,6 +175,15 @@ public class HomeFragment extends Fragment {
             }
         });
         txv_endtime = view.findViewById(R.id.txv_endtime);
+
+        txv_chuxiao_name = view.findViewById(R.id.txv_chuxiao_name);
+        txv_chuxiao_name.setText(14, 0, Color.RED);
+        txv_chuxiao_name.setTextStillTime(3000);
+        txv_chuxiao_name.setAnimTime(500);
+        ArrayList<String> displayList = new ArrayList<>();
+        displayList.add("测试111111");
+        displayList.add("测试2222222");
+        txv_chuxiao_name.setTextList(displayList);
     }
 
     private void initProxyLayout(View view) {
@@ -639,7 +650,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
     /*---------------------------------------------------------------------*/
 
     private boolean checkLogin(){
@@ -711,5 +721,21 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(txv_chuxiao_name != null){
+            txv_chuxiao_name.startAutoScroll();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(txv_chuxiao_name != null){
+            txv_chuxiao_name.stopAutoScroll();
+        }
     }
 }

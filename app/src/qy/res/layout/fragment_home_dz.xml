@@ -49,6 +49,17 @@
         android:layout_height="1px"
         android:background="@color/divider"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_l"
+        android:layout_marginTop="@dimen/padding_l"
+        android:drawablePadding="@dimen/padding_l"
+        android:layout_gravity="center_horizontal"
+        android:text="升级套餐享受更顺畅的加速服务"
+        android:drawableLeft="@mipmap/ic_smile"
+        android:textColor="@color/blue"/>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
@@ -173,6 +184,39 @@
                             android:hint="线路选择"
                             android:textColorHint="@color/black"
                             tools:text="日本线路"/>
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@mipmap/ic_trangel_right"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lin_chuxiao_lines"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_height_ml"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="@dimen/padding_m"
+                        android:layout_marginLeft="@dimen/padding_xxl"
+                        android:layout_marginRight="@dimen/padding_xxl"
+                        android:paddingLeft="@dimen/padding_l"
+                        android:paddingRight="@dimen/padding_l"
+                        android:background="@drawable/bg_white_shap_cnr_15"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/padding_m"
+                            android:src="@mipmap/ic_chuxiao"/>
+
+                        <im.socks.yysk.VerticalTextview
+                            android:id="@+id/txv_chuxiao_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"/>
 
                         <ImageView
                             android:layout_width="15dp"
