@@ -210,7 +210,11 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             list.add(title);
             //包月套餐
             XBean packgeMonth = new XBean();
-            packgeMonth.put("name","包月套餐");
+            String month_name = "1个月";
+            if(bean.getInteger("monthly_gift",0) > 0){
+                month_name = month_name+"+送"+bean.getInteger("monthly_gift",0)+"个月";
+            }
+            packgeMonth.put("name",month_name);
             packgeMonth.put("packgeName",packgeName);
             packgeMonth.put("id",bean.getInteger("id",-1));
             packgeMonth.put("price",bean.getString("monthly")+"元");
@@ -219,7 +223,11 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             list.add(packgeMonth);
             //季度套餐
             XBean packgeQuarter = new XBean();
-            packgeQuarter.put("name","季度套餐");
+            String quarter_name = "3个月";
+            if(bean.getInteger("packet_quarter_gift",0) > 0){
+                quarter_name = month_name+"+送"+bean.getInteger("packet_quarter_gift",0)+"个月";
+            }
+            packgeQuarter.put("name",quarter_name);
             packgeQuarter.put("packgeName",packgeName);
             packgeQuarter.put("id",bean.getInteger("id",-1));
             packgeQuarter.put("price",bean.getString("packet_quarter")+"元");
@@ -228,7 +236,11 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             list.add(packgeQuarter);
             //半年套餐
             XBean packgeHalfYear = new XBean();
-            packgeHalfYear.put("name","半年套餐");
+            String halfyear_name = "6个月";
+            if(bean.getInteger("half_year_gift",0) > 0){
+                halfyear_name = month_name+"+送"+bean.getInteger("half_year_gift",0)+"个月";
+            }
+            packgeHalfYear.put("name",halfyear_name);
             packgeHalfYear.put("packgeName",packgeName);
             packgeHalfYear.put("id",bean.getInteger("id",-1));
             packgeHalfYear.put("price",bean.getString("half_year")+"元");
@@ -237,7 +249,11 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             list.add(packgeHalfYear);
             //年度套餐
             XBean packgeYear = new XBean();
-            packgeYear.put("name","年度套餐");
+            String year_name = "6个月";
+            if(bean.getInteger("yearly_gift",0) > 0){
+                year_name = month_name+"+送"+bean.getInteger("yearly_gift",0)+"个月";
+            }
+            packgeYear.put("name",year_name);
             packgeYear.put("packgeName",packgeName);
             packgeYear.put("id",bean.getInteger("id",-1));
             packgeYear.put("price",bean.getString("yearly")+"元");

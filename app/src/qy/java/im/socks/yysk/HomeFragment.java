@@ -36,6 +36,7 @@ import java.util.TimerTask;
 import im.socks.yysk.api.YyskApi;
 import im.socks.yysk.data.Proxy;
 import im.socks.yysk.data.Session;
+import im.socks.yysk.data.User;
 import im.socks.yysk.util.NetUtil;
 import im.socks.yysk.util.StringUtils;
 import im.socks.yysk.util.XBean;
@@ -46,6 +47,7 @@ public class HomeFragment extends Fragment {
 
     private Button vpnButton;
     private TextView txv_vpn_statu;
+    private TextView txv_greeting;
     private VerticalTextview txv_chuxiao_name;
 
     //proxy part
@@ -156,6 +158,11 @@ public class HomeFragment extends Fragment {
                 refreshlayout.finishRefresh(true);
             }
         });
+        txv_greeting = view.findViewById(R.id.txv_greeting);
+        txv_chuxiao_name = view.findViewById(R.id.txv_chuxiao_name);
+        txv_chuxiao_name.setText(14, 0, Color.RED);
+        txv_chuxiao_name.setTextStillTime(3000);
+        txv_chuxiao_name.setAnimTime(500);
     }
 
     private void initConnectLayout(View view) {
@@ -175,15 +182,6 @@ public class HomeFragment extends Fragment {
             }
         });
         txv_endtime = view.findViewById(R.id.txv_endtime);
-
-        txv_chuxiao_name = view.findViewById(R.id.txv_chuxiao_name);
-        txv_chuxiao_name.setText(14, 0, Color.RED);
-        txv_chuxiao_name.setTextStillTime(3000);
-        txv_chuxiao_name.setAnimTime(500);
-        ArrayList<String> displayList = new ArrayList<>();
-        displayList.add("测试111111");
-        displayList.add("测试2222222");
-        txv_chuxiao_name.setTextList(displayList);
     }
 
     private void initProxyLayout(View view) {
@@ -443,22 +441,37 @@ public class HomeFragment extends Fragment {
                     if(NetUtil.checkAndHandleRsp(result,getContext(),"获取个人信息失败",null)){
                         XBean userInfo = NetUtil.getRspData(result);
                         app.getSessionManager().onUserInfoUpdate(userInfo);
-                        String expertTime = userInfo.getString("expiring_time");
-                        if(expertTime != null && !expertTime.isEmpty()){
-                            expertTime = expertTime.replace("T"," ");
-                            txv_endtime.setText(expertTime);
+                        int rest_days = userInfo.getInteger("rest_days",0);
+                        txv_endtime.setText("剩余时长"+rest_days+"天");
+                        XBean packgeInfo = userInfo.getXBean("tariff_package");
+                        if(packgeInfo != null){
+                            txv_greeting.setText(packgeInfo.getString("greeting"));
                         }
+                        updateAds(userInfo.getList("promotions", XBean.class));
                     }
                 }
             });
         }else{
-            String expertTime = app.getSessionManager().getSession().user.expiring_time;
-            if(expertTime != null && !expertTime.isEmpty()){
-                expertTime = expertTime.replace("T"," ");
-                txv_endtime.setText(expertTime);
+            User user = app.getSessionManager().getSession().user;
+            int rest_days = user.rest_days;
+            txv_endtime.setText("剩余时长"+rest_days+"天");
+            XBean packgeInfo = user.tariff_package;
+            if(packgeInfo != null){
+                txv_greeting.setText(packgeInfo.getString("greeting"));
             }
-            txv_endtime.setText(expertTime);
+            updateAds(user.promotions);
         }
+    }
+
+    private void updateAds(List<XBean> list){
+        if(list == null || list.size() == 0){
+            return;
+        }
+        ArrayList<String> displayList = new ArrayList<>();
+        for (XBean item:list){
+            displayList.add(item.getString("description",""));
+        }
+        txv_chuxiao_name.setTextList(displayList);
     }
 
     private void startVPNWithServer(){

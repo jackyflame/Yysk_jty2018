@@ -1,5 +1,7 @@
 package im.socks.yysk.data;
 
+import java.util.List;
+
 import im.socks.yysk.util.Json;
 import im.socks.yysk.util.XBean;
 
@@ -23,7 +25,9 @@ public class User implements Json.IJsonable<XBean> {
     public String token;//token
 
     public String expiring_time;//过期时间
+    public int rest_days;//到期天数
     public XBean tariff_package;//购买包
+    public List<XBean> promotions;//活动
     public int terminal_no;
     public boolean is_active;//是否激活
 
@@ -41,7 +45,8 @@ public class User implements Json.IJsonable<XBean> {
         return new XBean("id", id, "user_type", user_type,  "username", username, "mobile_number", mobile_number,
                 "password", password, "email",email, "corporate_name",corporate_name,"department",department,"created",created,
                 "last_login_time",last_login_time,"invite_code",invite_code,"ss_pass",ss_pass,"token",token,
-                "expiring_time",expiring_time,"tariff_package",tariff_package,"terminal_no",terminal_no,"is_active",is_active
+                "expiring_time",expiring_time,"rest_days",rest_days,"tariff_package",tariff_package,
+                "terminal_no",terminal_no,"is_active",is_active,"promotions",promotions
         );
     }
 
@@ -61,9 +66,11 @@ public class User implements Json.IJsonable<XBean> {
         ss_pass = bean.getString("ss_pass", null);
         token = bean.getString("token", null);
         expiring_time = bean.getString("expiring_time", null);
+        rest_days = bean.getInteger("rest_days", 0);
         tariff_package = bean.getXBean("tariff_package");
         terminal_no = bean.getInteger("terminal_no", -1);
         is_active = bean.getBoolean("is_active", false);
+        promotions = bean.getList("promotions", XBean.class);
         return true;
     }
 }
