@@ -55,13 +55,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/padding_xxl"
         android:layout_marginRight="@dimen/padding_xxl"
-        android:textSize="@dimen/text_l"
+        android:textSize="@dimen/text_ml"
         android:layout_marginTop="@dimen/padding_l"
         android:drawablePadding="@dimen/padding_l"
         android:layout_gravity="center_horizontal"
         android:text="升级套餐享受更顺畅的加速服务"
-        android:drawableLeft="@mipmap/ic_smile"
-        android:textColor="@color/blue"/>
+        android:textColor="@color/black"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
