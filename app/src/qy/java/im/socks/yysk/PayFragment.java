@@ -213,7 +213,9 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             String month_name = bean.getString("monthly_name", "1个月");
             if(bean.getInteger("monthly_gift",0) > 0){
                 int month = bean.getInteger("monthly_gift",0)/30;
-                month_name = month_name+"+送"+month+"个月";
+                if(month > 0) {
+                    month_name = month_name + "+送" + month + "个月";
+                }
             }
             packgeMonth.put("name",month_name);
             packgeMonth.put("packgeName",packgeName);
@@ -227,7 +229,9 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             String quarter_name = bean.getString("packet_quarter_name", "3个月");
             if(bean.getInteger("packet_quarter_gift",0) > 0){
                 int month = bean.getInteger("packet_quarter_gift",0)/30;
-                quarter_name = quarter_name+"+送"+month+"个月";
+                if(month > 0) {
+                    quarter_name = quarter_name + "+送" + month + "个月";
+                }
             }
             packgeQuarter.put("name",quarter_name);
             packgeQuarter.put("packgeName",packgeName);
@@ -241,7 +245,9 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             String halfyear_name = bean.getString("half_year_name", "6个月");
             if(bean.getInteger("half_year_gift",0) > 0){
                 int month = bean.getInteger("half_year_gift",0)/30;
-                halfyear_name = halfyear_name+"+送"+month+"个月";
+                if(month > 0) {
+                    halfyear_name = halfyear_name + "+送" + month + "个月";
+                }
             }
             packgeHalfYear.put("name",halfyear_name);
             packgeHalfYear.put("packgeName",packgeName);
@@ -255,7 +261,9 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             String year_name = bean.getString("year_name", "12个月");
             if(bean.getInteger("yearly_gift",0) > 0){
                 int month = bean.getInteger("yearly_gift",0)/30;
-                year_name = year_name+"+送"+month+"个月";
+                if(month > 0){
+                    year_name = year_name+"+送"+month+"个月";
+                }
             }
             packgeYear.put("name",year_name);
             packgeYear.put("packgeName",packgeName);

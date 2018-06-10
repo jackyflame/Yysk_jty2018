@@ -51,9 +51,11 @@ public class MainActivity extends AppCompatActivity {
         if(getIntent().hasExtra(Constants.EXTRA_JUMP)){
             String action = getIntent().getStringExtra(Constants.EXTRA_JUMP);
             if(Constants.EXTRA_JUMP_LOGIN.equals(action)){
-                mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_LOGIN,500);
+                //mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_LOGIN,500);
+                getFragmentStack().show(LoginFragment.newInstance(null), "login", false);
             }else if(Constants.EXTRA_JUMP_REGIST.equals(action)){
-                mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_REGIST,500);
+                //mHandler.sendEmptyMessageDelayed(HANDLER_GOTO_REGIST,500);
+                getFragmentStack().show(RegisterFragment.newInstance(), "regist", false);
             }
         }
 

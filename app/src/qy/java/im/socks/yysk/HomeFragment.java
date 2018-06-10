@@ -71,6 +71,7 @@ public class HomeFragment extends Fragment {
             if (Yysk.EVENT_LOGIN.equals(name)) {
                 //checkVpnUpdate(false);
                 updateMe();
+                getAndSetDefaultProxy();
             } else if (Yysk.EVENT_LOGOUT.equals(name)) {
                 updateMe(true);
             } else if (Yysk.EVENT_PROXY_CHANGED.equals(name)) {
@@ -105,6 +106,8 @@ public class HomeFragment extends Fragment {
         if(app.getSessionManager().getSession().isLogin()){
             updateMe();
         }
+
+        getAndSetDefaultProxy();
 
         return view;
     }
@@ -161,7 +164,7 @@ public class HomeFragment extends Fragment {
         txv_greeting = view.findViewById(R.id.txv_greeting);
         txv_chuxiao_name = view.findViewById(R.id.txv_chuxiao_name);
         txv_chuxiao_name.setText(14, 0, Color.RED);
-        txv_chuxiao_name.setTextStillTime(3000);
+        txv_chuxiao_name.setTextStillTime(5000);
         txv_chuxiao_name.setAnimTime(500);
     }
 
@@ -619,9 +622,12 @@ public class HomeFragment extends Fragment {
         }
         //设置默认选择代理
         for(XBean item:result){
-            if(item != null && !item.isEmpty("host") && !item.isEmpty("port")){
+            String porxyID = item.getString(Proxy.BEANNAME_ID);
+            if(porxyID != null && !porxyID.isEmpty()){
+                //发出一个事件，然后HomeFragment就可以监听到了
                 Proxy proxy = new Proxy();
-                proxy.name = item.getString("name");
+                proxy.id = item.getString(Proxy.BEANNAME_ID);
+                proxy.name = item.getString(Proxy.BEANNAME_NAME);
                 proxy.data = item;
                 proxy.isCustom = false;
                 app.getSessionManager().setProxy(getActivity(), proxy, false, false);
@@ -631,6 +637,40 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private void getAndSetDefaultProxy(){
+        final Session session = app.getSessionManager().getSession();
+        if (session.isLogin()) {
+            Proxy storedProxy = app.getSessionManager().getProxy();
+            if(storedProxy == null){
+                //获取公司代理列表
+                app.getApi().getDZProxyList(session.user.mobile_number, new YyskApi.ICallback<XBean>() {
+                    @Override
+                    public void onResult(XBean result) {
+                        if(result != null && result.hasKeys("data")){
+                            List<XBean> porxList = result.getList("data");
+                            if(porxList != null && porxList.size() > 0){
+                                //缓存列表
+                                app.getDzProxyManager().save(porxList);
+                                //组装数据
+                                for(XBean item:porxList){
+                                    List<XBean> nodes = item.getList("nodes");
+                                    if(nodes == null || nodes.size() == 0){
+                                        continue;
+                                    }else{
+                                        //自动设置默认代理
+                                        setDefaultProxy(nodes);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }else{
+                //startVPNWithServer();
+            }
+        }
+    }
     /*---------------------------------------------------------------------*/
     private void stopPing(){
         if(ping!=null){
