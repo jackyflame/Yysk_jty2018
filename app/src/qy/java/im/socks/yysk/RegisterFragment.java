@@ -126,9 +126,9 @@ public class RegisterFragment extends Fragment {
                 sendVerifyCodeButton.setEnabled(true);
                 if(NetUtil.checkAndHandleRsp(result,getContext(),"发送验证码失败",null)){
                     showError("发送验证码成功，请查收短信");
-                    refreshImageCode();
+                    //refreshImageCode();
                 }else{
-                    refreshImageCode();
+                    //refreshImageCode();
                 }
             }
         });

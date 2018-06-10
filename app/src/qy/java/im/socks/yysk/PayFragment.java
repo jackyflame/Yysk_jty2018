@@ -205,7 +205,7 @@ public class PayFragment extends Fragment implements View.OnClickListener{
             }
             //标题行
             XBean title = new XBean();
-            title.put("title","描述：" + bean.getString("description"));
+            title.put("title","套餐说明：" + bean.getString("description"));
             title.put("msg",bean.getString("support"));
             list.add(title);
             //包月套餐

@@ -45,7 +45,7 @@
             android:drawableLeft="@mipmap/ic_invite_code"
             android:drawablePadding="@dimen/padding_m"
             android:textSize="@dimen/text_ml"
-            android:hint="填入好友邀请码领福利"/>
+            android:hint="填入好友邀请码"/>
 
 
         <LinearLayout
